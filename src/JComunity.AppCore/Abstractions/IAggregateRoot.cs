@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace JComunity.AppCore.Abstractions;
 
-namespace JComunity.AppCore.Abstractions
+public interface IAggregateRoot
 {
-    internal interface IAggregateRoot
-    {
-    }
 }

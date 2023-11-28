@@ -1,4 +1,5 @@
-﻿global using JComunity.AppCore.Entities.MemberAggregate;
+﻿global using JComunity.AppCore.Abstractions;
+global using JComunity.AppCore.Entities.MemberAggregate;
 global using JComunity.AppCore.Utils;
 global using JComunity.Domain.Entities.Users;
 global using System.Reflection;

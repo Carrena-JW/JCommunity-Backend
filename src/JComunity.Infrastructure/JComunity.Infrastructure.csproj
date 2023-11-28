@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\JComunity.Application\JComunity.AppCore.csproj" />
+    <ProjectReference Include="..\JComunity.AppCore\JComunity.AppCore.csproj" />
   </ItemGroup>
 
 </Project>

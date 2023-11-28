@@ -12,8 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\JComunity.Application\JComunity.AppCore.csproj" />
-    <ProjectReference Include="..\JComunity.Infrastructure\JComunity.Infrastructure.csproj" />
+    <ProjectReference Include="..\JComunity.Services\JComunity.Services.csproj" />
     <ProjectReference Include="..\JComunity.Web.Contract\JComunity.Web.Contract.csproj" />
   </ItemGroup>
 

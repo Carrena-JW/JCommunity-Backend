@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\JComunity.AppCore\JComunity.AppCore.csproj" />
+    <ProjectReference Include="..\JComunity.Infrastructure\JComunity.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

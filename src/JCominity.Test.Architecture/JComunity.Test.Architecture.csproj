@@ -25,9 +25,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\JComunity.Application\JComunity.AppCore.csproj" />
+    <ProjectReference Include="..\JComunity.AppCore\JComunity.AppCore.csproj" />
     <ProjectReference Include="..\JComunity.Infrastructure\JComunity.Infrastructure.csproj" />
-	<ProjectReference Include="..\JComunity.Host.Web\JComunity.Web.Host.csproj" />
+    <ProjectReference Include="..\JComunity.Services\JComunity.Services.csproj" />
+    <ProjectReference Include="..\JComunity.Web.Contract\JComunity.Web.Contract.csproj" />
+    <ProjectReference Include="..\JComunity.Web.Host\JComunity.Web.Host.csproj" />
   </ItemGroup>
 
 </Project>

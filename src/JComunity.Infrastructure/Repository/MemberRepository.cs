@@ -2,7 +2,7 @@
 
 public class MemberRepository : IMemberRepository
 {
-    public IUnitOfWork UnitOfWork => _appDbContext;
+    public IUnitOfWork UnitOfWork => (IUnitOfWork)_appDbContext;
     private readonly AppDbContext _appDbContext;
 
     public MemberRepository(AppDbContext appDbContext)

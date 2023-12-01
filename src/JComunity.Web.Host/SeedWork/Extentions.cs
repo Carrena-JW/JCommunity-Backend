@@ -1,7 +1,8 @@
-﻿using JComunity.Host.Web.ApiEndpoints;
+﻿using FluentValidation;
+using JComunity.Host.Web.ApiEndpoints;
 using System.Xml.Linq;
 
-namespace JComunity.Web.Host.SetupHost
+namespace JComunity.Web.Host.SeedWork
 {
     public static class Extentions
     {
@@ -12,6 +13,9 @@ namespace JComunity.Web.Host.SetupHost
         {
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
+
+            //Validator DI
+            services.AddValidatorsFromAssembly(typeof(Web.Contract.AssemblyReference).Assembly);
 
             return services;
         }

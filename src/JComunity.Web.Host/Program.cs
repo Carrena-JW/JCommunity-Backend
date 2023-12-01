@@ -1,4 +1,4 @@
-using JComunity.Web.Host.SetupHost;
+using JComunity.Web.Host.SeedWork;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddWebHostServices(builder.Configuration, builder.Environment);

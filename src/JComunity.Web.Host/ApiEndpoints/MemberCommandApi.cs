@@ -25,10 +25,10 @@ namespace JComunity.Host.Web.ApiEndpoints
             [AsParameters] MemberApiService services)
         {
             var validate = await validator.ValidateAsync(req);
-            if (!validate.IsValid) return TypedResults.ValidationProblem(validate.ToDictionary());
+            if (!validate.IsValid) return Results.ValidationProblem(validate.ToDictionary());
              
 
-            return TypedResults.Ok();
+            return Results.Ok();
         }
 
     }

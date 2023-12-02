@@ -1,6 +1,5 @@
-using NetArchTest.Rules;
 using FluentAssertions;
-using JComunity.AppCore;
+using NetArchTest.Rules;
 
 namespace JComunity.Test.Architecture;
 
@@ -83,7 +82,7 @@ public class ArchitectureTest
         var assembly = typeof(Web.Contract.AssemblyReference).Assembly;
         var otherProjects = new[]
         { 
-            AppCoreNS, ServicesNS, InfrastructureNS, WebHostNS
+            ServicesNS, InfrastructureNS, WebHostNS
         };
 
         // Act

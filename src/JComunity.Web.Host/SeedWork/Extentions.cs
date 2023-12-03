@@ -19,8 +19,9 @@ public static class Extentions
 
         services.AddSerilog(conf =>
         {
-          
-            
+            var elasticServerUri = config.GetSection("ElasticConfiguration").GetSection("Uri").Value ?? "http://localhost:9200";
+            var elasticsearchOptions = new ElasticsearchSinkOptions(new Uri(elasticServerUri));
+
             conf
 #if DEBUG
             .Enrich.FromLogContext()
@@ -28,11 +29,10 @@ public static class Extentions
             .WriteTo.Debug()
             .WriteTo.Console()
 #endif
-            .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri("http://localhost:9200")))
+            .WriteTo.Elasticsearch(elasticsearchOptions)
             .ReadFrom.Configuration(configuration);
         });
 
-        
 
 
         services.AddEndpointsApiExplorer();

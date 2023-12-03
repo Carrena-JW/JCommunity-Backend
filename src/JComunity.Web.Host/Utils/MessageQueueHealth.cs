@@ -1,6 +1,9 @@
-﻿namespace JComunity.Web.Host.Utils
+﻿namespace JComunity.Web.Host.Utils;
+
+public class MessageQueueHealth
 {
-    public class MessageQueueHealth
+    public static HealthCheckResult Checker()
     {
+        return HealthCheckResult.Healthy();
     }
 }

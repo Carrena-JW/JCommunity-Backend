@@ -1,3 +1,5 @@
-﻿namespace JComunity.Web.Contract.MemberApi.Responses;
+﻿using JComunity.AppCore.Abstractions;
 
-public sealed record SomeResponse(int id, string name);
+namespace JComunity.Web.Contract.MemberApi.Responses;
+
+public sealed record SomeResponse(int id, string name) : IResponseContract;

@@ -1,3 +1,6 @@
-﻿namespace JComunity.Web.Contract.MemberApi.Requests;
+﻿using JComunity.AppCore.Abstractions;
 
-public sealed record SomeRequest(int id, string name);
+namespace JComunity.Web.Contract.MemberApi.Requests;
+
+
+public sealed record SomeRequest(int? id, string? name) : IRequestContract;

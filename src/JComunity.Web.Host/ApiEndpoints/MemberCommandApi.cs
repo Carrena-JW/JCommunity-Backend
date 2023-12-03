@@ -7,6 +7,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace JComunity.Host.Web.ApiEndpoints
 {
+   
     public static class MemberCommandApi
     {
         public static IEndpointRouteBuilder MapMemberCommandApi(this IEndpointRouteBuilder app)
@@ -15,20 +16,27 @@ namespace JComunity.Host.Web.ApiEndpoints
 
             app.MapPost("/someRequest", SomePostAction);
 
+            
 
             return app;
         }
 
         public static async Task<IResult> SomePostAction(
-            SomeRequest req,
+            [FromBody] SomeRequest req,
             IValidator<SomeRequest> validator,
             [AsParameters] MemberApiService services)
         {
-            var validate = await validator.ValidateAsync(req);
-            if (!validate.IsValid) return Results.ValidationProblem(validate.ToDictionary());
-             
+            try
+            {
+                var validate = await validator.ValidateAsync(req);
+                if (!validate.IsValid) return Results.ValidationProblem(validate.ToDictionary());
 
-            return Results.Ok();
+                return Results.Ok();
+            }
+            catch (Exception ex)
+            {
+                return Results.Problem(ex.Message, ex.StackTrace, 500);
+            }
         }
 
     }

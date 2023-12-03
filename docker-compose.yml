@@ -3,14 +3,46 @@ version: '3.1'
 
 services:
 
-  db:
-    image: postgres
-    restart: always
-    environment:
-      POSTGRES_PASSWORD: password1
+  # db:
+  #   image: postgres
+  #   restart: always
+  #   environment:
+  #     POSTGRES_PASSWORD: password1
 
-  adminer:
-    image: adminer
-    restart: always
+  # adminer:
+  #   image: adminer
+  #   restart: always
+  #   ports:
+  #     - 8080:8080
+  
+  elasticsearch:
+    container_name: elasticsearch
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.11.1
     ports:
-      - 8080:8080
+        - 9200:9200
+    volumes:
+        - elasticsearch-data:/mnt/d/docker_vol/elasticsearch-data
+    environment:
+        - xpack.security.enabled=false
+        - discovery.type=single-node
+    networks:
+        - elastic
+  
+  kibana:
+    container_name: kibana
+    image : docker.elastic.co/kibana/kibana:8.11.1
+    ports: 
+        - 5601:5601
+    depends_on: 
+        - elasticsearch
+    environment:
+        - ELASTICSEARCH_URL=http://localhost:9200
+    networks:
+        - elastic
+
+networks:
+  elastic:
+    driver: bridge
+
+volumes:
+  elasticsearch-data:

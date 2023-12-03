@@ -1,0 +1,10 @@
+﻿global using FluentValidation;
+global using JComunity.Host.Web.ApiEndpoints;
+global using JComunity.Web.Contract.MemberApi.Requests;
+global using JComunity.Web.Host.ApiEndpoints;
+global using JComunity.Web.Host.Filters;
+global using JComunity.Web.Host.SeedWork;
+global using Microsoft.Extensions.Diagnostics.HealthChecks;
+global using System.Diagnostics;
+global using System.Text;
+global using System.Text.Json;

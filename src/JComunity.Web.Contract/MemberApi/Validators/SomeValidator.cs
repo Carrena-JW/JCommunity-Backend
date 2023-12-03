@@ -1,6 +1,4 @@
-﻿
-
-namespace JComunity.Web.Contract.MemberApi.Validators;
+﻿namespace JComunity.Web.Contract.MemberApi.Validators;
 
 public sealed class SomeValidator : AbstractValidator<SomeRequest>
 {

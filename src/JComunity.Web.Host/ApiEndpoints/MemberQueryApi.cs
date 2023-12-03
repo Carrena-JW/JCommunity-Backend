@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace JComunity.Host.Web.ApiEndpoints;
 
-
 public static class MemberQueryApi
 {
   
@@ -20,9 +19,6 @@ public static class MemberQueryApi
         [AsParameters] MemberApiService services
         )
     {
-
-        
-
         return Results.Ok(req);
     }
 }

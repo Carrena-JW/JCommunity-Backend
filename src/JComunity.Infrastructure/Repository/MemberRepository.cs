@@ -2,8 +2,8 @@
 
 public class MemberRepository : IMemberRepository
 {
-    public IUnitOfWork UnitOfWork => (IUnitOfWork)_appDbContext;
     private readonly AppDbContext _appDbContext;
+    public IUnitOfWork UnitOfWork => _appDbContext;
 
     public MemberRepository(AppDbContext appDbContext)
     {
@@ -23,5 +23,15 @@ public class MemberRepository : IMemberRepository
     public void Update(Member member)
     {
         _appDbContext.Entry(member).State = EntityState.Modified;
+    }
+
+    public async Task<bool> IsUniqueEmail(string email)
+    {
+        return !await _appDbContext.Members.AnyAsync(c => c.Email == email);
+    }
+
+    public async Task<bool> IsUniqueNickName(string nickName)
+    {
+        return !await _appDbContext.Members.AnyAsync(c => c.NickName == nickName);
     }
 }

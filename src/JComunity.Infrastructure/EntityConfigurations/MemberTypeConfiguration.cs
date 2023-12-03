@@ -13,8 +13,8 @@ internal class MemberTypebuilderuration : IEntityTypeConfiguration<Member>
         builder.HasKey(builder => builder.Id);
         builder.Property(builder => builder.Id)
             .HasConversion(
-                Id => Id.ToString(),
-                value => new MemberId(Guid.Parse(value))
+                Id => Id.id,
+                value => new MemberId(Guid.Parse(value.ToString()))
             );
 
         // Name
@@ -34,6 +34,6 @@ internal class MemberTypebuilderuration : IEntityTypeConfiguration<Member>
 
         // Password
         builder.Property(builder => builder.Password)
-            .HasMaxLength(MemberRestriction.PASSWORD_MAX_LENGTH);
+            .HasMaxLength(MemberRestriction.PASSWORD_HASHED_MAX_LENGTH);
     }
 }

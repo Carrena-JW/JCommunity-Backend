@@ -11,4 +11,9 @@
     <ProjectReference Include="..\JComunity.Infrastructure\JComunity.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="MemberService\QueryRequest\" />
+    <Folder Include="MemberService\QueryHandler\" />
+  </ItemGroup>
+
 </Project>

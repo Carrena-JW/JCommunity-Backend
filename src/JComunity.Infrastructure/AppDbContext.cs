@@ -1,16 +1,29 @@
-﻿namespace JComunity.Infrastructure;
+﻿using Microsoft.Extensions.Configuration;
 
-public class AppDbContext : DbContext
+namespace JComunity.Infrastructure;
+
+public class AppDbContext : DbContext, IUnitOfWork
 {
 
     public DbSet<Member> Members { get; set; }
+    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+    {
+    }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseNpgsql("User ID=postgres;Password=password1;Server=localhost;Port=5432;database=postgres; Integrated Security=true;Pooling=true");
+        optionsBuilder.UseNpgsql();
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
+    }
+
+    public async Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default)
+    {
+        _ = await base.SaveChangesAsync(cancellationToken);
+
+        return true;
     }
 }

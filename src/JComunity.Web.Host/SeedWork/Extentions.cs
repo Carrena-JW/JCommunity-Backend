@@ -1,17 +1,14 @@
-﻿using JComunity.Web.Host.Utils;
-using Microsoft.Extensions.Configuration;
-using Serilog;
-using Serilog.Exceptions;
-using Serilog.Sinks.Elasticsearch;
+﻿using JComunity.Web.Host.ApiEndpoints.Member;
 
 namespace JComunity.Web.Host.SeedWork;
 
 public static class Extentions
 {
+  
     public static IServiceCollection AddWebHostServices(
-        this IServiceCollection services,
-        IConfiguration config,
-        IWebHostEnvironment env)
+    this IServiceCollection services,
+    IConfiguration config,
+    IWebHostEnvironment env)
     {
         var configuration = new ConfigurationBuilder()
                    .AddJsonFile("appsettings.json")
@@ -34,14 +31,17 @@ public static class Extentions
         });
 
 
+        services.AddDbContext<AppDbContext>(options =>
+        options.UseNpgsql(config.GetConnectionString("PostgresConnection")));
+        
 
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
 
-     
+
 
         //Validator DI
-        services.AddValidatorsFromAssembly(typeof(Web.Contract.AssemblyReference).Assembly);
+        services.AddValidatorsFromAssembly(typeof(Contract.AssemblyReference).Assembly);
 
 
         // server health check
@@ -50,7 +50,7 @@ public static class Extentions
             .AddCheck("database", () => DatabaseHealth.Checker())
             .AddCheck("message_queue", () => MessageQueueHealth.Checker());
 
-        
+
 
         return services;
     }
@@ -87,11 +87,11 @@ public static class Extentions
         #region [Health check]
         app.MapHealthChecks("/health");
 
-        app.MapGet("/health/report",async () =>
+        app.MapGet("/health/report", async () =>
         {
             var healthCheckService = app.Services.GetRequiredService<HealthCheckService>();
             var result = await healthCheckService.CheckHealthAsync();
-            return Results.Ok(new { Environment.MachineName, result});
+            return Results.Ok(new { Environment.MachineName, result });
         });
         #endregion
 

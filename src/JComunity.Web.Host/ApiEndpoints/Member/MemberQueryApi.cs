@@ -1,11 +1,8 @@
-﻿using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Mvc;
-
-namespace JComunity.Host.Web.ApiEndpoints;
+﻿namespace JComunity.Web.Host.ApiEndpoints.Member;
 
 public static class MemberQueryApi
 {
-  
+
     public static IEndpointRouteBuilder MapMemberQueryApi(this IEndpointRouteBuilder app)
     {
         app.MapGet("/", () => Results.Ok("data"));
@@ -19,6 +16,7 @@ public static class MemberQueryApi
         [AsParameters] MemberApiService services
         )
     {
+        var result = await services.Mediator.Send(req);
         return Results.Ok(req);
     }
 }

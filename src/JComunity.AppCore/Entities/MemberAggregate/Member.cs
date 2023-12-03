@@ -38,14 +38,12 @@ public class Member : IAuditEntity, IAggregateRoot
         MemberStatus = MemberStatus.Active;
 
         //Audit
-        CreatedMemberId = this.Id.ToString(); 
-        LastUpdatedMemberId = this.Id.ToString();
-
-
+        CreatedMemberId = this.Id.id.ToString(); 
+        LastUpdatedMemberId = this.Id.id.ToString();
         
     }
 
-    internal static Member Create(
+    public static Member Create(
         string name,
         string nickName,
         string password,

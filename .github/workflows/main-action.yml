@@ -28,7 +28,7 @@ jobs:
         run: dotnet restore ./JComunity.sln
         
       - name: Build
-        run: dotnet build ./JComunity.sln --configuration Release --no-restore --runtime ubuntu.22.04.3-x64
+        run: dotnet build ./JComunity.sln --configuration Release --no-restore --runtime ubuntu.xx.xx-x64
         
       - name: Test
         run: dotnet test ./JComunity.sln

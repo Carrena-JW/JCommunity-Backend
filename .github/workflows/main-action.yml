@@ -36,7 +36,7 @@ jobs:
         run: dotnet restore ./JComunity.sln
         
       - name: Build
-        run: dotnet build ./JComunity.sln --configuration Release --no-restore --utf8output
+        run: dotnet build ./JComunity.sln --configuration Release --no-restore 
         
       - name: Test
         run: dotnet test ./JComunity.sln

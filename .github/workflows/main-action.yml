@@ -19,11 +19,11 @@ jobs:
       
       - name: Set Local
         run: 
-          sudo LANG=ko_KR.utf8
+          LANG=ko_KR.utf8
           
       - name: Export Lang
         run:
-          sudo export LANG
+          export LANG
         
       - name: Setup .NET
         uses: actions/setup-dotnet@v3

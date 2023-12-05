@@ -1,6 +1,4 @@
-﻿using JCommunity.AppCore.Entities.MemberAggregate;
-
-namespace JCommunity.Web.Contract.MemberApi.Validators;
+﻿namespace JCommunity.Web.Contract.MemberApi.Validators;
 
 public sealed class CreateMemberRequestValidator : AbstractValidator<CreateMemberRequest>
 {
@@ -47,19 +45,8 @@ public sealed class CreateMemberRequestValidator : AbstractValidator<CreateMembe
             .MinimumLength(MemberRestriction.PASSWORD_MIN_LENGTH)
             .MaximumLength(MemberRestriction.PASSWORD_MAX_LENGTH)
             .WithMessage($"Check the length in the [Password] string. (Min:{MemberRestriction.PASSWORD_MIN_LENGTH} , Max:{MemberRestriction.PASSWORD_MAX_LENGTH})");
-
-        //RuleFor(r => r.memberStatus)
-        //    .Must(status =>
-        //    {
-        //        if (status > -1 && status < 4) return true;
-
-        //        return false;
-        //    })
-        //    .WithMessage("Member status values must be between 1 and 4");
-
-
+               
     }
 }
 
 
-//CreateMemberRequest(string name, string nickName, string email, string password, int memberStatus)

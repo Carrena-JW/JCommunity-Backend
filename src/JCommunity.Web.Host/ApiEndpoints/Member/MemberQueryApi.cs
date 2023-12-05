@@ -1,16 +1,33 @@
-﻿namespace JCommunity.Web.Host.ApiEndpoints.Member;
+﻿
+
+namespace JCommunity.Web.Host.ApiEndpoints.Member;
 
 public static class MemberQueryApi
 {
 
-    public static IEndpointRouteBuilder MapMemberQueryApi(this IEndpointRouteBuilder app)
+    internal static IEndpointRouteBuilder MapMemberQueryApi(this IEndpointRouteBuilder app)
     {
-        app.MapGet("/", () => Results.Ok("data"));
+        app.MapGet("/", GetMembersAsync);
+        app.MapGet("/{id}", GetMemberByIdAsync);
         app.MapGet("/someGetAction", SomeGetAction);
         return app;
     }
+    private static async Task<IResult> GetMembersAsync([AsParameters] MemberApiService services)
+    {
+        return Results.Ok();
+    }
 
-    public static async Task<IResult> SomeGetAction(
+    private static async Task<IResult> GetMemberByIdAsync(
+        [AsParameters] GetMemberByIdRequest req,
+        [AsParameters] MemberApiService services)
+    {
+        var queryCommand = new GetMemberByIdQueryCommand(req.id);
+        var result = await services.Mediator.Send(queryCommand);
+
+        return Results.Ok(result);
+    }
+
+    private static async Task<IResult> SomeGetAction(
         [AsParameters] SomeRequest req,
         IValidator<SomeRequest> validator,
         [AsParameters] MemberApiService services

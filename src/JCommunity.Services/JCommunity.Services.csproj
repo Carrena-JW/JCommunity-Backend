@@ -12,8 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="MemberService\QueryRequest\" />
-    <Folder Include="MemberService\QueryHandler\" />
+    <Folder Include="MemberService\QueryCommandHandler\" />
   </ItemGroup>
 
 </Project>

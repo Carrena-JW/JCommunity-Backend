@@ -16,7 +16,7 @@ public class MemberApiValidatorTest
     }
 
    
-
+    //test flag
 
     [Fact]
     async void CreateMemberRequestTest_CASE_01()

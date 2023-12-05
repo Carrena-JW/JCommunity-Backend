@@ -7,6 +7,7 @@
 
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
+	<Utf8Output>true</Utf8Output>
   </PropertyGroup>
 
   <ItemGroup>

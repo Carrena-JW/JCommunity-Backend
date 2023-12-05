@@ -16,15 +16,7 @@ jobs:
     steps:
      
       - uses: actions/checkout@v3
-      
-      - name: Set Local
-        run: 
-          LANG=ko_KR.utf8
-          
-      - name: Export Lang
-        run:
-          export LANG
-        
+               
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
@@ -36,7 +28,7 @@ jobs:
         run: dotnet restore ./JComunity.sln
         
       - name: Build
-        run: dotnet build ./JComunity.sln --configuration Release --no-restore 
+        run: dotnet build ./JComunity.sln --configuration Release --no-restore --runtime ubuntu.22.04.3-x64
         
       - name: Test
         run: dotnet test ./JComunity.sln

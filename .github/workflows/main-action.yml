@@ -15,7 +15,7 @@ jobs:
     if: ${{ contains(github.event.head_commit.message, '#action') }}
     steps:
      
-      - uses: actions/checkout@
+      - uses: actions/checkout@v3
                
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
@@ -25,11 +25,11 @@ jobs:
         #   DOTNET_INSTALL_DIR: "./.dotnet"
           
       - name: Restore
-        run: dotnet restore ./JComunity.sln
+        run: dotnet restore ./JCommunity.sln
         
       - name: Build
-        run: dotnet build ./JComunity.sln --configuration Release --no-restore
+        run: dotnet build ./JCommunity.sln --configuration Release --no-restore
         
       - name: Test
-        run: dotnet test ./JComunity.sln
+        run: dotnet test ./JCommunity.sln
         

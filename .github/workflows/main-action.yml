@@ -1,0 +1,37 @@
+name: Main_Action 🚀
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+    - main
+
+env:
+  AZURE_WEBAPP_NAME: time-service
+  AZURE_WEBAPP_PACKAGE_PATH: "./publish"
+
+jobs:
+  publish:
+    # if using self-hosted
+    #runs-on: self-hosted
+    runs-on: ubuntu-latest
+    if: ${{ contains(github.event.head_commit.message, '#action') }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
+        env:
+          DOTNET_INSTALL_DIR: "./.dotnet"
+          
+      - name: Restore
+        run: dotnet restore ./JComunity.sln
+        
+      - name: Build
+        run: dotnet build ./JComunity.sln --configuration Release --no-restore
+        
+      - name: Test
+        run: dotnet test ./JComunity.sln
+        

@@ -1,12 +1,18 @@
-﻿namespace JComunity.Test.Service.EndpointTest;
+﻿using JComunity.AppCore.Entities.MemberAggregate;
+using JComunity.Web.Contract.MemberApi.Validators;
+using Moq;
+
+namespace JComunity.Test.Service.EndpointTest;
 
 public class MemberApiValidatorTest
 {
     IValidator<CreateMemberRequest> _createMemberValidator;
+    Mock<IMemberRepository> _memberRepository;
 
-    public MemberApiValidatorTest(IValidator<CreateMemberRequest> createMemberValidator)
+    public MemberApiValidatorTest()
     {
-        _createMemberValidator = createMemberValidator;
+        _memberRepository = new Mock<IMemberRepository>();
+        _createMemberValidator = new CreateMemberRequestValidator(_memberRepository.Object);
     }
 
    
@@ -15,6 +21,15 @@ public class MemberApiValidatorTest
     [Fact]
     async void CreateMemberRequestTest_CASE_01()
     {
+        // Setup
+        _memberRepository.Setup(x =>
+            x.IsUniqueEmail(It.IsAny<string>(), It.IsAny<CancellationToken>())
+        ).ReturnsAsync(true);
+
+        _memberRepository.Setup(x =>
+            x.IsUniqueNickName(It.IsAny<string>(), It.IsAny<CancellationToken>())
+        ).ReturnsAsync(true);
+
         // Arrange
         var request = new CreateMemberRequest(
             "Michael Jordan",

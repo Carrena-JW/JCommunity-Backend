@@ -15,7 +15,7 @@ public class MemberRepository : IMemberRepository
         return _appDbContext.Members.Add(member).Entity;
     }
 
-    public async Task<Member?> GetByIdAsync(MemberId memberId)
+    public async Task<Member?> GetByIdAsync(MemberId memberId, CancellationToken token)
     {
         return await _appDbContext.Members.FindAsync(memberId);
     }
@@ -25,12 +25,12 @@ public class MemberRepository : IMemberRepository
         _appDbContext.Entry(member).State = EntityState.Modified;
     }
 
-    public async Task<bool> IsUniqueEmail(string email)
+    public async Task<bool> IsUniqueEmail(string email, CancellationToken token)
     {
         return !await _appDbContext.Members.AnyAsync(c => c.Email == email);
     }
 
-    public async Task<bool> IsUniqueNickName(string nickName)
+    public async Task<bool> IsUniqueNickName(string nickName, CancellationToken token)
     {
         return !await _appDbContext.Members.AnyAsync(c => c.NickName == nickName);
     }

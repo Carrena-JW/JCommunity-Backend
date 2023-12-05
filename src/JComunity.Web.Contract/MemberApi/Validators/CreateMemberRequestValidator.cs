@@ -22,7 +22,7 @@ public sealed class CreateMemberRequestValidator : AbstractValidator<CreateMembe
         RuleFor(r => r.nickName)
             .MustAsync(async (nickName, _) =>
             {
-                return await _memberRepository.IsUniqueNickName(nickName);
+                return await _memberRepository.IsUniqueNickName(nickName, _);
             })
             .WithMessage("NickName must be unique.");
             
@@ -38,7 +38,7 @@ public sealed class CreateMemberRequestValidator : AbstractValidator<CreateMembe
         RuleFor(r => r.email)
           .MustAsync(async (email, _) =>
           {
-              return await _memberRepository.IsUniqueEmail(email);
+              return await _memberRepository.IsUniqueEmail(email, _);
           })
           .WithMessage("NickName must be unique.");
 

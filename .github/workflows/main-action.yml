@@ -11,7 +11,7 @@ env:
   AZURE_WEBAPP_PACKAGE_PATH: "./publish"
 
 jobs:
-  publish:
+  Build-Test:
     # if using self-hosted
     #runs-on: self-hosted
     runs-on: ubuntu-latest

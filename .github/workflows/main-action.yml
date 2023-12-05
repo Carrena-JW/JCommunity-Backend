@@ -17,8 +17,13 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ contains(github.event.head_commit.message, '#action') }}
     steps:
+     
       - uses: actions/checkout@v3
-
+      
+      - name: Set font
+        run: 
+          sudo apt-get install fonts-nanum*
+        
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:

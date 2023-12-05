@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\JCommunity.AppCore\JCommunity.AppCore.csproj" />
+    <ProjectReference Include="..\JCommunity.Infrastructure\JCommunity.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="MemberService\QueryRequest\" />
+    <Folder Include="MemberService\QueryHandler\" />
+  </ItemGroup>
+
+</Project>

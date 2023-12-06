@@ -1,4 +1,4 @@
-﻿namespace JCommunity.AppCore.Entities.MemberAggregate;
+﻿namespace JCommunity.AppCore.Entities.Member;
 
 public enum MemberStatus
 {

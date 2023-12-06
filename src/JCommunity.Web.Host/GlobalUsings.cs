@@ -1,11 +1,9 @@
-﻿global using FluentValidation;
+﻿global using JCommunity.AppCore.Core.Abstractions;
 global using JCommunity.Infrastructure;
 global using JCommunity.Services.Extentions;
+global using JCommunity.Services.MemberService.Command;
 global using JCommunity.Services.MemberService.QueryCommand;
-global using JCommunity.Web.Contract.MemberApi.Requests;
-global using JCommunity.Web.Host.Filters;
 global using JCommunity.Web.Host.SeedWork;
-global using JCommunity.Web.Host.Utils;
 global using MediatR;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.EntityFrameworkCore;
@@ -14,3 +12,4 @@ global using Serilog;
 global using Serilog.Exceptions;
 global using Serilog.Sinks.Elasticsearch;
 global using System.Text;
+

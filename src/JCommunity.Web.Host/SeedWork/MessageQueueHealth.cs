@@ -1,4 +1,4 @@
-﻿namespace JCommunity.Web.Host.Utils;
+﻿namespace JCommunity.Web.Host.SeedWork;
 
 public class MessageQueueHealth
 {

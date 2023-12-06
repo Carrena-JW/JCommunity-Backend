@@ -1,6 +1,4 @@
-﻿using System.Reflection;
-
-namespace JCommunity.Infrastructure;
+﻿namespace JCommunity.Infrastructure;
 
 public static class AssemblyReference
 {

@@ -1,4 +1,4 @@
-﻿namespace JCommunity.AppCore.Utils;
+﻿namespace JCommunity.AppCore.Core.Utils;
 
 public static class SystemTime
 {

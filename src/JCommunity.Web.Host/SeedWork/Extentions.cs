@@ -1,4 +1,6 @@
 ﻿using JCommunity.Web.Host.ApiEndpoints.Member;
+using JCommunity.Web.Host.SeedWork.Filters;
+using Microsoft.Extensions.Configuration;
 
 namespace JCommunity.Web.Host.SeedWork;
 
@@ -6,13 +8,14 @@ public static class Extentions
 {
   
     public static IServiceCollection AddWebHostServices(
-    this IServiceCollection services,
-    IConfiguration config,
-    IWebHostEnvironment env)
+        this IServiceCollection services,
+        IConfiguration config,
+        IWebHostEnvironment env)
     {
         var configuration = new ConfigurationBuilder()
-                   .AddJsonFile("appsettings.json")
-                   .Build();
+            .AddJsonFile(env.IsDevelopment() ? "appsettings.Development.json" : "appsettings.json")
+            .Build();
+        
 
         services.AddSerilog(conf =>
         {
@@ -37,11 +40,6 @@ public static class Extentions
 
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
-
-
-
-        //Validator DI
-        services.AddValidatorsFromAssembly(typeof(Contract.AssemblyReference).Assembly);
 
 
         // server health check

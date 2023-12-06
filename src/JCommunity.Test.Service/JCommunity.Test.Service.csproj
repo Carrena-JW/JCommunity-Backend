@@ -30,7 +30,6 @@
     <ProjectReference Include="..\JCommunity.AppCore\JCommunity.AppCore.csproj" />
     <ProjectReference Include="..\JCommunity.Infrastructure\JCommunity.Infrastructure.csproj" />
     <ProjectReference Include="..\JCommunity.Services\JCommunity.Services.csproj" />
-    <ProjectReference Include="..\JCommunity.Web.Contract\JCommunity.Web.Contract.csproj" />
     <ProjectReference Include="..\JCommunity.Web.Host\JCommunity.Web.Host.csproj" />
   </ItemGroup>
 

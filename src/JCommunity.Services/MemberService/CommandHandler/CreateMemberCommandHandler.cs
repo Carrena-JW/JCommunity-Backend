@@ -1,24 +1,31 @@
-﻿using JCommunity.Domain.Entities.Users;
-using JCommunity.Services.MemberService.Command;
-using Microsoft.Extensions.Logging;
+﻿using JCommunity.AppCore.Core.Models;
 
 namespace JCommunity.Services.MemberService.CommandHandler;
 
-public class CreateMemberCommandHandler : IRequestHandler<CreateMemberCommand, string>
+public class CreateMemberCommandHandler : IRequestHandler<CreateMemberCommand, Result<string>>
 {
-    private ILogger<CreateMemberCommandHandler> _logger;
+    private readonly ILogger<CreateMemberCommandHandler> _logger;
     private readonly IMemberRepository _memberRepository;
+    private readonly IValidator<CreateMemberCommand> _validator;
 
     public CreateMemberCommandHandler(
         ILogger<CreateMemberCommandHandler> logger, 
-        IMemberRepository memberRepository)
+        IMemberRepository memberRepository,
+        IValidator<CreateMemberCommand> validator)
     {
-        _logger = logger;
-        _memberRepository = memberRepository;
+        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        _memberRepository = memberRepository ?? throw new ArgumentNullException(nameof(memberRepository));
+        _validator = validator ?? throw new ArgumentNullException(nameof(validator));
+
     }
 
-    public async Task<string> Handle(CreateMemberCommand command, CancellationToken cancellationToken)
+    public async Task<Result<string>> Handle(CreateMemberCommand command, CancellationToken cancellationToken)
     {
+        //validate command
+        var validate =  await _validator.ValidateAsync(command);
+         
+        
+
         var member = Member.Create(command.name, command.nickName, command.password, command.email);
 
         _logger.LogInformation("Creating Member - member: {@member}", member);
@@ -26,7 +33,7 @@ public class CreateMemberCommandHandler : IRequestHandler<CreateMemberCommand, s
         var result = _memberRepository.Add(member);
         await _memberRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
-        return result.Id.id.ToString();
+        return Result<string>.Create(result.getMemberId());
 
     }
 }

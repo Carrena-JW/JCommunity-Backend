@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-
-namespace JCommunity.Infrastructure;
+﻿namespace JCommunity.Infrastructure;
 
 public class AppDbContext : DbContext, IUnitOfWork
 {

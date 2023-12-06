@@ -1,4 +1,6 @@
-﻿namespace JCommunity.AppCore.Entities.MemberAggregate;
+﻿using JCommunity.AppCore.Core.Abstractions;
+
+namespace JCommunity.AppCore.Entities.Member;
 
 public interface IMemberRepository : IRepository<Member>
 {

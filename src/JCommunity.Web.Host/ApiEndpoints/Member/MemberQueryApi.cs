@@ -9,31 +9,22 @@ public static class MemberQueryApi
     {
         app.MapGet("/", GetMembersAsync);
         app.MapGet("/{id}", GetMemberByIdAsync);
-        app.MapGet("/someGetAction", SomeGetAction);
         return app;
     }
-    private static async Task<IResult> GetMembersAsync([AsParameters] MemberApiService services)
+
+    private static async Task<IResult> GetMembersAsync(
+        [AsParameters] MemberApiService services,
+        CancellationToken token = new())
     {
         return Results.Ok();
     }
 
     private static async Task<IResult> GetMemberByIdAsync(
-        [AsParameters] GetMemberByIdRequest req,
-        [AsParameters] MemberApiService services)
+        [AsParameters] GetMemberByIdQueryCommand req,
+        [AsParameters] MemberApiService services,
+        CancellationToken token = new())
     {
-        var queryCommand = new GetMemberByIdQueryCommand(req.id);
-        var result = await services.Mediator.Send(queryCommand);
-
-        return Results.Ok(result);
+        return Results.Ok(await services.Mediator.Send(req, token));
     }
 
-    private static async Task<IResult> SomeGetAction(
-        [AsParameters] SomeRequest req,
-        IValidator<SomeRequest> validator,
-        [AsParameters] MemberApiService services
-        )
-    {
-        var result = await services.Mediator.Send(req);
-        return Results.Ok(req);
-    }
 }

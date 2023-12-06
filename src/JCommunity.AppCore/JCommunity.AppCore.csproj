@@ -9,13 +9,11 @@
   <ItemGroup>
     <Folder Include="Entities\Articles\" />
     <Folder Include="Entities\Topics\" />
-    <Folder Include="BaseClasses\" />
-    <Folder Include="Common\" />
-    <Folder Include="SeedWork\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="FluentValidation" Version="11.8.1" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.8.1" />
     <PackageReference Include="MediatR" Version="12.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.0" />

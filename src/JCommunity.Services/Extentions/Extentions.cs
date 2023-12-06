@@ -1,5 +1,4 @@
-﻿using JCommunity.Infrastructure.Repository;
-using Microsoft.Extensions.DependencyInjection;
+﻿
 
 namespace JCommunity.Services.Extentions;
 
@@ -7,6 +6,7 @@ public static class Extentions
 {
     public static void AddApplicationServices(this IHostApplicationBuilder builder)
     {
+        builder.Services.AddValidatorsFromAssembly(typeof(AssemblyReference).Assembly);
 
         builder.Services.AddScoped<IMemberRepository, MemberRepository>();
 

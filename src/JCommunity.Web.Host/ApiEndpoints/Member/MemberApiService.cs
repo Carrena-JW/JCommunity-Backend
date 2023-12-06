@@ -2,8 +2,8 @@
 
 public class MemberApiService(
     ILogger<MemberApiService> logger,
-    IMediator mediator)
+    ISender mediator)
 {
     public ILogger<MemberApiService> logger { get; } = logger;
-    public IMediator Mediator { get; set; } = mediator;
+    public ISender Mediator { get; } = mediator;
 }

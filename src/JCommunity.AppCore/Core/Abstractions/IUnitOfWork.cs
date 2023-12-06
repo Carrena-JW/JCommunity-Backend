@@ -1,4 +1,4 @@
-﻿namespace JCommunity.AppCore.Abstractions;
+﻿namespace JCommunity.AppCore.Core.Abstractions;
 
 public interface IUnitOfWork : IDisposable
 {

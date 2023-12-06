@@ -1,10 +1,10 @@
-﻿namespace JCommunity.AppCore.Restrictions;
+﻿namespace JCommunity.AppCore.Entities.Member;
 
 public static class MemberRestriction
 {
     public const int NAME_MIN_LENGTH = 2;
     public const int NAME_MAX_LENGTH = 20;
-    
+
     public const int NICKNAME_MIN_LENGTH = 2;
     public const int NICKNAME_MAX_LENGTH = 20;
 

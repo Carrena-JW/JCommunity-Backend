@@ -1,7 +1,9 @@
-﻿namespace JCommunity.Services.MemberService.Command;
+﻿using JCommunity.AppCore.Core.Models;
+
+namespace JCommunity.Services.MemberService.Command;
 
 public sealed record CreateMemberCommand(
     string name, 
     string nickName, 
     string email, 
-    string password) : IRequest<string>;
+    string password) : ICommand<Result<string>>;

@@ -1,4 +1,4 @@
-﻿using JCommunity.AppCore.Restrictions;
+﻿using JCommunity.AppCore.Entities.Member;
 
 namespace JCommunity.Infrastructure.Entitybuilderurations;
 

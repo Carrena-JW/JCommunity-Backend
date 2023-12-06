@@ -1,12 +1,13 @@
-﻿using JCommunity.AppCore.Entities.MemberAggregate;
-using JCommunity.Web.Contract.MemberApi.Validators;
+﻿using JCommunity.AppCore.Entities.Member;
+using JCommunity.Services.MemberService.Command;
+using JCommunity.Services.MemberService.Validators;
 using Moq;
 
 namespace JCommunity.Test.Service.EndpointTest;
 
 public class MemberApiValidatorTest
 {
-    IValidator<CreateMemberRequest> _createMemberValidator;
+    IValidator<CreateMemberCommand> _createMemberValidator;
     Mock<IMemberRepository> _memberRepository;
 
     public MemberApiValidatorTest()
@@ -31,7 +32,7 @@ public class MemberApiValidatorTest
         ).ReturnsAsync(true);
 
         // Arrange
-        var request = new CreateMemberRequest(
+        var request = new CreateMemberCommand(
             "Michael Jordan",
             "MJ",
             "MJ@Test.com",

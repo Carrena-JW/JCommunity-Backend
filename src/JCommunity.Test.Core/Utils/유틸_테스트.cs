@@ -1,5 +1,4 @@
-﻿using JCommunity.AppCore.Utils;
-using Microsoft.VisualStudio.TestPlatform.ObjectModel;
+﻿using JCommunity.AppCore.Core.Utils;
 
 namespace JCommunity.Test.Core.Utils
 {

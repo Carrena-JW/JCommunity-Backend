@@ -1,4 +1,4 @@
-﻿using JCommunity.AppCore.Core.Models;
+﻿
 
 namespace JCommunity.Services.MemberService.Command;
 

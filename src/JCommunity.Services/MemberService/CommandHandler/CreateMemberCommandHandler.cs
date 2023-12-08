@@ -1,4 +1,4 @@
-﻿using JCommunity.AppCore.Core.Models;
+﻿using FluentValidation.Results;
 
 namespace JCommunity.Services.MemberService.CommandHandler;
 
@@ -22,7 +22,12 @@ public class CreateMemberCommandHandler : IRequestHandler<CreateMemberCommand, R
     public async Task<Result<string>> Handle(CreateMemberCommand command, CancellationToken cancellationToken)
     {
         //validate command
-        var validate =  await _validator.ValidateAsync(command);
+        var validation =  await _validator.ValidateAsync(command);
+        if (!validation.IsValid)
+        {
+            return Result.Fail(validation.ToString(";"));
+            
+        }
          
         
 
@@ -33,7 +38,7 @@ public class CreateMemberCommandHandler : IRequestHandler<CreateMemberCommand, R
         var result = _memberRepository.Add(member);
         await _memberRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
-        return Result<string>.Create(result.getMemberId());
+        return Result.Ok(result.getMemberId());
 
     }
 }

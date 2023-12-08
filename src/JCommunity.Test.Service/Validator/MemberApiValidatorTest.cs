@@ -1,9 +1,4 @@
-﻿using JCommunity.AppCore.Entities.Member;
-using JCommunity.Services.MemberService.Command;
-using JCommunity.Services.MemberService.Validators;
-using Moq;
-
-namespace JCommunity.Test.Service.EndpointTest;
+﻿namespace JCommunity.Test.Service.EndpointTest;
 
 public class MemberApiValidatorTest
 {

@@ -23,7 +23,7 @@ public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TReques
         if (!(responseType == typeof(Result<>) || responseType == typeof(Result))) return await next();
         if (_validator == null) return await next();
 
-
+        //ss
         var validation = await _validator.ValidateAsync(request, cancellationToken);
         if (!validation.IsValid)
         {

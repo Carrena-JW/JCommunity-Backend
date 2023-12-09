@@ -1,4 +1,5 @@
 ﻿using JCommunity.Web.Host.ApiEndpoints.Member;
+using JCommunity.Web.Host.SeedWork.ExceptionHandlers;
 using JCommunity.Web.Host.SeedWork.Filters;
 using Microsoft.Extensions.Configuration;
 
@@ -48,7 +49,9 @@ public static class Extentions
             .AddCheck("database", () => DatabaseHealth.Checker())
             .AddCheck("message_queue", () => MessageQueueHealth.Checker());
 
-
+        //global exception handler
+        services.AddExceptionHandler<GlobalUnhandleExceptionHandler>();
+        services.AddProblemDetails();
 
         return services;
     }
@@ -63,6 +66,10 @@ public static class Extentions
             app.UseSwagger();
             app.UseSwaggerUI();
         }
+        #endregion
+
+        #region [Global Exception Handler]
+        app.UseExceptionHandler();
         #endregion
 
         #region [Global Filters]

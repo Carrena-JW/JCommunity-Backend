@@ -1,6 +1,4 @@
-﻿
-
-namespace JCommunity.Services.MemberService.Command;
+﻿namespace JCommunity.Services.MemberService.Command;
 
 public sealed record CreateMemberCommand(
     string name, 

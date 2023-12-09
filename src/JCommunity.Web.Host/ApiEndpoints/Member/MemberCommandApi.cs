@@ -14,8 +14,10 @@ public static class MemberCommandApi
         [AsParameters] MemberApiService services,
         CancellationToken token = new())
     {
-        var result = await services.Mediator.Send(command);
-        return result.isError == false ? Results.Ok() : Results.BadRequest(result.data);
+        var result = await services.Mediator.Send(command, token);
+
+        return result.IsSuccess ? Results.Ok(result.Value) :
+                                  Results.BadRequest(result.Errors);
     }
 
 }

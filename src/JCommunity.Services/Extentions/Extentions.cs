@@ -1,5 +1,7 @@
 ﻿
 
+using JCommunity.Services.ServiceBehaviors;
+
 namespace JCommunity.Services.Extentions;
 
 public static class Extentions
@@ -14,6 +16,6 @@ public static class Extentions
         {
             cfg.RegisterServicesFromAssemblyContaining(typeof(AssemblyReference));
 
-        });
+        }).AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
     }
 }

@@ -1,5 +1,7 @@
 ﻿
 
+using System.Runtime.CompilerServices;
+
 namespace JCommunity.AppCore.Entities.Member;
 
 public class Member : IAuditEntity, IAggregateRoot
@@ -27,14 +29,19 @@ public class Member : IAuditEntity, IAggregateRoot
         string email
         )
     {
-
+        var memberId = new MemberId(Guid.NewGuid());
         Member member = new() 
         { 
+            Id= memberId,
             Name = name, 
             NickName = nickName,
             Password = password, 
-            Email = email 
+            Email = email,
+            CreatedMemberId = memberId.id.ToString(),
+            LastUpdatedMemberId = memberId.id.ToString()
+
         };
+        
 
         return member;
     }

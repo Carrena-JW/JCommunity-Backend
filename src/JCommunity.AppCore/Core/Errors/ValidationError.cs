@@ -2,10 +2,9 @@
 
 public class ValidationError : Error, IError
 {
-    private const string INVALID_MESSAGE = "Invalid parameter error";
     public ValidationError(List<ValidationFailure> errors) : base()
     {
-        this.Message = INVALID_MESSAGE;
+        this.Message = "Invalid parameter error";
 
         this.Reasons.AddRange(errors.Select(error =>
             new Error(error.ErrorMessage)

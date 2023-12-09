@@ -1,4 +1,5 @@
-﻿namespace JCommunity.Infrastructure.Repository;
+﻿
+namespace JCommunity.Infrastructure.Repository;
 
 public class MemberRepository : IMemberRepository
 {
@@ -18,6 +19,7 @@ public class MemberRepository : IMemberRepository
     public async Task<Member?> GetByIdAsync(MemberId memberId, CancellationToken token)
     {
         return await _appDbContext.Members.FindAsync(memberId);
+
     }
 
     public void Update(Member member)
@@ -33,5 +35,10 @@ public class MemberRepository : IMemberRepository
     public async Task<bool> IsUniqueNickName(string nickName, CancellationToken token)
     {
         return !await _appDbContext.Members.AnyAsync(c => c.NickName == nickName);
+    }
+
+    public async Task<IEnumerable<Member>> GetAllMembersAsync(CancellationToken token)
+    {
+        return await _appDbContext.Members.ToListAsync();
     }
 }

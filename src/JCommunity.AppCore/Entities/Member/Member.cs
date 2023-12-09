@@ -1,8 +1,4 @@
-﻿
-
-using System.Runtime.CompilerServices;
-
-namespace JCommunity.AppCore.Entities.Member;
+﻿namespace JCommunity.AppCore.Entities.Member;
 
 public class Member : IAuditEntity, IAggregateRoot
 {

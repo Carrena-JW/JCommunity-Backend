@@ -1,6 +1,4 @@
-﻿
-
-namespace JCommunity.Web.Host.ApiEndpoints.Member;
+﻿namespace JCommunity.Web.Host.ApiEndpoints.Member;
 
 public static class MemberQueryApi
 {
@@ -13,10 +11,12 @@ public static class MemberQueryApi
     }
 
     private static async Task<IResult> GetMembersAsync(
+        [AsParameters] GetMembersQueryCommand req,
         [AsParameters] MemberApiService services,
         CancellationToken token = new())
     {
-        return Results.Ok();
+        var result = await services.Mediator.Send(req, token);
+        return Results.Ok(result.Value);
     }
 
     private static async Task<IResult> GetMemberByIdAsync(
@@ -24,7 +24,8 @@ public static class MemberQueryApi
         [AsParameters] MemberApiService services,
         CancellationToken token = new())
     {
-        return Results.Ok(await services.Mediator.Send(req, token));
+        var result = await services.Mediator.Send(req, token);
+        return Results.Ok(result.Value);
     }
 
 }

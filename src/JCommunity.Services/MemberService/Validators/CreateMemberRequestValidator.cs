@@ -1,7 +1,4 @@
-﻿using FluentValidation;
-using JCommunity.AppCore.Entities.Member;
-
-namespace JCommunity.Services.MemberService.Validators;
+﻿namespace JCommunity.Services.MemberService.Validators;
 
 public sealed class CreateMemberRequestValidator : AbstractValidator<CreateMemberCommand>
 {

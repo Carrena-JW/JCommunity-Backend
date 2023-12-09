@@ -11,9 +11,4 @@
     <ProjectReference Include="..\JCommunity.Infrastructure\JCommunity.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="MemberService\Dtos\" />
-    <Folder Include="MemberService\QueryCommandHandler\" />
-  </ItemGroup>
-
 </Project>

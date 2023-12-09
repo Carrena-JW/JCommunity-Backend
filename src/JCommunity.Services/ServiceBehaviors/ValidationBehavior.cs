@@ -1,15 +1,16 @@
 ﻿using JCommunity.AppCore.Core.Errors;
+using System.Collections.Generic;
 
 namespace JCommunity.Services.ServiceBehaviors;
 
 public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     where TRequest : notnull
 {
-    private readonly IValidator<TRequest> _validator;
+    private readonly IEnumerable<IValidator<TRequest>> _validators;
 
-    public ValidationBehavior(IValidator<TRequest> validator)
+    public ValidationBehavior(IEnumerable<IValidator<TRequest>> validators)
     {
-        _validator = validator;  
+        _validators = validators;
     }
 
     public async Task<TResponse> Handle(
@@ -21,11 +22,12 @@ public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TReques
 
         //If you do not have validator, early return
         if (!(responseType == typeof(Result<>) || responseType == typeof(Result))) return await next();
-        if (_validator == null) return await next();
+        if (!_validators.Any()) return await next();
 
-        //ss
-        var validation = await _validator.ValidateAsync(request, cancellationToken);
-        if (!validation.IsValid)
+        var validationResults = await Task.WhenAll(_validators.Select(v => v.ValidateAsync(request)));
+        var failures = validationResults.SelectMany(r => r.Errors).Where(f => f != null).ToList();
+
+        if (failures.Count != 0) 
         {
             var genericType = typeof(TResponse).GetGenericArguments().FirstOrDefault();
             if(genericType != null)
@@ -33,7 +35,7 @@ public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TReques
                 var instanceType = typeof(Result<>).MakeGenericType(genericType);
                 var errorInstance = Activator.CreateInstance(instanceType);
                 var withErrorMethod = instanceType.GetMethod("WithError", new[] { typeof(Error) });
-                withErrorMethod!.Invoke(errorInstance, new object[] { new ValidationError(validation.Errors) });
+                withErrorMethod!.Invoke(errorInstance, new object[] { new ValidationError(failures) });
                 return (TResponse)errorInstance!;
             }
             else

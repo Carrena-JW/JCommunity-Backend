@@ -8,6 +8,8 @@ public interface IMemberRepository : IRepository<Member>
     void Update(Member member);
     Task<Member?> GetByIdAsync(MemberId memberId, CancellationToken token);
 
+    Task<IEnumerable<Member>> GetAllMembersAsync(CancellationToken token);
+
     Task<bool> IsUniqueEmail(string email, CancellationToken token);
 
     Task<bool> IsUniqueNickName(string nickName, CancellationToken token);

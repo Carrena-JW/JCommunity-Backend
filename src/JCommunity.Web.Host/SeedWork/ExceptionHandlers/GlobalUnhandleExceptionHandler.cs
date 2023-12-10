@@ -31,7 +31,5 @@ public class GlobalUnhandleExceptionHandler : IExceptionHandler
             .WriteAsJsonAsync(details, ct);
 
         return true;
-
-        
     }
 }

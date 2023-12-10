@@ -29,9 +29,10 @@ public static class Extentions
             .ReadFrom.Configuration(configuration);
         });
 
+        var connectionStrings = config.GetConnectionString("PostgresConnection") ?? "http://localhost:5432";
 
-        services.AddDbContext<AppDbContext>(options =>
-        options.UseNpgsql(config.GetConnectionString("PostgresConnection")));
+        services.AddDbContext<AppDbContext>(
+            options =>options.UseNpgsql(connectionStrings));
 
 
         services.AddEndpointsApiExplorer();
@@ -45,7 +46,7 @@ public static class Extentions
         // server health check
         services.AddHealthChecks()
             .AddCheck("self", () => HealthCheckResult.Healthy())
-            .AddNpgSql(connectionString: config.GetConnectionString("PostgresConnection")!,
+            .AddNpgSql(connectionString: connectionStrings,
                        name: "PostgreSQL",
                        failureStatus: HealthStatus.Degraded,
                        tags: new string[] { "db", "postgresql" }

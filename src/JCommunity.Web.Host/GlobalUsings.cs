@@ -1,3 +1,4 @@
+global using JCommunity.AppCore.Core.Abstractions;
 global using JCommunity.Infrastructure;
 global using JCommunity.Services.Extentions;
 global using JCommunity.Services.MemberService.Commands;

@@ -8,7 +8,6 @@ public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TReques
     public ValidationBehavior(IEnumerable<IValidator<TRequest>> validators)
     {
         _validators = validators;
-        
     }
 
     public async Task<TResponse> Handle(

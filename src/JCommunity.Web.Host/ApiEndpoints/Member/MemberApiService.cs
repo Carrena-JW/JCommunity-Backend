@@ -1,6 +1,6 @@
 ﻿namespace JCommunity.Web.Host.ApiEndpoints.Member;
 
-public class MemberApiService(
+internal class MemberApiService(
     ILogger<MemberApiService> logger,
     ISender mediator)
 {

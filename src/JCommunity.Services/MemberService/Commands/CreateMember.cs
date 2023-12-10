@@ -16,8 +16,6 @@ public class CreateMember
         {
             public Validator()
             {
-                
-
                 RuleFor(r => r.Name)
                     .NotEmpty()
                     .MinimumLength(MemberRestriction.NAME_MIN_LENGTH)
@@ -65,11 +63,10 @@ public class CreateMember
                 var isUniqueNickname = await _memberRepository.IsUniqueNickName(command.NickName, ct);
                 if(isUniqueNickname == false) return Result.Fail(new MemberError.NicknameNotUnique(command.NickName));
 
-                _logger.LogInformation("Creating Member - member: {@member}", member);
-
                 var result = _memberRepository.Add(member);
                 await _memberRepository.UnitOfWork.SaveChangesAsync(ct);
 
+                _logger.LogInformation("Creating Member - member: {@member}", member);
                 return result.GetMemberId();
             }
         }

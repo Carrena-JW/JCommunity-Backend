@@ -38,11 +38,10 @@ public class DeleteMember
 
                 if (findMember == null) return Result.Fail(new MemberError.NotFound(command.Id));
 
-                _logger.LogInformation("Deleting Member - member: {@member}", findMember);
                 _memberRepository.DeleteMember(findMember);
-
                 await _memberRepository.UnitOfWork.SaveChangesAsync(ct);
 
+                _logger.LogInformation("Deleting Member - member: {@member}", findMember);
                 return true;
             }
         }

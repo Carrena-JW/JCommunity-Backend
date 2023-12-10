@@ -1,6 +1,4 @@
-﻿using JCommunity.AppCore.Core.Abstractions;
-
-namespace JCommunity.Web.Host.SeedWork.Filters;
+﻿namespace JCommunity.Web.Host.SeedWork.Filters;
 
 public class GlobalLoggingFilter : IEndpointFilter
 {

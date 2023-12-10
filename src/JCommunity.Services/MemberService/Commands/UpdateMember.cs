@@ -16,7 +16,6 @@ public class UpdateMember
         {
             public Validator()
             {
-
                 RuleFor(r => r.Id)
                     .NotEmpty()
                     .NotNull();
@@ -68,18 +67,16 @@ public class UpdateMember
                     if (isUniqueNickname == false) return Result.Fail(new MemberError.NicknameNotUnique(command.Nickname));
                     findMember.SetNickName(command.Nickname);
                 }
+
                 if(!string.IsNullOrEmpty(command.Password)) 
                 {
                     findMember.SetPassword(command.Password);
                 }
 
                 findMember.UpdateLastUpdateAt();
-
-                _logger.LogInformation("Updating Member - member: {@member}", findMember);
-
                 await _memberRepository.UnitOfWork.SaveChangesAsync(ct);
-
-
+                
+                _logger.LogInformation("Updating Member - member: {@member}", findMember);
                 return true;
             }
         }

@@ -1,6 +1,6 @@
 ﻿namespace JCommunity.Web.Host.ApiEndpoints.Member;
 
-public static class MemberCommandApi
+internal static class MemberCommandApi
 {
     public static IEndpointRouteBuilder MapMemberCommandApi(this IEndpointRouteBuilder app)
     {

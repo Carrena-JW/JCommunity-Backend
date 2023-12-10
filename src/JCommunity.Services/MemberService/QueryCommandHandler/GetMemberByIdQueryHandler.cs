@@ -13,9 +13,9 @@ public class GetMemberByIdQueryHandler : IRequestHandler<GetMemberByIdQueryComma
         _memberRepository = memberRepository;
     }
 
-    public async Task<Result<MemberDto>> Handle(GetMemberByIdQueryCommand request, CancellationToken cancellationToken)
+    public async Task<Result<MemberDto>> Handle(GetMemberByIdQueryCommand request, CancellationToken ct)
     {
-        var member = await _memberRepository.GetByIdAsync(new MemberId(Guid.Parse( request.id)),cancellationToken);
+        var member = await _memberRepository.GetByIdAsync(new MemberId(Guid.Parse( request.id)),ct);
         _logger.LogInformation("Get Members - member: {@member}", member);
         if (member == null) return Result.Ok();
 

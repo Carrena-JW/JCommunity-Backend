@@ -79,12 +79,12 @@ public static class Extentions
 
         #region [Map Endpoints]
 
-        rootMapPath.MapGroup("/api/v1/Member")
+        rootMapPath.MapGroup("/api/v1/Members")
             .WithTags(new[] { "Member Query API" })
             .MapMemberQueryApi();
 
 
-        rootMapPath.MapGroup("/api/v1/Member")
+        rootMapPath.MapGroup("/api/v1/Members")
             .WithTags(new[] { "Member Command API" })
             .MapMemberCommandApi();
         #endregion

@@ -18,9 +18,9 @@ public class AppDbContext : DbContext, IUnitOfWork
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
     }
 
-    public async Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default)
+    public async Task<bool> SaveEntitiesAsync(CancellationToken ct = default)
     {
-        _ = await base.SaveChangesAsync(cancellationToken);
+        _ = await base.SaveChangesAsync(ct);
 
         return true;
     }

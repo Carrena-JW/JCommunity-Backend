@@ -15,7 +15,7 @@ public class CreateMemberCommandHandler : IRequestHandler<CreateMemberCommand, R
 
     }
 
-    public async Task<Result<string>> Handle(CreateMemberCommand command, CancellationToken cancellationToken)
+    public async Task<Result<string>> Handle(CreateMemberCommand command, CancellationToken ct)
     {
        
         var member = Member.Create(command.name, command.nickName, command.password, command.email);
@@ -23,7 +23,7 @@ public class CreateMemberCommandHandler : IRequestHandler<CreateMemberCommand, R
         _logger.LogInformation("Creating Member - member: {@member}", member);
 
         var result = _memberRepository.Add(member);
-        await _memberRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
+        await _memberRepository.UnitOfWork.SaveChangesAsync(ct);
 
         return result.getMemberId();
 

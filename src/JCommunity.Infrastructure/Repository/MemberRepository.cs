@@ -18,7 +18,7 @@ public class MemberRepository : IMemberRepository
 
     public async Task<Member?> GetByIdAsync(MemberId memberId, CancellationToken token)
     {
-        return await _appDbContext.Members.FindAsync(memberId);
+        return await _appDbContext.Members.FindAsync(memberId, token);
 
     }
 
@@ -29,16 +29,21 @@ public class MemberRepository : IMemberRepository
 
     public async Task<bool> IsUniqueEmail(string email, CancellationToken token)
     {
-        return !await _appDbContext.Members.AnyAsync(c => c.Email == email);
+        return !await _appDbContext.Members.AnyAsync(c => c.Email == email, token);
     }
 
     public async Task<bool> IsUniqueNickName(string nickName, CancellationToken token)
     {
-        return !await _appDbContext.Members.AnyAsync(c => c.NickName == nickName);
+        return !await _appDbContext.Members.AnyAsync(c => c.NickName == nickName, token);
     }
 
     public async Task<IEnumerable<Member>> GetAllMembersAsync(CancellationToken token)
     {
-        return await _appDbContext.Members.ToListAsync();
+        return await _appDbContext.Members.ToListAsync(token);
+    }
+
+    public void DeleteMember(Member member) 
+    {
+        _appDbContext.Members.Remove(member);
     }
 }

@@ -1,13 +1,15 @@
-﻿using JCommunity.Web.Host.ApiEndpoints.Member;
+﻿using Elasticsearch.Net;
+using JCommunity.Web.Host.ApiEndpoints.Member;
 using JCommunity.Web.Host.SeedWork.ExceptionHandlers;
 using JCommunity.Web.Host.SeedWork.Filters;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 
 namespace JCommunity.Web.Host.SeedWork;
 
 public static class Extentions
 {
-  
+
     public static IServiceCollection AddWebHostServices(
         this IServiceCollection services,
         IConfiguration config,
@@ -16,7 +18,7 @@ public static class Extentions
         var configuration = new ConfigurationBuilder()
             .AddJsonFile(env.IsDevelopment() ? "appsettings.Development.json" : "appsettings.json")
             .Build();
-        
+
 
         services.AddSerilog(conf =>
         {
@@ -37,7 +39,7 @@ public static class Extentions
 
         services.AddDbContext<AppDbContext>(options =>
         options.UseNpgsql(config.GetConnectionString("PostgresConnection")));
-        
+
 
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
@@ -46,7 +48,11 @@ public static class Extentions
         // server health check
         services.AddHealthChecks()
             .AddCheck("self", () => HealthCheckResult.Healthy())
-            .AddCheck("database", () => DatabaseHealth.Checker())
+            .AddNpgSql(connectionString: config.GetConnectionString("PostgresConnection")!,
+                       name: "PostgreSQL",
+                       failureStatus: HealthStatus.Degraded,
+                       tags: new string[] { "db", "postgresql" }
+                       )
             .AddCheck("message_queue", () => MessageQueueHealth.Checker());
 
         //global exception handler
@@ -96,7 +102,16 @@ public static class Extentions
         {
             var healthCheckService = app.Services.GetRequiredService<HealthCheckService>();
             var result = await healthCheckService.CheckHealthAsync();
-            return Results.Ok(new { Environment.MachineName, result });
+
+            /** 2023-12-10 
+            * In the event of an exception, the target site has symptoms that do not normally allow Json serialization, 
+            * so creating a CustomReport class is added to re-bind the problematic Exception item to the default Exception
+            */
+            object resultReport = result.Status == HealthStatus.Healthy ?
+                                  result :
+                                  CustomHealthReport.Create(result);
+            
+            return Results.Ok(new { Environment.MachineName, resultReport });
         });
         #endregion
 

@@ -25,7 +25,7 @@ public class CreateMemberCommandHandler : IRequestHandler<CreateMemberCommand, R
         var result = _memberRepository.Add(member);
         await _memberRepository.UnitOfWork.SaveChangesAsync(ct);
 
-        return result.getMemberId();
+        return result.GetMemberId();
 
     }
      

@@ -14,7 +14,7 @@ internal class MemberTypebuilderuration : IEntityTypeConfiguration<Member>
         builder.Property(builder => builder.Id)
             .HasConversion(
                 Id => Id.id.ToString(),
-                value => new MemberId(Guid.Parse(value.ToString()))
+                value => Member.CreateId(value)
             );
 
         // Name

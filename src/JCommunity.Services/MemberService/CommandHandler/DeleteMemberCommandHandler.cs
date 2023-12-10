@@ -19,7 +19,7 @@ public class DeleteMemberCommandHandler : IRequestHandler<DeleteMemberCommand, R
 
     public async Task<Result<bool>> Handle(DeleteMemberCommand command, CancellationToken ct)
     {
-        var findMember = await _memberRepository.GetByIdAsync(new MemberId(Guid.Parse(command.id)),ct);
+        var findMember = await _memberRepository.GetByIdAsync(Member.CreateId(command.id),ct);
 
         if(findMember == null) return Result.Fail(new MemberError.NotFound(command.id));
         

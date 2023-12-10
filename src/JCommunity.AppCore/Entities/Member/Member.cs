@@ -12,9 +12,14 @@ public class Member : IAuditEntity, IAggregateRoot
     public string CreatedMemberId { get; private set; } = string.Empty;
     public DateTime LastUpdatedAt { get; private set; } = SystemTime.now();
     public string LastUpdatedMemberId { get; private set; } = string.Empty;
-    public string getMemberId() 
+    public string GetMemberId() 
     {
         return this.Id.id.ToString();
+    }
+
+    public static MemberId CreateId (string id)
+    {
+        return new MemberId(Guid.Parse(id));
     }
 
 
@@ -31,7 +36,7 @@ public class Member : IAuditEntity, IAggregateRoot
             Id= memberId,
             Name = name, 
             NickName = nickName,
-            Password = password, 
+            Password = PasswordHasher.HashPassword(password), 
             Email = email,
             CreatedMemberId = memberId.id.ToString(),
             LastUpdatedMemberId = memberId.id.ToString()
@@ -42,4 +47,30 @@ public class Member : IAuditEntity, IAggregateRoot
         return member;
     }
 
+    public void SetNickName(string nickName)
+    {
+        if (this.NickName == nickName) return;
+        
+        this.NickName = nickName; 
+    }
+
+    public void SetPassword(string password)
+    {
+        var hashed = PasswordHasher.HashPassword(password);
+        if (this.Password == hashed) return;
+            
+        this.Password = hashed;
+    }
+
+    public void SetEmail(string email)
+    {
+        if (this.Email == email) return;
+
+        this.Email = email;
+    }
+
+    public void UpdateLastUpdateAt()
+    {
+        this.LastUpdatedAt = SystemTime.now();
+    }
 }

@@ -15,10 +15,30 @@ public class MemberError
         }
     }
 
-    public class InvalidError : Error, IError
+    public class EmailNotUnique : Error, IError
     {
-        public InvalidError()
+        private const string MEMBER_EMAIL_NOT_UNIQUE_ERROR_CODE = "Member.Email.NotUnique";
+        public EmailNotUnique(string email) : base()
         {
+            this.Message = "Email address is not unique.";
+
+            WithMetadata("PropertyName", nameof(email));
+            WithMetadata("AttemptedValue", email);
+            WithMetadata("ErrorCode", MEMBER_EMAIL_NOT_UNIQUE_ERROR_CODE);
         }
     }
+
+    public class NicknameNotUnique : Error, IError
+    {
+        private const string MEMBER_NICKNAME_NOT_UNIQUE_ERROR_CODE = "Member.Nickname.NotUnique";
+        public NicknameNotUnique(string nickname) : base()
+        {
+            this.Message = "Email address is not unique.";
+
+            WithMetadata("PropertyName", nameof(nickname));
+            WithMetadata("AttemptedValue", nickname);
+            WithMetadata("ErrorCode", MEMBER_NICKNAME_NOT_UNIQUE_ERROR_CODE);
+        }
+    }
+
 }

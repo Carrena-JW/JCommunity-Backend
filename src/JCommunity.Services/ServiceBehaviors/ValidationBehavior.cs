@@ -1,7 +1,4 @@
-﻿using JCommunity.AppCore.Core.Errors;
-using System.Collections.Generic;
-
-namespace JCommunity.Services.ServiceBehaviors;
+﻿namespace JCommunity.Services.ServiceBehaviors;
 
 public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     where TRequest : notnull
@@ -11,6 +8,7 @@ public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TReques
     public ValidationBehavior(IEnumerable<IValidator<TRequest>> validators)
     {
         _validators = validators;
+        
     }
 
     public async Task<TResponse> Handle(

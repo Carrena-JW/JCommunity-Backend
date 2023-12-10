@@ -1,50 +1,40 @@
-﻿namespace JCommunity.Test.Service.EndpointTest;
+﻿using JCommunity.Services.MemberService.Commands;
+
+namespace JCommunity.Test.Service.EndpointTest;
 
 public class MemberApiValidatorTest
 {
-    IValidator<CreateMemberCommand> _createMemberValidator;
-    Mock<IMemberRepository> _memberRepository;
+    IValidator<CreateMember.Command> _createMemberValidator;
 
-    public MemberApiValidatorTest()
+    public MemberApiValidatorTest(IValidator<CreateMember.Command> createMemberValidator)
     {
-        _memberRepository = new Mock<IMemberRepository>();
-        _createMemberValidator = new CreateMemberRequestValidator(_memberRepository.Object);
+        _createMemberValidator = createMemberValidator;
     }
-
-   
-    //test flag
 
     [Fact]
     async void CreateMemberRequestTest_CASE_01()
     {
-        // Setup
-        _memberRepository.Setup(x =>
-            x.IsUniqueEmail(It.IsAny<string>(), It.IsAny<CancellationToken>())
-        ).ReturnsAsync(true);
-
-        _memberRepository.Setup(x =>
-            x.IsUniqueNickName(It.IsAny<string>(), It.IsAny<CancellationToken>())
-        ).ReturnsAsync(true);
-
         // Arrange
-        var request = new CreateMemberCommand(
-            "Michael Jordan",
-            "MJ",
-            "MJ@Test.com",
-            "Pa$$w0rd1234");
+        CreateMember.Command request = new()
+        {
+            Name = "Michael Jordan",
+            NickName = "MJ",
+            Email = "MJ@Test.com",
+            Password = "Pa$$w0rd1234"
+        };
 
-        var request_2 = request with { name = "Michael Jordanddddddddddddddddddddddddddddddddddddd" };
+        var request_2 = request with { Name = "Michael Jordanddddddddddddddddddddddddddddddddddddd" };
 
-        var request_3 = request with { name = "M" };
+        var request_3 = request with { Name = "M" };
 
-        var request_4 = request with { nickName = "M" };
-        var request_5 = request with { nickName = "mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmM" };
+        var request_4 = request with { NickName = "M" };
+        var request_5 = request with { NickName = "mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmM" };
 
-        var request_6 = request with { email = "qweqwe123123123" };
-        var request_7 = request with { email = "carre22222222222222222312333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333na@naver.com" };
+        var request_6 = request with { Email = "qweqwe123123123" };
+        var request_7 = request with { Email = "carre22222222222222222312333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333na@naver.com" };
 
-        var request_8 = request with { password = "1233" };
-        var request_9 = request with { password = "1233p2q2341231q23412311" };
+        var request_8 = request with { Password = "1233" };
+        var request_9 = request with { Password = "1233p2q2341231q23412311" };
 
 
 

@@ -1,14 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\JCommunity.AppCore\JCommunity.AppCore.csproj" />
-    <ProjectReference Include="..\JCommunity.Infrastructure\JCommunity.Infrastructure.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\JCommunity.AppCore\JCommunity.AppCore.csproj" />
+		<ProjectReference Include="..\JCommunity.Infrastructure\JCommunity.Infrastructure.csproj" />
+	</ItemGroup>
 
+
+	<ItemGroup>
+		<InternalsVisibleTo Include="JCommunity.Test.Service" />
+		<InternalsVisibleTo Include="JCommunity.Test.Architecture" />
+		<InternalsVisibleTo Include="JCommunity.Test.Core" />
+	</ItemGroup>
 </Project>

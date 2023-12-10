@@ -1,8 +1,11 @@
 global using JCommunity.Infrastructure;
 global using JCommunity.Services.Extentions;
-global using JCommunity.Services.MemberService.Command;
-global using JCommunity.Services.MemberService.QueryCommand;
+global using JCommunity.Services.MemberService.Commands;
+global using JCommunity.Services.MemberService.Queries;
+global using JCommunity.Web.Host.ApiEndpoints.Member;
 global using JCommunity.Web.Host.SeedWork;
+global using JCommunity.Web.Host.SeedWork.ExceptionHandlers;
+global using JCommunity.Web.Host.SeedWork.Filters;
 global using MediatR;
 global using Microsoft.AspNetCore.Diagnostics;
 global using Microsoft.AspNetCore.Mvc;

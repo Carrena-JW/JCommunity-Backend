@@ -1,11 +1,4 @@
-﻿using Elasticsearch.Net;
-using JCommunity.Web.Host.ApiEndpoints.Member;
-using JCommunity.Web.Host.SeedWork.ExceptionHandlers;
-using JCommunity.Web.Host.SeedWork.Filters;
-using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
-
-namespace JCommunity.Web.Host.SeedWork;
+﻿namespace JCommunity.Web.Host.SeedWork;
 
 public static class Extentions
 {
@@ -42,7 +35,11 @@ public static class Extentions
 
 
         services.AddEndpointsApiExplorer();
-        services.AddSwaggerGen();
+        services.AddSwaggerGen(options =>
+        {
+            //Resolve schema redundancy due to nested classes
+            options.CustomSchemaIds(type => type.ToString().Replace("+", "."));
+        });
 
 
         // server health check

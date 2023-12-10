@@ -1,4 +1,6 @@
-﻿namespace JCommunity.Web.Host.SeedWork.Filters;
+﻿using JCommunity.AppCore.Core.Abstractions;
+
+namespace JCommunity.Web.Host.SeedWork.Filters;
 
 public class GlobalLoggingFilter : IEndpointFilter
 {
@@ -6,7 +8,7 @@ public class GlobalLoggingFilter : IEndpointFilter
 
     public GlobalLoggingFilter(ILogger<GlobalLoggingFilter> logger)
     {
-        _logger = logger;
+        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
     public async ValueTask<object?> InvokeAsync(EndpointFilterInvocationContext context, EndpointFilterDelegate next)
@@ -16,9 +18,9 @@ public class GlobalLoggingFilter : IEndpointFilter
 
         if (context.Arguments.Count > 0)
         {
-            var requestParams = context.Arguments.OfType<IRequest>();
+            var requestContractModel = context.Arguments.OfType<IRequestContract>();
 
-            foreach (var p in requestParams)
+            foreach (var p in requestContractModel)
             {
                 sb.Append(p.ToString());
             }

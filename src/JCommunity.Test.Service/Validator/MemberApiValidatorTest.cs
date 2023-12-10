@@ -1,14 +1,21 @@
-﻿using JCommunity.Services.MemberService.Commands;
+﻿using FluentAssertions;
+using FluentResults;
+using JCommunity.Services.MemberService.Commands;
+using JCommunity.Test.Service.Utils;
 
 namespace JCommunity.Test.Service.EndpointTest;
 
 public class MemberApiValidatorTest
 {
     IValidator<CreateMember.Command> _createMemberValidator;
+    IValidator<UpdateMember.Command> _updateMemberValidator;
 
-    public MemberApiValidatorTest(IValidator<CreateMember.Command> createMemberValidator)
+    public MemberApiValidatorTest(
+        IValidator<CreateMember.Command> createMemberValidator,
+        IValidator<UpdateMember.Command> updateMemberValidator)
     {
         _createMemberValidator = createMemberValidator;
+        _updateMemberValidator = updateMemberValidator;
     }
 
     [Fact]
@@ -66,5 +73,116 @@ public class MemberApiValidatorTest
         Assert.False(result_case_8.IsValid); //암호 8자 이하
         Assert.False(result_case_9.IsValid); //암호 20자 이상
 
+    }
+
+    UpdateMember.Command updateMember_normal_case => new()
+    {
+        Email = "carrena@naver.com",
+        Nickname = "102boy",
+        Id = Guid.NewGuid().ToString(),
+        Password = "Pa$$w0rd1234"
+    };
+
+    [Fact]
+    async void UpdateMemberRequest_normal_case_Test()
+    {
+
+        // Arrange
+        // global variable updateMember_normal_case
+
+        // Act
+        var normal_case =  await _updateMemberValidator.ValidateAsync(updateMember_normal_case);
+        
+        // Assert
+        normal_case.IsValid.Should().BeTrue();
+    }
+
+    [Fact]
+    async void UpdateMemberRequest_nickname_over_maxlength_Test()
+    {
+
+        // Arrange
+        UpdateMember.Command command = updateMember_normal_case with
+        {
+            // max = 20
+            Nickname = TestUtil.GenerateRandomString(30)
+        };
+
+        // Act
+        var normal_case = await _updateMemberValidator.ValidateAsync(command);
+
+        // Assert
+        normal_case.IsValid.Should().BeFalse();
+    }
+
+    [Fact]
+    async void UpdateMemberRequest_nickname_less_minlength_Test()
+    {
+
+        // Arrange
+        UpdateMember.Command command = updateMember_normal_case with
+        {
+            Nickname = TestUtil.GenerateRandomString(1)
+        };
+
+        // Act
+        var normal_case = await _updateMemberValidator.ValidateAsync(command);
+
+        // Assert
+        normal_case.IsValid.Should().BeFalse();
+    }
+
+    [Fact]
+    async void UpdateMemberRequest_email_over_maxlength_Test()
+    {
+
+        // Arrange
+        UpdateMember.Command command = updateMember_normal_case with
+        {
+            // max length = 50
+            Email = TestUtil.GenerateRandomString(60,true)
+        };
+
+        // Act
+        var normal_case = await _updateMemberValidator.ValidateAsync(command);
+
+        // Assert
+        normal_case.IsValid.Should().BeFalse();
+    }
+
+    [Fact]
+    async void UpdateMemberRequest_email_invalid_email_type_Test()
+    {
+
+        // Arrange
+        UpdateMember.Command command = updateMember_normal_case with
+        {
+            // max length = 50
+            Email = TestUtil.GenerateRandomString(20,true)
+        };
+
+        // Act
+        var normal_case = await _updateMemberValidator.ValidateAsync(command);
+
+        // Assert
+        normal_case.IsValid.Should().BeFalse();
+    }
+
+    [Fact]
+    async void UpdateMemberRequest_password_over_maxlength_Test()
+    {
+
+        // Arrange
+        UpdateMember.Command command = updateMember_normal_case with
+        {
+            // max length = 50
+            Password = TestUtil.GenerateRandomString(50)
+        };
+
+        // Act
+        var normal_case = await _updateMemberValidator.ValidateAsync(command);
+
+        // Assert
+        normal_case.IsValid.Should().BeFalse();
     }
 }

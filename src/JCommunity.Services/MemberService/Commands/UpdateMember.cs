@@ -58,19 +58,19 @@ public class UpdateMember
                 {
                     var isUniqueEmail = await _memberRepository.IsUniqueEmail(command.Email, ct);
                     if (isUniqueEmail == false) return Result.Fail(new MemberError.EmailNotUnique(command.Email));
-                    findMember.SetEmail(command.Email);
+                    findMember.UpdateEmail(command.Email);
                 }
 
                 if (!string.IsNullOrEmpty(command.Nickname))
                 {
                     var isUniqueNickname = await _memberRepository.IsUniqueNickName(command.Nickname, ct);
                     if (isUniqueNickname == false) return Result.Fail(new MemberError.NicknameNotUnique(command.Nickname));
-                    findMember.SetNickName(command.Nickname);
+                    findMember.UpdateNickname(command.Nickname);
                 }
 
                 if(!string.IsNullOrEmpty(command.Password)) 
                 {
-                    findMember.SetPassword(command.Password);
+                    findMember.UpdatePassword(command.Password);
                 }
 
                 findMember.UpdateLastUpdateAt();

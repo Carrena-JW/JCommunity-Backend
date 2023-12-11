@@ -59,7 +59,7 @@ public class MemberEntityTest
 		var findMember = _dbContext.Members.Find(member.Id);
 
 		if (findMember == null) return;
-		findMember.SetNickName(newNickname);
+		findMember.UpdateNickname(newNickname);
 		_dbContext.SaveChanges();
 
 		// Assert
@@ -79,7 +79,7 @@ public class MemberEntityTest
         var findMember = _dbContext.Members.Find(member.Id);
 
         if (findMember == null) return;
-        findMember.SetEmail(newEmail);
+        findMember.UpdateEmail(newEmail);
         _dbContext.SaveChanges();
 
 		// Assert
@@ -100,7 +100,7 @@ public class MemberEntityTest
         var findMember = _dbContext.Members.Find(member.Id);
 
         if (findMember == null) return;
-        findMember.SetPassword(newPassword);
+        findMember.UpdatePassword(newPassword);
         _dbContext.SaveChanges();
 
         // Assert
@@ -123,6 +123,17 @@ public class MemberEntityTest
         _dbContext.Members.Should().NotContain(m => m.Id.Equals(member.Id));
     }
 
+    [Fact]
+    void Member_GetId_Test()
+    {
+        // Arrange
+        Member member = Member.Create(NAME, NICKNAME, PASSWORD, EMAIL);
 
+        // Act
+        var id = member.GetMemberId();
+
+        // Assert
+        id.Should().Be(member.Id.id.ToString());
+    }
 }
 

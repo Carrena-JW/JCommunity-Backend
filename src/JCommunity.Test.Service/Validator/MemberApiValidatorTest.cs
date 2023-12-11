@@ -158,7 +158,7 @@ public class MemberApiValidatorTest
         UpdateMember.Command command = updateMember_normal_case with
         {
             // max length = 50
-            Email = TestUtil.GenerateRandomString(20,true)
+            Email = TestUtil.GenerateRandomString(20,false)
         };
 
         // Act

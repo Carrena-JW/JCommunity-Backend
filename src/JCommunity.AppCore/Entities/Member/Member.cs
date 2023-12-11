@@ -7,7 +7,7 @@ public class Member : IAuditEntity, IAggregateRoot
     public string NickName { get; private set; } = string.Empty;
     public string Email { get; private set; } = string.Empty;
     public string Password { get; private set; } = string.Empty;
-    public MemberStatus MemberStatus { get; private set; }
+    public MemberStatus MemberStatus { get; private set; } = MemberStatus.Active;
     public DateTime CreatedAt { get; private set; } = SystemTime.now();
     public string CreatedMemberId { get; private set; } = string.Empty;
     public DateTime LastUpdatedAt { get; private set; } = SystemTime.now();
@@ -31,13 +31,14 @@ public class Member : IAuditEntity, IAggregateRoot
         )
     {
         var memberId = new MemberId(Guid.NewGuid());
-        Member member = new() 
-        { 
-            Id= memberId,
-            Name = name, 
+        Member member = new()
+        {
+            Id = memberId,
+            Name = name,
             NickName = nickName,
-            Password = PasswordHasher.HashPassword(password), 
+            Password = PasswordHasher.HashPassword(password),
             Email = email,
+            MemberStatus = MemberStatus.Active,
             CreatedMemberId = memberId.id.ToString(),
             LastUpdatedMemberId = memberId.id.ToString()
 
@@ -47,14 +48,14 @@ public class Member : IAuditEntity, IAggregateRoot
         return member;
     }
 
-    public void SetNickName(string nickName)
+    public void UpdateNickname(string nickName)
     {
         if (this.NickName == nickName) return;
         
         this.NickName = nickName; 
     }
 
-    public void SetPassword(string password)
+    public void UpdatePassword(string password)
     {
         var hashed = PasswordHasher.HashPassword(password);
         if (this.Password == hashed) return;
@@ -62,7 +63,7 @@ public class Member : IAuditEntity, IAggregateRoot
         this.Password = hashed;
     }
 
-    public void SetEmail(string email)
+    public void UpdateEmail(string email)
     {
         if (this.Email == email) return;
 

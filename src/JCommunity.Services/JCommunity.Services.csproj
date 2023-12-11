@@ -13,6 +13,9 @@
 
 
 	<ItemGroup>
+		
+		<InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
+		<InternalsVisibleTo Include="Moq" />
 		<InternalsVisibleTo Include="JCommunity.Test.Service" />
 		<InternalsVisibleTo Include="JCommunity.Test.Architecture" />
 		<InternalsVisibleTo Include="JCommunity.Test.Core" />

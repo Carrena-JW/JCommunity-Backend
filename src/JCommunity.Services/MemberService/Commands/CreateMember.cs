@@ -57,11 +57,11 @@ public class CreateMember
                 var member = Member.Create(command.Name, command.NickName, command.Password, command.Email);
                 
                 //check if nickname and email is the unique value
-                var isUniqueEmail =  await _memberRepository.IsUniqueEmail(command.Email, ct);
+                var isUniqueEmail =  await _memberRepository.IsUniqueEmailAsync(command.Email, ct);
                 if(isUniqueEmail == false) return Result.Fail(new MemberError.EmailNotUnique(command.Email));
 
-                var isUniqueNickname = await _memberRepository.IsUniqueNickName(command.NickName, ct);
-                if(isUniqueNickname == false) return Result.Fail(new MemberError.NicknameNotUnique(command.NickName));
+                var IsUniqueNickNameAsync = await _memberRepository.IsUniqueNickNameAsync(command.NickName, ct);
+                if(IsUniqueNickNameAsync == false) return Result.Fail(new MemberError.NicknameNotUnique(command.NickName));
 
                 var result = _memberRepository.Add(member);
                 await _memberRepository.UnitOfWork.SaveChangesAsync(ct);

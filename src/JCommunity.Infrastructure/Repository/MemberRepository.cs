@@ -27,12 +27,12 @@ public class MemberRepository : IMemberRepository
         _appDbContext.Entry(member).State = EntityState.Modified;
     }
 
-    public async Task<bool> IsUniqueEmail(string email, CancellationToken token)
+    public async Task<bool> IsUniqueEmailAsync(string email, CancellationToken token)
     {
         return !await _appDbContext.Members.AnyAsync(c => c.Email == email, token);
     }
 
-    public async Task<bool> IsUniqueNickName(string nickName, CancellationToken token)
+    public async Task<bool> IsUniqueNickNameAsync(string nickName, CancellationToken token)
     {
         return !await _appDbContext.Members.AnyAsync(c => c.NickName == nickName, token);
     }

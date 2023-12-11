@@ -27,7 +27,7 @@ public class GetMemberById
             public async Task<Result<MemberDto>> Handle(Query request, CancellationToken ct)
             {
 
-                var member = await _memberRepository.GetByIdAsync(Member.CreateId(request.Id), ct);
+                var member = await _memberRepository.GetByIdAsync(Member.ConvertMemberIdFromString(request.Id), ct);
                 _logger.LogInformation("Get Members - member: {@member}", member);
                 if (member == null) return Result.Ok();
 

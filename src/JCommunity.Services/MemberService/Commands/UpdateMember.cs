@@ -50,21 +50,21 @@ public class UpdateMember
             public async Task<Result<bool>> Handle(Command command, CancellationToken ct)
             {
 
-                var findMember = await _memberRepository.GetByIdAsync(Member.CreateId(command.Id), ct);
+                var findMember = await _memberRepository.GetByIdAsync(Member.ConvertMemberIdFromString(command.Id), ct);
                 if (findMember == null) return Result.Fail(new MemberError.NotFound(command.Id));
 
                 //check if nickname and email is the unique value
                 if (!string.IsNullOrEmpty(command.Email))
                 {
-                    var isUniqueEmail = await _memberRepository.IsUniqueEmail(command.Email, ct);
+                    var isUniqueEmail = await _memberRepository.IsUniqueEmailAsync(command.Email, ct);
                     if (isUniqueEmail == false) return Result.Fail(new MemberError.EmailNotUnique(command.Email));
                     findMember.UpdateEmail(command.Email);
                 }
 
                 if (!string.IsNullOrEmpty(command.Nickname))
                 {
-                    var isUniqueNickname = await _memberRepository.IsUniqueNickName(command.Nickname, ct);
-                    if (isUniqueNickname == false) return Result.Fail(new MemberError.NicknameNotUnique(command.Nickname));
+                    var IsUniqueNickNameAsync = await _memberRepository.IsUniqueNickNameAsync(command.Nickname, ct);
+                    if (IsUniqueNickNameAsync == false) return Result.Fail(new MemberError.NicknameNotUnique(command.Nickname));
                     findMember.UpdateNickname(command.Nickname);
                 }
 

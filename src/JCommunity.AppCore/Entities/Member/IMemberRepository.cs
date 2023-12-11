@@ -11,7 +11,7 @@ public interface IMemberRepository : IRepository<Member>
 
     Task<IEnumerable<Member>> GetAllMembersAsync(CancellationToken token);
 
-    Task<bool> IsUniqueEmail(string email, CancellationToken token);
+    Task<bool> IsUniqueEmailAsync(string email, CancellationToken token);
 
-    Task<bool> IsUniqueNickName(string nickName, CancellationToken token);
+    Task<bool> IsUniqueNickNameAsync(string nickName, CancellationToken token);
 }

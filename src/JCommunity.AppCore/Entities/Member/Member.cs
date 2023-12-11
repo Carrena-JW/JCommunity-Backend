@@ -12,12 +12,13 @@ public class Member : IAuditEntity, IAggregateRoot
     public string CreatedMemberId { get; private set; } = string.Empty;
     public DateTime LastUpdatedAt { get; private set; } = SystemTime.now();
     public string LastUpdatedMemberId { get; private set; } = string.Empty;
+
     public string GetMemberId() 
     {
         return this.Id.id.ToString();
     }
 
-    public static MemberId CreateId (string id)
+    public static MemberId ConvertMemberIdFromString (string id)
     {
         return new MemberId(Guid.Parse(id));
     }

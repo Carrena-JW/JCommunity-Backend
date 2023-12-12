@@ -21,9 +21,7 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '8.0.x'
-        # env:d
-        #   DOTNET_INSTALL_DIR: "./.dotnet"
-          
+       
       - name: Restore
         run: dotnet restore ./JCommunity.sln
         

@@ -1,14 +1,15 @@
 ﻿namespace JCommunity.AppCore.Entities.Topics;
 
-public class TopicCategory
+public class TopicTag
 {
     public Guid Id { get; private set; }
-    public Category Value { get; private set; }
+    public Tag Value { get; private set; }
     public string Name { get; private set; } = string.Empty;
+    public ICollection<Topic> Topics { get; private set; } = Array.Empty<Topic>();
 
-    public static TopicCategory Create(string name)
+    public static TopicTag Create(string name)
     {
-        Category result;
+        Tag result;
         Enum.TryParse(name, out result);
 
         return new() { 
@@ -19,7 +20,7 @@ public class TopicCategory
     }
 }
 
-public enum Category
+public enum Tag
 {
     Unknown,
     Whatever,

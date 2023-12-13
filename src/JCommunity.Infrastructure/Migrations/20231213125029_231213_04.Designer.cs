@@ -3,6 +3,7 @@ using System;
 using JCommunity.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace JCommunity.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231213125029_231213_04")]
+    partial class _231213_04
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -148,7 +151,7 @@ namespace JCommunity.Infrastructure.Migrations
                     b.HasIndex("Value")
                         .IsUnique();
 
-                    b.ToTable("topic_tags", (string)null);
+                    b.ToTable("topic_categories", (string)null);
                 });
 
             modelBuilder.Entity("JCommunity.AppCore.Entities.Topics.TopicTagMap", b =>
@@ -163,7 +166,7 @@ namespace JCommunity.Infrastructure.Migrations
 
                     b.HasIndex("TopicTagId");
 
-                    b.ToTable("topic_tag_map", (string)null);
+                    b.ToTable("TopicTagMap");
                 });
 
             modelBuilder.Entity("JCommunity.AppCore.Entities.Member.Member", b =>

@@ -1,6 +1,4 @@
-﻿using JCommunity.Infrastructure.Setup;
-
-namespace JCommunity.Web.Host.SeedWork;
+﻿namespace JCommunity.Web.Host.SeedWork;
 
 public static class Extentions
 {
@@ -120,7 +118,7 @@ public static class Extentions
         using var scope = app.Services.CreateScope();
         var services = scope.ServiceProvider;
        
-        SetupTopicCategorySeed.Setup(services);
+        SetupTopicTagSeed.Setup(services);
         
 
         #endregion

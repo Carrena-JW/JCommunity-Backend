@@ -129,7 +129,7 @@ namespace JCommunity.Infrastructure.Migrations
                     b.ToTable("topics", (string)null);
                 });
 
-            modelBuilder.Entity("JCommunity.AppCore.Entities.Topics.TopicCategory", b =>
+            modelBuilder.Entity("JCommunity.AppCore.Entities.Topics.TopicTag", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd()

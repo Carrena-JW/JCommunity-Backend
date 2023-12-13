@@ -1,8 +1,4 @@
-﻿
-
-using Microsoft.EntityFrameworkCore;
-using System.Reflection.Emit;
-using System.Reflection.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace JCommunity.Infrastructure.Entitybuilderurations;
 
@@ -33,16 +29,16 @@ internal class TopicTypeConfiguration : IEntityTypeConfiguration<Topic>
         builder.Property(builder => builder.Sort);
 
 
-        // Category
-        //builder.HasMany(builder => builder.Categories)
-        //    .WithMany();
+        // Tags
+        builder.HasMany(e => e.Tags)
+           .WithMany(e => e.Topics)
+           .UsingEntity<TopicTagMap>();
            
-
 
         // Author
         builder.HasOne<Member>()
             .WithOne()
-            .HasPrincipalKey<Topic>(b=> b.AuthorId);
+            .HasPrincipalKey<Topic>(b => b.AuthorId);
 
         builder.Property(b => b.AuthorId)
             .HasConversion(
@@ -50,31 +46,6 @@ internal class TopicTypeConfiguration : IEntityTypeConfiguration<Topic>
                 value => Guid.Parse(value)
             );
 
-    
-    }
-}
-
-
-internal class TopicCategoryTypeConfiguration : IEntityTypeConfiguration<TopicCategory>
-{
-    public void Configure(EntityTypeBuilder<TopicCategory> builder)
-    {
-
-        
-        builder.ToTable("topic_categories");
-        
-        builder.HasKey(builder => builder.Id);
-        builder.Property(builder => builder.Id)
-           .HasConversion(
-               Id => Id.ToString(),
-               value => Guid.Parse(value)
-           );
-         
-        builder.HasIndex(b => b.Value).IsUnique();
-
-        builder.HasIndex(b=> b.Name).IsUnique();
-        builder.Property(b => b.Name)
-            .HasMaxLength(TopicRestriction.CATEGORY_NAME_MAX_LENGTH);
 
     }
 }

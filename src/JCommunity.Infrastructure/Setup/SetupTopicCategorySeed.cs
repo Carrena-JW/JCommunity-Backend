@@ -1,9 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 
 namespace JCommunity.Infrastructure.Setup;
 
-public static class SetupTopicCategorySeed 
+public static class SetupTopicTagSeed 
 {
     public static void Setup(IServiceProvider serviceProvider)
     {
@@ -18,13 +17,13 @@ public static class SetupTopicCategorySeed
          * AsEnumable() -> ToList()
          */
         var sourceTopicCategories = dbContext.TopicCategories.ToList();
-        var topicCategoryNames = Enum.GetNames(typeof(Category)).ToArray();
+        var TopicTagNames = Enum.GetNames(typeof(Tag)).ToArray();
 
         var takeTop10 = dbContext.TopicCategories.AsEnumerable();
 
-        var newCategories = topicCategoryNames
+        var newCategories = TopicTagNames
             .Where(name => !sourceTopicCategories.Any(stc => stc.Name == name))
-            .Select(name => TopicCategory.Create(name));
+            .Select(name => TopicTag.Create(name));
 
         dbContext.TopicCategories.AddRange(newCategories);
         dbContext.SaveChanges();

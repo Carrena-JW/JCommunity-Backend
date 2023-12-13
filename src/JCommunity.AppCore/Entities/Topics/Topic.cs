@@ -1,13 +1,11 @@
-﻿using JCommunity.AppCore.Entities.Member;
-
-namespace JCommunity.AppCore.Entities.Topics;
+﻿namespace JCommunity.AppCore.Entities.Topics;
 
 public class Topic : IAuditEntity, IAggregateRoot
 {
     public Guid Id { get; set; }
     public string Name { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
-    //public ICollection<TopicCategory> Categories { get; private set; } = Array.Empty<TopicCategory>();
+    public ICollection<TopicTag> Tags { get; private set; } = Array.Empty<TopicTag>();
     public int Sort { get; private set; }
     public Guid AuthorId { get; private set; } 
 
@@ -16,7 +14,21 @@ public class Topic : IAuditEntity, IAggregateRoot
     public DateTime LastUpdatedAt { get; private set; } = SystemTime.now();
     public string LastUpdatedMemberId { get; private set; } = string.Empty;
 
-
+    public static Topic Create(
+        string name,
+        string description,
+        int sort,
+        Guid AuthorId)
+    {
+        return new()
+        {
+            Id = Guid.NewGuid(),
+            Name = name,
+            Description = description,
+            Sort = sort,
+            AuthorId = AuthorId
+        };
+    }
 }
 
 /*

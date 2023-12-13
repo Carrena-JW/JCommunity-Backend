@@ -1,4 +1,6 @@
-﻿namespace JCommunity.Web.Host.SeedWork;
+﻿using JCommunity.Infrastructure.Setup;
+
+namespace JCommunity.Web.Host.SeedWork;
 
 public static class Extentions
 {
@@ -34,6 +36,7 @@ public static class Extentions
         services.AddDbContext<AppDbContext>(
             options =>options.UseNpgsql(connectionStrings));
 
+         
 
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen(options =>
@@ -111,6 +114,15 @@ public static class Extentions
             
             return Results.Ok(new { Environment.MachineName, resultReport });
         });
+        #endregion
+
+        #region [Setup Seed Data]
+        using var scope = app.Services.CreateScope();
+        var services = scope.ServiceProvider;
+       
+        SetupTopicCategorySeed.Setup(services);
+        
+
         #endregion
 
         return app;

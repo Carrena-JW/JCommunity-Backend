@@ -18,4 +18,5 @@ public static class Extentions
 
         }).AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
     }
+ 
 }

@@ -16,7 +16,7 @@ public class MemberRepository : IMemberRepository
         return _appDbContext.Members.Add(member).Entity;
     }
 
-    public async Task<Member?> GetByIdAsync(MemberId memberId, CancellationToken token)
+    public async Task<Member?> GetByIdAsync(Guid memberId, CancellationToken token)
     {
         return await _appDbContext.Members.FindAsync(memberId, token);
 

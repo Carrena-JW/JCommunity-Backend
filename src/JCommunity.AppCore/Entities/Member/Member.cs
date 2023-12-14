@@ -2,7 +2,7 @@
 
 public class Member : IAuditEntity, IAggregateRoot
 {
-    public MemberId Id { get; private set; } = new(Guid.NewGuid());
+    public Guid Id { get; private set; } 
     public string Name { get; private set; } = string.Empty;
     public string NickName { get; private set; } = string.Empty;
     public string Email { get; private set; } = string.Empty;
@@ -15,12 +15,12 @@ public class Member : IAuditEntity, IAggregateRoot
 
     public string GetMemberId() 
     {
-        return this.Id.id.ToString();
+        return this.Id.ToString();
     }
 
-    public static MemberId ConvertMemberIdFromString (string id)
+    public static Guid ConvertMemberIdFromString (string id)
     {
-        return new MemberId(Guid.Parse(id));
+        return Guid.Parse(id);
     }
 
 
@@ -31,17 +31,17 @@ public class Member : IAuditEntity, IAggregateRoot
         string email
         )
     {
-        var memberId = new MemberId(Guid.NewGuid());
+        var memberId = Guid.NewGuid();
         Member member = new()
         {
-            Id = memberId,
+            Id = Guid.NewGuid(),
             Name = name,
             NickName = nickName,
             Password = PasswordHasher.HashPassword(password),
             Email = email,
             MemberStatus = MemberStatus.Active,
-            CreatedMemberId = memberId.id.ToString(),
-            LastUpdatedMemberId = memberId.id.ToString()
+            CreatedMemberId = memberId.ToString(),
+            LastUpdatedMemberId = memberId.ToString()
 
         };
         

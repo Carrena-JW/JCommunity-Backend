@@ -13,8 +13,8 @@ internal class MemberTypebuilderuration : IEntityTypeConfiguration<Member>
         builder.HasKey(builder => builder.Id);
         builder.Property(builder => builder.Id)
             .HasConversion(
-                Id => Id.id.ToString(),
-                value => Member.ConvertMemberIdFromString(value)
+                Id => Id.ToString(),
+                value => Guid.Parse(value)
             );
 
         // Name

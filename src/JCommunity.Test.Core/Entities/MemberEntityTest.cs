@@ -133,7 +133,7 @@ public class MemberEntityTest
         var id = member.GetMemberId();
 
         // Assert
-        id.Should().Be(member.Id.id.ToString());
+        id.Should().Be(member.Id.ToString());
     }
 }
 

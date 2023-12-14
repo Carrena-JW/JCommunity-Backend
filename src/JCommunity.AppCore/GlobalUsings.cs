@@ -2,6 +2,7 @@
 global using FluentValidation.Results;
 global using JCommunity.AppCore.Core.Abstractions;
 global using JCommunity.AppCore.Core.Utils;
+global using JCommunity.AppCore.Entities.Member;
 global using MediatR;
 global using System.Reflection;
 global using System.Security.Cryptography;

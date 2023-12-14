@@ -36,7 +36,7 @@ internal class TopicTypeConfiguration : IEntityTypeConfiguration<Topic>
            
 
         // Author
-        builder.HasOne<Member>()
+        builder.HasOne(builder => builder.Author)
             .WithOne()
             .HasPrincipalKey<Topic>(b => b.AuthorId);
 

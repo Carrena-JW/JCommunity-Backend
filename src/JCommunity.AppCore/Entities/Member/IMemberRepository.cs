@@ -7,7 +7,7 @@ public interface IMemberRepository : IRepository<Member>
     Member Add(Member member);
     void Update(Member member);
     void DeleteMember(Member member);
-    Task<Member?> GetByIdAsync(MemberId memberId, CancellationToken token);
+    Task<Member?> GetByIdAsync(Guid memberId, CancellationToken token);
 
     Task<IEnumerable<Member>> GetAllMembersAsync(CancellationToken token);
 

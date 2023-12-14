@@ -29,7 +29,7 @@ public class GetMembers
 
                 var members = await _memberRepository.GetAllMembersAsync(ct);
                 _logger.LogInformation("Get Members - member: {@member}", members);
-                var result = members.Select(x => new MemberDto(x.Id.id.ToString(), x.Name, x.Email, x.NickName));
+                var result = members.Select(x => new MemberDto(x.Id.ToString(), x.Name, x.Email, x.NickName));
                 return Result.Ok(result);
             }
         }

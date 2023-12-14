@@ -2,10 +2,11 @@
 
 namespace JCommunity.Infrastructure.Setup;
 
-public static class SetupTopicTagSeed 
+public class SetupTopicTagSeed 
 {
     public static void Setup(IServiceProvider serviceProvider)
     {
+
         using var dbContext = new AppDbContext(
             serviceProvider.GetRequiredService<DbContextOptions<AppDbContext>>());
 

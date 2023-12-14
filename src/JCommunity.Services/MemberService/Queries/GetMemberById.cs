@@ -31,7 +31,7 @@ public class GetMemberById
                 _logger.LogInformation("Get Members - member: {@member}", member);
                 if (member == null) return Result.Ok();
 
-                return new MemberDto(member.Id.id.ToString(), member.Name, member.Email, member.NickName);
+                return new MemberDto(member.Id.ToString(), member.Name, member.Email, member.NickName);
             }
         }
         #endregion

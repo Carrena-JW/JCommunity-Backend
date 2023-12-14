@@ -7,6 +7,8 @@ public class Topic : IAuditEntity, IAggregateRoot
     public string Description { get; set; } = string.Empty;
     public ICollection<TopicTag> Tags { get; private set; } = Array.Empty<TopicTag>();
     public int Sort { get; private set; }
+
+    public Member.Member Author { get; private set; } = null!;
     public Guid AuthorId { get; private set; } 
 
     public DateTime CreatedAt { get; private set; } = SystemTime.now();
@@ -18,7 +20,7 @@ public class Topic : IAuditEntity, IAggregateRoot
         string name,
         string description,
         int sort,
-        Guid AuthorId)
+        Guid authorId)
     {
         return new()
         {
@@ -26,7 +28,8 @@ public class Topic : IAuditEntity, IAggregateRoot
             Name = name,
             Description = description,
             Sort = sort,
-            AuthorId = AuthorId
+            AuthorId = authorId
+            //Author = author
         };
     }
 }

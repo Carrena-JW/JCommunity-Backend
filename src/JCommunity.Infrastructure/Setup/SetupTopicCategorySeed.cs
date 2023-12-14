@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-
-namespace JCommunity.Infrastructure.Setup;
+﻿namespace JCommunity.Infrastructure.Setup;
 
 public class SetupTopicTagSeed 
 {
@@ -25,7 +23,7 @@ public class SetupTopicTagSeed
             .Where(name => !sourceTopicCategories.Any(stc => stc.Name == name))
             .Select(name => {
                 Tag enumValue;
-                Enum.TryParse<Tag>(name, out enumValue);
+                Enum.TryParse(name, out enumValue);
                 return TopicTag.Create(enumValue);
             }); 
 

@@ -125,15 +125,15 @@ public static class Extentions
         #endregion
 
         #region [Setup Seed Data]
-        var enableSeedJob = app.Configuration.GetSection("SetupSeed")
-            .GetValue("EnableSetupTopicTagSeed", false);
+        var enableSeedJob = app.Configuration.GetValue("EnableSetupSeed", false);
+             
 
         if (enableSeedJob)
         {
             using var scope = app.Services.CreateScope();
             var services = scope.ServiceProvider;
-       
-            SetupTopicTagSeed.Setup(services);
+
+            SetupTestMemberSeed.Setup(services);
         }
         #endregion
 

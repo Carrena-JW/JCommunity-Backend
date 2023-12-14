@@ -19,16 +19,18 @@ internal static class MemberQueryApi
        CancellationToken token = new())
     {
         var result = await services.Mediator.Send(request, token);
-        return Results.Ok(result.Value);
+        return result.IsSuccess ? Results.Ok(result.Value) :
+                                  Results.BadRequest(result.Errors);
     }
 
     private static async Task<IResult> GetMembersAsync(
-        [AsParameters] GetMembers.Query request,
+        [AsParameters] GetTopics.Query request,
         [AsParameters] MemberApiService services,
         CancellationToken token = new())
     {
         var result = await services.Mediator.Send(request, token);
-        return Results.Ok(result.Value);
+        return result.IsSuccess ? Results.Ok(result.Value) :
+                                  Results.BadRequest(result.Errors);
     }
  
 

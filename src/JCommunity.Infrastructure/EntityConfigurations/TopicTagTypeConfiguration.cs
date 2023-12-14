@@ -15,9 +15,7 @@ internal class TopicTagTypeConfiguration : IEntityTypeConfiguration<TopicTag>
                value => Guid.Parse(value)
            );
          
-        builder.HasIndex(b => b.Value).IsUnique();
 
-        builder.HasIndex(b=> b.Name).IsUnique();
         builder.Property(b => b.Name)
             .HasMaxLength(TopicRestriction.TAG_NAME_MAX_LENGTH);
 

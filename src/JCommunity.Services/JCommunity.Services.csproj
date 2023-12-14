@@ -26,8 +26,6 @@
 	  <None Remove="TopicService\Queries\" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Folder Include="TopicService\" />
 	  <Folder Include="TopicService\Commands\" />
-	  <Folder Include="TopicService\Queries\" />
 	</ItemGroup>
 </Project>

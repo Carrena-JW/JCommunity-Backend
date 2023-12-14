@@ -31,14 +31,16 @@ internal class TopicTypeConfiguration : IEntityTypeConfiguration<Topic>
 
         // Tags
         builder.HasMany(e => e.Tags)
-           .WithMany(e => e.Topics)
+           .WithMany()
            .UsingEntity<TopicTagMap>();
            
 
         // Author
         builder.HasOne(builder => builder.Author)
-            .WithOne()
-            .HasPrincipalKey<Topic>(b => b.AuthorId);
+            .WithMany()
+            .HasForeignKey(b => b.AuthorId);
+
+
 
         builder.Property(b => b.AuthorId)
             .HasConversion(

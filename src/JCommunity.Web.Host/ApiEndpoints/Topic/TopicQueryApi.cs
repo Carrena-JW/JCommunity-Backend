@@ -2,11 +2,10 @@
 
 internal static class TopicQueryApi
 {
-
     internal static IEndpointRouteBuilder MapTopicQueryApi(this IEndpointRouteBuilder app)
     {
         #region [Map Path]
-        app.MapGet("/", GetTopicAsync);
+        app.MapGet("/", GetTopicsAsync);
         app.MapGet("/{id}", GetTopicByIdAsync);
         app.MapGet("/{topicId}/topictags", GetTopicTagsByIdAsync);
         #endregion
@@ -14,19 +13,38 @@ internal static class TopicQueryApi
         return app;
     }
 
-    private static Task GetTopicTagsByIdAsync(HttpContext context)
+    // include option
+    private static async Task<IResult> GetTopicsAsync(
+        [AsParameters] GetTopics.Query request,
+        [AsParameters] TopicApiService services,
+        CancellationToken token = new())
     {
-        throw new NotImplementedException();
+        var result = await services.Mediator.Send(request, token);
+        return result.IsSuccess ? Results.Ok(result.Value) :
+                                  Results.BadRequest(result.Errors);
+    }
+    private static async Task<IResult> GetTopicByIdAsync(
+        [AsParameters] GetTopicById.Query request,
+        [AsParameters] TopicApiService services,
+        CancellationToken token = new())
+    {
+        var result = await services.Mediator.Send(request, token);
+
+        if (result.Value == null) return Results.Ok(new { });
+
+        return result.IsSuccess ? Results.Ok(result.Value) :
+                                  Results.BadRequest(result.Errors);
     }
 
-    private static Task GetTopicByIdAsync()
+    private static async Task<IResult> GetTopicTagsByIdAsync(
+        [AsParameters] GetTopicTags.Query request,
+        [AsParameters] TopicApiService services,
+        CancellationToken token = new())
     {
-        throw new NotImplementedException();
+        var result = await services.Mediator.Send(request, token);
+        return result.IsSuccess ? Results.Ok(result.Value) :
+                                  Results.BadRequest(result.Errors);
     }
 
-    private static Task GetTopicAsync(HttpContext context)
-    {
-        throw new NotImplementedException();
-    }
 }
 

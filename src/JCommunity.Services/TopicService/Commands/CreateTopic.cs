@@ -59,7 +59,8 @@ public class CreateTopic
 
                 if(command.Tags.Count() > 0)
                 {
-                    
+                    var topicTags = command.Tags.Select(t =>TopicTag.Create(t) );
+                    topic.AddTags(topicTags.ToArray());
                 }
 
                 var isUniqueName = await _repository.IsUniqueTopicNameAsync(command.Name, ct);

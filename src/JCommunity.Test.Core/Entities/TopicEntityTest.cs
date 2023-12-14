@@ -10,7 +10,7 @@ namespace JCommunity.Test.Core.Entities;
 public class TopicEntityTest
 {
 
-	MemoryDbContext _dbContext = new MemoryDbContext();
+    
 
     const string NAME = "TOPIC_NAME";
     const string DESCRIPTION = "This is Description";
@@ -24,11 +24,14 @@ public class TopicEntityTest
 
     Member CreatedMember = default!;
 
-    void Init_Job()
+    void Init_Job(MemoryDbContext dbContext)
     {
+        // Memory database 초기화
+         
+
         CreatedMember = Member.Create(MEMBER_NAME, MEMBER_NICKNAME, MEMBER_PASSWORD, MEMBER_EMAIL);
-        _dbContext.Members.Add(CreatedMember);
-        _dbContext.SaveChanges();
+        dbContext.Members.Add(CreatedMember);
+        dbContext.SaveChanges();
 
     }
 
@@ -36,14 +39,17 @@ public class TopicEntityTest
     [Fact]
 	void Topic_Create_Test()
 	{
-        Init_Job();
+        // Setup
+        using var dbContext = new MemoryDbContext();
+        Init_Job(dbContext);
+
         // Arrange
         var topic = Topic.Create(NAME, DESCRIPTION, SROT, CreatedMember.Id);
 
         // Act
-        _dbContext.Topics.Add(topic);
-        _dbContext.SaveChanges();
-        var createdTopic = _dbContext.Topics.AsNoTracking().First();
+        dbContext.Topics.Add(topic);
+        dbContext.SaveChanges();
+        var createdTopic = dbContext.Topics.AsNoTracking().First();
 
 		// Assert
         topic.Id.Should().Be(createdTopic.Id);
@@ -52,16 +58,19 @@ public class TopicEntityTest
     [Fact]
     void Topic_Add_Tag_Test()
     {
-        Init_Job();
+        // Setup
+        using var dbContext = new MemoryDbContext();
+        Init_Job(dbContext);
+
         // Arrange
         var topic = Topic.Create(NAME, DESCRIPTION, SROT, CreatedMember.Id);
         var tag = TopicTag.Create(Tag.Whatever);
         topic.AddTag(tag);
 
         // Act
-        _dbContext.Topics.Add(topic);
-        _dbContext.SaveChanges();
-        var createdTopic = _dbContext.Topics
+        dbContext.Topics.Add(topic);
+        dbContext.SaveChanges();
+        var createdTopic = dbContext.Topics
             .Include(t=> t.Tags)
             .AsNoTracking().First();
 
@@ -74,7 +83,10 @@ public class TopicEntityTest
     [Fact]
     void Topic_AddRange_Tags_Test()
     {
-        Init_Job();
+        // Setup
+        using var dbContext = new MemoryDbContext();
+        Init_Job(dbContext);
+
         // Arrange
         var topic = Topic.Create(NAME, DESCRIPTION, SROT, CreatedMember.Id);
 
@@ -88,9 +100,9 @@ public class TopicEntityTest
         topic.AddTags(tags);
 
         // Act
-        _dbContext.Topics.Add(topic);
-        _dbContext.SaveChanges();
-        var createdTopic = _dbContext.Topics
+        dbContext.Topics.Add(topic);
+        dbContext.SaveChanges();
+        var createdTopic = dbContext.Topics
             .Include(t => t.Tags)
             .AsNoTracking().First();
 
@@ -102,7 +114,10 @@ public class TopicEntityTest
     [Fact]
     void Topic_Remove_Tag_Test()
     {
-        Init_Job();
+        // Setup
+        using var dbContext = new MemoryDbContext();
+        Init_Job(dbContext);
+
         // Arrange
         var topic = Topic.Create(NAME, DESCRIPTION, SROT, CreatedMember.Id);
         var tag1 = TopicTag.Create(Tag.Whatever);
@@ -110,9 +125,9 @@ public class TopicEntityTest
 
         // Act
         topic.RemoveTag(tag1);
-        _dbContext.Topics.Add(topic);
-        _dbContext.SaveChanges();
-        var createdTopic = _dbContext.Topics
+        dbContext.Topics.Add(topic);
+        dbContext.SaveChanges();
+        var createdTopic = dbContext.Topics
             .Include(t => t.Tags)
             .AsNoTracking().First();
 
@@ -123,7 +138,10 @@ public class TopicEntityTest
     [Fact]
     void Topic_Remove_All_Tag_Test()
     {
-        Init_Job();
+        // Setup
+        using var dbContext = new MemoryDbContext();
+        Init_Job(dbContext);
+
         // Arrange
         var topic = Topic.Create(NAME, DESCRIPTION, SROT, CreatedMember.Id);
         var tag1 = TopicTag.Create(Tag.Whatever);
@@ -135,9 +153,9 @@ public class TopicEntityTest
 
         // Act
         topic.RemoveAllTags();
-        _dbContext.Topics.Add(topic);
-        _dbContext.SaveChanges();
-        var createdTopic = _dbContext.Topics
+        dbContext.Topics.Add(topic);
+        dbContext.SaveChanges();
+        var createdTopic = dbContext.Topics
             .Include(t => t.Tags)
             .AsNoTracking().First();
 
@@ -148,17 +166,20 @@ public class TopicEntityTest
     [Fact]
     void Topic_Update_Name_Test()
     {
-        Init_Job();
+        // Setup
+        using var dbContext = new MemoryDbContext();
+        Init_Job(dbContext);
+
         // Arrange
         var topic = Topic.Create(NAME, DESCRIPTION, SROT, CreatedMember.Id);
-        _dbContext.Topics.Add(topic);
+        dbContext.Topics.Add(topic);
 
         // Act
         var updatedName = "UpdatedName";
         topic.UpdateTopicName(updatedName);
-        _dbContext.SaveChanges();
+        dbContext.SaveChanges();
 
-        var createdTopic = _dbContext.Topics.AsNoTracking().First();
+        var createdTopic = dbContext.Topics.AsNoTracking().First();
 
         // Assert
         createdTopic.Name.Should().Be(updatedName);
@@ -167,17 +188,20 @@ public class TopicEntityTest
     [Fact]
     void Topic_Update_Desc_Test()
     {
-        Init_Job();
+        // Setup
+        using var dbContext = new MemoryDbContext();
+        Init_Job(dbContext);
+
         // Arrange
         var topic = Topic.Create(NAME, DESCRIPTION, SROT, CreatedMember.Id);
-        _dbContext.Topics.Add(topic);
+        dbContext.Topics.Add(topic);
 
         // Act
         var updatedDesc = "UpdatedDesc";
         topic.UpdateTopicDescription(updatedDesc);
-        _dbContext.SaveChanges();
+        dbContext.SaveChanges();
 
-        var createdTopic = _dbContext.Topics.AsNoTracking().First();
+        var createdTopic = dbContext.Topics.AsNoTracking().First();
 
         // Assert
         createdTopic.Description.Should().Be(updatedDesc);
@@ -186,17 +210,20 @@ public class TopicEntityTest
     [Fact]
     void Topic_Update_SortOrder_Test()
     {
-        Init_Job();
+        // Setup
+        using var dbContext = new MemoryDbContext();
+        Init_Job(dbContext);
+
         // Arrange
         var topic = Topic.Create(NAME, DESCRIPTION, SROT, CreatedMember.Id);
-        _dbContext.Topics.Add(topic);
+        dbContext.Topics.Add(topic);
 
         // Act
         var sortOrder = 3;
         topic.UpdateTopicSortOrder(sortOrder);
-        _dbContext.SaveChanges();
+        dbContext.SaveChanges();
 
-        var createdTopic = _dbContext.Topics.AsNoTracking().First();
+        var createdTopic = dbContext.Topics.AsNoTracking().First();
 
         // Assert
         createdTopic.Sort.Should().Be(sortOrder);

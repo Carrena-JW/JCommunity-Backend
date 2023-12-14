@@ -3,6 +3,7 @@ using System;
 using JCommunity.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace JCommunity.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231214160334_231215_02")]
+    partial class _231215_02
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -115,7 +118,8 @@ namespace JCommunity.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AuthorId");
+                    b.HasIndex("AuthorId")
+                        .IsUnique();
 
                     b.HasIndex("Name")
                         .IsUnique();
@@ -160,8 +164,8 @@ namespace JCommunity.Infrastructure.Migrations
             modelBuilder.Entity("JCommunity.AppCore.Entities.Topics.Topic", b =>
                 {
                     b.HasOne("JCommunity.AppCore.Entities.Member.Member", "Author")
-                        .WithMany()
-                        .HasForeignKey("AuthorId")
+                        .WithOne()
+                        .HasForeignKey("JCommunity.AppCore.Entities.Topics.Topic", "AuthorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

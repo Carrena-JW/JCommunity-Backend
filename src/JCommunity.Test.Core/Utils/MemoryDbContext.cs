@@ -13,7 +13,7 @@ public class MemoryDbContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         // 인메모리 데이터베이스 사용
-        optionsBuilder.UseInMemoryDatabase("TestDatabase");
+        optionsBuilder.UseInMemoryDatabase(Guid.NewGuid().ToString());
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

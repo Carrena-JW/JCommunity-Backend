@@ -4,7 +4,6 @@ public class TopicTag : EntityBase
 { 
     public Tag Value { get; private set; }
     public string Name { get; private set; } = string.Empty;
-    public HashSet<Topic> Topics { get; private set; } = new();
 
     public static TopicTag Create(Tag tag)
     {

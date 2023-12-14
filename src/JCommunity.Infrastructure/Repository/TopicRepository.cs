@@ -1,4 +1,6 @@
-﻿namespace JCommunity.Infrastructure.Repository;
+﻿using FluentResults;
+
+namespace JCommunity.Infrastructure.Repository;
 
 public class TopicRepository : ITopicRepository
 {
@@ -20,18 +22,45 @@ public class TopicRepository : ITopicRepository
         _appDbContext.Topics.Remove(topic);
     }
 
-    public async Task<Topic?> GetByIdAsync(Guid topicId, CancellationToken token)
+    public async Task<Topic?> GetTopicByIdAsync(
+         TopicIncludeOptions options, 
+         Guid topicId, 
+         CancellationToken token)
     {
-        return await _appDbContext.Topics.FindAsync(topicId, token);
+        var query = _appDbContext.Topics.AsQueryable();
+        query = IncludeOption(options, query);
+
+        return await query.SingleOrDefaultAsync(t => t.Id == topicId, token);
     }
 
-    public async Task<IEnumerable<Topic>> GetAllTopicsAsync(CancellationToken token)
+    public async Task<IEnumerable<Topic>> GetAllTopicsAsync(
+        TopicIncludeOptions options,
+        CancellationToken token)
     {
-        return await _appDbContext.Topics.ToListAsync(token);
+        var query = _appDbContext.Topics.AsNoTracking();
+        query = IncludeOption(options, query);
+      
+        return await query.ToListAsync(token);
     }
+
 
     public async Task<bool> IsUniqueTopicNameAsync(string name, CancellationToken token)
     {
         return !await _appDbContext.Topics.AnyAsync(t => t.Name == name, token);
+    }
+
+    private IQueryable<T> IncludeOption<T>(TopicIncludeOptions options , IQueryable<T> query) where T : Topic
+    {
+        if (options.IncludeAuthor.HasValue && options.IncludeAuthor.Value)
+        {
+            query = query.Include(t => t.Author);
+        }
+
+        if (options.IncludeTags.HasValue && options.IncludeTags.Value)
+        {
+            query = query.Include(t => t.Tags);
+        }
+        
+        return query;
     }
 }

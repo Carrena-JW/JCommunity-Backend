@@ -84,6 +84,7 @@ public class TopicEntityTest
             TopicTag.Create(Tag.Finance)
         };
         topic.AddTags(tags);
+        topic.AddTags(tags);
 
         // Act
         _dbContext.Topics.Add(topic);

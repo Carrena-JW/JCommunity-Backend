@@ -33,6 +33,8 @@ public class Topic : IAuditEntity, IAggregateRoot
         };
     }
 
+    
+
     public void AddTag(TopicTag tag)
     {
         if (Tags.Any(t => t.Id.Equals(tag.Id))) return;

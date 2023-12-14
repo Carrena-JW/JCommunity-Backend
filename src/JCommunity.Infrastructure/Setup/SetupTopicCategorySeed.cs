@@ -22,9 +22,15 @@ public class SetupTopicTagSeed
 
         var takeTop10 = dbContext.TopicCategories.AsEnumerable();
 
+
+
         var newCategories = TopicTagNames
             .Where(name => !sourceTopicCategories.Any(stc => stc.Name == name))
-            .Select(name => TopicTag.Create(name));
+            .Select(name => {
+                Tag enumValue;
+                Enum.TryParse<Tag>(name, out enumValue);
+                return TopicTag.Create(enumValue);
+            }); 
 
         dbContext.TopicCategories.AddRange(newCategories);
         dbContext.SaveChanges();

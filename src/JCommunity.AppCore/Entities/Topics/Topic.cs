@@ -5,7 +5,7 @@ public class Topic : IAuditEntity, IAggregateRoot
     public Guid Id { get; set; }
     public string Name { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
-    public ICollection<TopicTag> Tags { get; private set; } = Array.Empty<TopicTag>();
+    public List<TopicTag> Tags { get; private set; } = new();
     public int Sort { get; private set; }
 
     public Member.Member Author { get; private set; } = null!;
@@ -31,6 +31,27 @@ public class Topic : IAuditEntity, IAggregateRoot
             AuthorId = authorId
             //Author = author
         };
+    }
+
+    public void AddTag(TopicTag tag)
+    {
+        if (Tags.Any(t => t.Id.Equals(tag.Id))) return;
+        Tags.Add(tag);
+    }
+
+    public void AddTags(TopicTag[] tags)
+    {
+        Tags.AddRange(tags);
+    }
+
+    public void RemoveAllTags()
+    {
+        if(Tags.Count > 0) Tags.Clear();
+    }
+
+    public void RemoveTag(TopicTag tag)
+    {
+        Tags.Remove(tag);
     }
 }
 

@@ -21,9 +21,9 @@ public class TopicEntityTest
 	const string MEMBER_EMAIL = "carrena@naver.com";
 	const string MEMBER_PASSWORD = "Pa$$w0rd";
 
-    Member CreatedMember;
+    Member CreatedMember = default!;
 
-    void Seed_Job()
+    void Init_Job()
     {
         CreatedMember = Member.Create(MEMBER_NAME, MEMBER_NICKNAME, MEMBER_PASSWORD, MEMBER_EMAIL);
         _dbContext.Members.Add(CreatedMember);
@@ -35,23 +35,115 @@ public class TopicEntityTest
     [Fact]
 	void Topic_Create_Test()
 	{
-        Seed_Job();
+        Init_Job();
         // Arrange
         var topic = Topic.Create(NAME, DESCRIPTION, SROT, CreatedMember.Id);
+
+        // Act
         _dbContext.Topics.Add(topic);
         _dbContext.SaveChanges();
-
-
-        //_dbContext.Members.Should().Contain(m => m.Id == member.Id);
-
         var createdTopic = _dbContext.Topics.AsNoTracking().First();
 
-         
-        // Act
-
-
 		// Assert
+        topic.Id.Should().Be(createdTopic.Id);
 	}
-     
+
+    [Fact]
+    void Topic_Add_Tag_Test()
+    {
+        Init_Job();
+        // Arrange
+        var topic = Topic.Create(NAME, DESCRIPTION, SROT, CreatedMember.Id);
+        var tag = TopicTag.Create(Tag.Whatever);
+        topic.AddTag(tag);
+
+        // Act
+        _dbContext.Topics.Add(topic);
+        _dbContext.SaveChanges();
+        var createdTopic = _dbContext.Topics
+            .Include(t=> t.Tags)
+            .AsNoTracking().First();
+
+        // Assert
+        createdTopic.Tags.Should().NotBeEmpty();
+        createdTopic.Tags.Should().Contain(t=> t.Value == tag.Value );
+
+    }
+
+    [Fact]
+    void Topic_AddRange_Tags_Test()
+    {
+        Init_Job();
+        // Arrange
+        var topic = Topic.Create(NAME, DESCRIPTION, SROT, CreatedMember.Id);
+
+        var tags = new TopicTag[]
+        {
+            TopicTag.Create(Tag.Whatever),
+            TopicTag.Create(Tag.Economy),
+            TopicTag.Create(Tag.Finance)
+        };
+        topic.AddTags(tags);
+
+        // Act
+        _dbContext.Topics.Add(topic);
+        _dbContext.SaveChanges();
+        var createdTopic = _dbContext.Topics
+            .Include(t => t.Tags)
+            .AsNoTracking().First();
+
+        // Assert
+        createdTopic.Tags.Should().NotBeEmpty();
+        createdTopic.Tags.Should().HaveCountGreaterThanOrEqualTo(3);
+
+    }
+    [Fact]
+    void Topic_Remove_Tag_Test()
+    {
+        Init_Job();
+        // Arrange
+        var topic = Topic.Create(NAME, DESCRIPTION, SROT, CreatedMember.Id);
+        var tag1 = TopicTag.Create(Tag.Whatever);
+        topic.AddTag(tag1);
+
+        // Act
+        topic.RemoveTag(tag1);
+        _dbContext.Topics.Add(topic);
+        _dbContext.SaveChanges();
+        var createdTopic = _dbContext.Topics
+            .Include(t => t.Tags)
+            .AsNoTracking().First();
+
+        // Assert
+        createdTopic.Tags.Should().BeEmpty();
+    }
+
+    [Fact]
+    void Topic_Remove_All_Tag_Test()
+    {
+        Init_Job();
+        // Arrange
+        var topic = Topic.Create(NAME, DESCRIPTION, SROT, CreatedMember.Id);
+        var tag1 = TopicTag.Create(Tag.Whatever);
+        var tag2 = TopicTag.Create(Tag.Whatever);
+        var tag3 = TopicTag.Create(Tag.Whatever);
+        topic.AddTag(tag1);
+        topic.AddTag(tag2);
+        topic.AddTag(tag3);
+
+        // Act
+        topic.RemoveAllTags();
+        _dbContext.Topics.Add(topic);
+        _dbContext.SaveChanges();
+        var createdTopic = _dbContext.Topics
+            .Include(t => t.Tags)
+            .AsNoTracking().First();
+
+        // Assert
+        createdTopic.Tags.Should().BeEmpty();
+    }
+
+
+
 }
 

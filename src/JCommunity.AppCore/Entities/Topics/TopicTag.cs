@@ -5,19 +5,29 @@ public class TopicTag
     public Guid Id { get; private set; }
     public Tag Value { get; private set; }
     public string Name { get; private set; } = string.Empty;
-    public ICollection<Topic> Topics { get; private set; } = Array.Empty<Topic>();
+    public List<Topic> Topics { get; private set; } = new();
+
+    public static TopicTag Create(Tag tag)
+    {
+        return new() { 
+            Name = Enum.GetName(tag)!, 
+            Value = tag
+        };
+    }
 
     public static TopicTag Create(string name)
     {
-        Tag result;
-        Enum.TryParse(name, out result);
+        Tag tag;
+        Enum.TryParse(name, out tag);
 
-        return new() { 
-            Id = Guid.NewGuid(), 
-            Name = name, 
-            Value = result
+        return new()
+        {
+            Name = name,
+            Value = tag
         };
     }
+
+
 }
 
 public enum Tag

@@ -1,5 +1,4 @@
-﻿
-namespace JCommunity.Infrastructure.Repository;
+﻿namespace JCommunity.Infrastructure.Repository;
 
 public class MemberRepository : IMemberRepository
 {
@@ -14,6 +13,7 @@ public class MemberRepository : IMemberRepository
     public Member Add(Member member)
     {
         return _appDbContext.Members.Add(member).Entity;
+
     }
 
     public async Task<Member?> GetByIdAsync(Guid memberId, CancellationToken token)
@@ -22,10 +22,6 @@ public class MemberRepository : IMemberRepository
 
     }
 
-    public void Update(Member member)
-    {
-        _appDbContext.Entry(member).State = EntityState.Modified;
-    }
 
     public async Task<bool> IsUniqueEmailAsync(string email, CancellationToken token)
     {
@@ -42,7 +38,7 @@ public class MemberRepository : IMemberRepository
         return await _appDbContext.Members.ToListAsync(token);
     }
 
-    public void DeleteMember(Member member) 
+    public void Remove(Member member) 
     {
         _appDbContext.Members.Remove(member);
     }

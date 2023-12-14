@@ -20,4 +20,14 @@
 		<InternalsVisibleTo Include="JCommunity.Test.Architecture" />
 		<InternalsVisibleTo Include="JCommunity.Test.Core" />
 	</ItemGroup>
+	<ItemGroup>
+	  <None Remove="TopicService\" />
+	  <None Remove="TopicService\Commands\" />
+	  <None Remove="TopicService\Queries\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="TopicService\" />
+	  <Folder Include="TopicService\Commands\" />
+	  <Folder Include="TopicService\Queries\" />
+	</ItemGroup>
 </Project>

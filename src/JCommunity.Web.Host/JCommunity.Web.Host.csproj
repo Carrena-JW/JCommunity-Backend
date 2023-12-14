@@ -25,4 +25,10 @@
     <ProjectReference Include="..\JCommunity.Services\JCommunity.Services.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="ApiEndpoints\Topic\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ApiEndpoints\Topic\" />
+  </ItemGroup>
 </Project>

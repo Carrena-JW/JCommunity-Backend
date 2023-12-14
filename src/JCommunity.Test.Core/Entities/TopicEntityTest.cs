@@ -145,6 +145,62 @@ public class TopicEntityTest
         createdTopic.Tags.Should().BeEmpty();
     }
 
+    [Fact]
+    void Topic_Update_Name_Test()
+    {
+        Init_Job();
+        // Arrange
+        var topic = Topic.Create(NAME, DESCRIPTION, SROT, CreatedMember.Id);
+        _dbContext.Topics.Add(topic);
+
+        // Act
+        var updatedName = "UpdatedName";
+        topic.UpdateTopicName(updatedName);
+        _dbContext.SaveChanges();
+
+        var createdTopic = _dbContext.Topics.AsNoTracking().First();
+
+        // Assert
+        createdTopic.Name.Should().Be(updatedName);
+    }
+
+    [Fact]
+    void Topic_Update_Desc_Test()
+    {
+        Init_Job();
+        // Arrange
+        var topic = Topic.Create(NAME, DESCRIPTION, SROT, CreatedMember.Id);
+        _dbContext.Topics.Add(topic);
+
+        // Act
+        var updatedDesc = "UpdatedDesc";
+        topic.UpdateTopicDescription(updatedDesc);
+        _dbContext.SaveChanges();
+
+        var createdTopic = _dbContext.Topics.AsNoTracking().First();
+
+        // Assert
+        createdTopic.Description.Should().Be(updatedDesc);
+    }
+
+    [Fact]
+    void Topic_Update_SortOrder_Test()
+    {
+        Init_Job();
+        // Arrange
+        var topic = Topic.Create(NAME, DESCRIPTION, SROT, CreatedMember.Id);
+        _dbContext.Topics.Add(topic);
+
+        // Act
+        var sortOrder = 3;
+        topic.UpdateTopicSortOrder(sortOrder);
+        _dbContext.SaveChanges();
+
+        var createdTopic = _dbContext.Topics.AsNoTracking().First();
+
+        // Assert
+        createdTopic.Sort.Should().Be(sortOrder);
+    }
 
 
 }

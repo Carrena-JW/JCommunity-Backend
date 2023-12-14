@@ -19,7 +19,7 @@ internal class TopicTagTypeConfiguration : IEntityTypeConfiguration<TopicTag>
 
         builder.HasIndex(b=> b.Name).IsUnique();
         builder.Property(b => b.Name)
-            .HasMaxLength(TopicRestriction.CATEGORY_NAME_MAX_LENGTH);
+            .HasMaxLength(TopicRestriction.TAG_NAME_MAX_LENGTH);
 
     }
 }

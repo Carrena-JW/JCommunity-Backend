@@ -25,8 +25,6 @@ public class TopicTag : EntityBase
             Value = tag
         };
     }
-
-
 }
 
 public enum Tag

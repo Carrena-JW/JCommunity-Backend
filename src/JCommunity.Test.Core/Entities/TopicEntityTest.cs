@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿
+using FluentAssertions;
 using JCommunity.AppCore.Entities.Member;
 using JCommunity.AppCore.Entities.Topics;
 using JCommunity.Test.Core.Utils;

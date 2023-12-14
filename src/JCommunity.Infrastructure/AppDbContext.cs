@@ -4,7 +4,8 @@ public class AppDbContext : DbContext, IUnitOfWork
 {
 
     public DbSet<Member> Members { get; set; }
-    public DbSet<TopicTag> TopicCategories { get; set; }
+    public DbSet<Topic> Topics { get; set; }
+    public DbSet<TopicTag> TopicTags { get; set; }
 
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {

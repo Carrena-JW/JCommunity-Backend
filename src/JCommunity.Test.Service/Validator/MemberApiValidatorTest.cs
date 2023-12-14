@@ -3,8 +3,8 @@ using FluentResults;
 using JCommunity.Services.MemberService.Commands;
 using JCommunity.Test.Service.Utils;
 
-namespace JCommunity.Test.Service.EndpointTest;
 
+namespace JCommunity.Test.Service.EndpointTest;
 public class MemberApiValidatorTest
 {
     IValidator<CreateMember.Command> _createMemberValidator;
@@ -185,4 +185,7 @@ public class MemberApiValidatorTest
         // Assert
         normal_case.IsValid.Should().BeFalse();
     }
+
+     
 }
+

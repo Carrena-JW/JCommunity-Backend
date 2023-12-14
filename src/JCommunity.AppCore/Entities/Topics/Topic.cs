@@ -1,21 +1,15 @@
 ﻿namespace JCommunity.AppCore.Entities.Topics;
 
-public class Topic : IAuditEntity, IAggregateRoot
+public class Topic : ArregateRoot 
 {
-    public Guid Id { get; set; }
-    public string Name { get; set; } = string.Empty;
+    
+    public string Name { get; private set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
     public List<TopicTag> Tags { get; private set; } = new();
     public int Sort { get; private set; }
-
     public Member.Member Author { get; private set; } = null!;
-    public Guid AuthorId { get; private set; } 
-
-    public DateTime CreatedAt { get; private set; } = SystemTime.now();
-    public string CreatedMemberId { get; private set; } = string.Empty;
-    public DateTime LastUpdatedAt { get; private set; } = SystemTime.now();
-    public string LastUpdatedMemberId { get; private set; } = string.Empty;
-
+    public Guid AuthorId { get; private set; }
+    
     public static Topic Create(
         string name,
         string description,
@@ -29,8 +23,30 @@ public class Topic : IAuditEntity, IAggregateRoot
             Description = description,
             Sort = sort,
             AuthorId = authorId
-            //Author = author
         };
+    }
+
+    /*
+    * Update Target:
+    *  - Name
+    *  - Description
+    *  - Tags
+    *  - Sort
+    */
+
+    public void UpdateTopicName(string name)
+    {
+        if (Name != name) Name = name;
+    }
+
+    public void UpdateTopicDescription(string desc)
+    {
+        if (Description != desc) Description = desc;
+    }
+
+    public void UpdateTopicSortOrder(int sort)
+    {
+        if (Sort != sort) Sort = sort;
     }
 
     
@@ -55,10 +71,10 @@ public class Topic : IAuditEntity, IAggregateRoot
     {
         Tags.Remove(tag);
     }
-}
 
-/*
-    public const int NAME_MIN_LENGTH = 2;
-    public const int NAME_MAX_LENGTH = 20;
-    public const int DESCRIPTION_MAX_LENGTH = 100;
- */
+    public void UpdateLastUpdateAt()
+    {
+        this.LastUpdatedAt = SystemTime.now();
+    }
+}
+ 

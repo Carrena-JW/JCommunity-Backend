@@ -1,18 +1,13 @@
 ﻿namespace JCommunity.AppCore.Entities.Member;
 
-public class Member : IAuditEntity, IAggregateRoot
+public class Member : ArregateRoot
 {
-    public Guid Id { get; private set; } 
     public string Name { get; private set; } = string.Empty;
     public string NickName { get; private set; } = string.Empty;
     public string Email { get; private set; } = string.Empty;
     public string Password { get; private set; } = string.Empty;
     public MemberStatus MemberStatus { get; private set; } = MemberStatus.Active;
-    public DateTime CreatedAt { get; private set; } = SystemTime.now();
-    public string CreatedMemberId { get; private set; } = string.Empty;
-    public DateTime LastUpdatedAt { get; private set; } = SystemTime.now();
-    public string LastUpdatedMemberId { get; private set; } = string.Empty;
-
+   
     public string GetMemberId() 
     {
         return this.Id.ToString();
@@ -51,24 +46,18 @@ public class Member : IAuditEntity, IAggregateRoot
 
     public void UpdateNickname(string nickName)
     {
-        if (this.NickName == nickName) return;
-        
-        this.NickName = nickName; 
+        if (this.NickName != nickName) this.NickName = nickName; 
     }
 
     public void UpdatePassword(string password)
     {
         var hashed = PasswordHasher.HashPassword(password);
-        if (this.Password == hashed) return;
-            
-        this.Password = hashed;
+        if (this.Password != hashed) this.Password = hashed;
     }
 
     public void UpdateEmail(string email)
     {
-        if (this.Email == email) return;
-
-        this.Email = email;
+        if (this.Email != email) this.Email = email;
     }
 
     public void UpdateLastUpdateAt()

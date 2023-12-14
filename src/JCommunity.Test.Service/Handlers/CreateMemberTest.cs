@@ -81,7 +81,7 @@ public class CreateMemberTest
 		var result = await _handler.Handle(command,new ());
 
         // Assert
-        result.Errors.Should().Contain(x => x.GetType() == typeof(MemberError.EmailNotUnique));
+        result.Errors.Should().Contain(x => x.GetType().Equals(typeof(MemberError.EmailNotUnique)));
 	}
 
     [Fact]
@@ -96,7 +96,7 @@ public class CreateMemberTest
         var result = await _handler.Handle(command, new ());
 
         // Assert
-        result.Errors.Should().Contain(x => x.GetType() == typeof(MemberError.NicknameNotUnique));
+        result.Errors.Should().Contain(x => x.GetType().Equals(typeof(MemberError.NicknameNotUnique)));
     }
 }
 

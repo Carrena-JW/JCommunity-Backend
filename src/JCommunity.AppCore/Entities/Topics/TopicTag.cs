@@ -1,8 +1,7 @@
 ﻿namespace JCommunity.AppCore.Entities.Topics;
 
-public class TopicTag
-{
-    public Guid Id { get; private set; }
+public class TopicTag : EntityBase
+{ 
     public Tag Value { get; private set; }
     public string Name { get; private set; } = string.Empty;
     public List<Topic> Topics { get; private set; } = new();

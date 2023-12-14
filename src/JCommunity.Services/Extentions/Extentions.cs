@@ -1,8 +1,4 @@
-﻿
-
-using JCommunity.Services.ServiceBehaviors;
-
-namespace JCommunity.Services.Extentions;
+﻿namespace JCommunity.Services.Extentions;
 
 public static class Extentions
 {
@@ -11,6 +7,7 @@ public static class Extentions
         builder.Services.AddValidatorsFromAssembly(typeof(AssemblyReference).Assembly);
 
         builder.Services.AddScoped<IMemberRepository, MemberRepository>();
+        builder.Services.AddScoped<ITopicRepository, TopicRepository>();
 
         builder.Services.AddMediatR(cfg =>
         {

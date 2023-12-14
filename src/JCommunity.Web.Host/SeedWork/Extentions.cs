@@ -1,4 +1,6 @@
-﻿namespace JCommunity.Web.Host.SeedWork;
+﻿using JCommunity.Web.Host.ApiEndpoints.Topic;
+
+namespace JCommunity.Web.Host.SeedWork;
 
 public static class Extentions
 {
@@ -92,6 +94,14 @@ public static class Extentions
         rootMapPath.MapGroup("/api/v1/Members")
             .WithTags(new[] { "Member Command API" })
             .MapMemberCommandApi();
+
+        rootMapPath.MapGroup("/api/v1/Topics")
+            .WithTags(new[] { "Topic Command API" })
+            .MapTopicCommandApi();
+
+        rootMapPath.MapGroup("/api/v1/Topics")
+            .WithTags(new[] { "Topic Query API" })
+            .MapTopicQueryApi();
         #endregion
 
         #region [Health check]

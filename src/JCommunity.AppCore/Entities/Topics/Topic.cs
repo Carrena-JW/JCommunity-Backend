@@ -5,7 +5,7 @@ public class Topic : ArregateRoot
     
     public string Name { get; private set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
-    public List<TopicTag> Tags { get; private set; } = new();
+    public HashSet<TopicTag> Tags { get; private set; } = new();
     public int Sort { get; private set; }
     public Member.Member Author { get; private set; } = null!;
     public Guid AuthorId { get; private set; }
@@ -59,7 +59,11 @@ public class Topic : ArregateRoot
 
     public void AddTags(TopicTag[] tags)
     {
-        Tags.AddRange(tags);
+        foreach (var tag in tags.AsEnumerable())
+        {
+            Tags.Add(tag);
+        }
+         
     }
 
     public void RemoveAllTags()

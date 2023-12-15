@@ -33,7 +33,7 @@ internal class TopicTypeConfiguration : IEntityTypeConfiguration<Topic>
 
         // Tags
         builder.HasMany(builder => builder.Tags)
-             .WithOne(builder => builder.Topic)
+             .WithOne()
              .HasForeignKey(builder => builder.TopicId);
 
 

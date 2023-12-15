@@ -8,6 +8,7 @@ public class Topic : ArregateRoot
     public HashSet<TopicTag> Tags { get; private set; } = new();
     public int Sort { get; private set; }
     public Member.Member Author { get; private set; } = null!;
+    [JsonIgnore]
     public Guid AuthorId { get; private set; }
     
     public static Topic Create(

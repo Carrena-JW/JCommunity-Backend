@@ -29,7 +29,7 @@ public class GetTopicById
             public async Task<Result<Topic>> Handle(Query query, CancellationToken ct)
             {
                 var options = TopicIncludeOptions
-                    .Create(query.IncludeAuthor, query.IncludeTags);
+                    .Create(query.IncludeTags, query.IncludeAuthor);
                  
                 var topic = await _repository.GetTopicByIdAsync(Guid.Parse(query.Id), options,  ct);
                 _logger.LogInformation("Get Topics - topics: {@topic}", topic);

@@ -28,7 +28,7 @@ public class GetTopics
             public async Task<Result<IEnumerable<Topic>>> Handle(Query query, CancellationToken ct)
             {
                 var options = TopicIncludeOptions
-                   .Create(query.IncludeAuthor, query.IncludeTags);
+                   .Create(query.IncludeTags, query.IncludeAuthor);
 
                 var topics = await _repository.GetAllTopicsAsync(options, ct);
 

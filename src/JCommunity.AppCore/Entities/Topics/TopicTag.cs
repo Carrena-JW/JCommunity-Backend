@@ -9,8 +9,6 @@ public class TopicTag : EntityBase
      */
     [JsonIgnore]
     public Guid TopicId { get; private set; }
-    [JsonIgnore]
-    public Topic Topic { get; private set; } = null!;
     public Tag Value { get; private set; }
     public string Name { get; private set; } = string.Empty;
 

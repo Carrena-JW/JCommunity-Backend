@@ -20,6 +20,8 @@ internal class TopicTagTypeConfiguration : IEntityTypeConfiguration<TopicTag>
         builder.Property(builder => builder.Name)
             .HasMaxLength(TopicRestriction.TAG_NAME_MAX_LENGTH);
 
+    
+
         //[DatabaseGenerated(DatabaseGeneratedOption.None)]
     }
 }

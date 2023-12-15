@@ -31,7 +31,7 @@ public class GetTopicById
                 var options = TopicIncludeOptions
                     .Create(query.IncludeAuthor, query.IncludeTags);
                  
-                var topic = await _repository.GetTopicByIdAsync(options, Guid.Parse(query.Id), ct);
+                var topic = await _repository.GetTopicByIdAsync(Guid.Parse(query.Id), options,  ct);
                 _logger.LogInformation("Get Topics - topics: {@topic}", topic);
 
                 if (topic == null) return Result.Ok();

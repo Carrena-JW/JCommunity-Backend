@@ -6,43 +6,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace JCommunity.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class _231213_01 : Migration
+    public partial class _231216_01 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "topic_categories",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "text", nullable: false),
-                    Category = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_topic_categories", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "topics",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "text", nullable: false),
-                    Title = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
-                    Description = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    Sort = table.Column<int>(type: "integer", nullable: false),
-                    AuthorId = table.Column<string>(type: "text", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    CreatedMemberId = table.Column<string>(type: "text", nullable: false),
-                    LastUpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    LastUpdatedMemberId = table.Column<string>(type: "text", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_topics", x => x.Id);
-                    table.UniqueConstraint("AK_topics_AuthorId", x => x.AuthorId);
-                });
-
             migrationBuilder.CreateTable(
                 name: "members",
                 columns: table => new
@@ -56,17 +24,56 @@ namespace JCommunity.Infrastructure.Migrations
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreatedMemberId = table.Column<string>(type: "text", nullable: false),
                     LastUpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    LastUpdatedMemberId = table.Column<string>(type: "text", nullable: false),
-                    TopicAuthorId = table.Column<string>(type: "text", nullable: true)
+                    LastUpdatedMemberId = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_members", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "topics",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "text", nullable: false),
+                    Name = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
+                    Description = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    Sort = table.Column<int>(type: "integer", nullable: false),
+                    AuthorId = table.Column<string>(type: "text", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatedMemberId = table.Column<string>(type: "text", nullable: false),
+                    LastUpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    LastUpdatedMemberId = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_topics", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_members_topics_TopicAuthorId",
-                        column: x => x.TopicAuthorId,
+                        name: "FK_topics_members_AuthorId",
+                        column: x => x.AuthorId,
+                        principalTable: "members",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "topic_tags",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "text", nullable: false),
+                    TopicId = table.Column<string>(type: "text", nullable: false),
+                    Value = table.Column<int>(type: "integer", nullable: false),
+                    Name = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_topic_tags", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_topic_tags_topics_TopicId",
+                        column: x => x.TopicId,
                         principalTable: "topics",
-                        principalColumn: "AuthorId");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -82,15 +89,19 @@ namespace JCommunity.Infrastructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_members_TopicAuthorId",
-                table: "members",
-                column: "TopicAuthorId",
-                unique: true);
+                name: "IX_topic_tags_TopicId",
+                table: "topic_tags",
+                column: "TopicId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_topics_Title",
+                name: "IX_topics_AuthorId",
                 table: "topics",
-                column: "Title",
+                column: "AuthorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_topics_Name",
+                table: "topics",
+                column: "Name",
                 unique: true);
         }
 
@@ -98,13 +109,13 @@ namespace JCommunity.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "members");
-
-            migrationBuilder.DropTable(
-                name: "topic_categories");
+                name: "topic_tags");
 
             migrationBuilder.DropTable(
                 name: "topics");
+
+            migrationBuilder.DropTable(
+                name: "members");
         }
     }
 }

@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace JCommunity.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231213104106_231213_02")]
-    partial class _231213_02
+    [Migration("20231215181904_231216_01")]
+    partial class _231216_01
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,6 +28,7 @@ namespace JCommunity.Infrastructure.Migrations
             modelBuilder.Entity("JCommunity.AppCore.Entities.Member.Member", b =>
                 {
                     b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedAt")
@@ -67,18 +68,12 @@ namespace JCommunity.Infrastructure.Migrations
                         .HasMaxLength(600)
                         .HasColumnType("character varying(600)");
 
-                    b.Property<string>("TopicAuthorId")
-                        .HasColumnType("text");
-
                     b.HasKey("Id");
 
                     b.HasIndex("Email")
                         .IsUnique();
 
                     b.HasIndex("NickName")
-                        .IsUnique();
-
-                    b.HasIndex("TopicAuthorId")
                         .IsUnique();
 
                     b.ToTable("members", (string)null);
@@ -123,6 +118,8 @@ namespace JCommunity.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AuthorId");
+
                     b.HasIndex("Name")
                         .IsUnique();
 
@@ -137,6 +134,11 @@ namespace JCommunity.Infrastructure.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<string>("TopicId")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<int>("Value")
@@ -144,15 +146,36 @@ namespace JCommunity.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("topic_categories", (string)null);
+                    b.HasIndex("TopicId");
+
+                    b.ToTable("topic_tags", (string)null);
                 });
 
-            modelBuilder.Entity("JCommunity.AppCore.Entities.Member.Member", b =>
+            modelBuilder.Entity("JCommunity.AppCore.Entities.Topics.Topic", b =>
                 {
-                    b.HasOne("JCommunity.AppCore.Entities.Topics.Topic", null)
-                        .WithOne()
-                        .HasForeignKey("JCommunity.AppCore.Entities.Member.Member", "TopicAuthorId")
-                        .HasPrincipalKey("JCommunity.AppCore.Entities.Topics.Topic", "AuthorId");
+                    b.HasOne("JCommunity.AppCore.Entities.Member.Member", "Author")
+                        .WithMany()
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Author");
+                });
+
+            modelBuilder.Entity("JCommunity.AppCore.Entities.Topics.TopicTag", b =>
+                {
+                    b.HasOne("JCommunity.AppCore.Entities.Topics.Topic", "Topic")
+                        .WithMany("Tags")
+                        .HasForeignKey("TopicId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Topic");
+                });
+
+            modelBuilder.Entity("JCommunity.AppCore.Entities.Topics.Topic", b =>
+                {
+                    b.Navigation("Tags");
                 });
 #pragma warning restore 612, 618
         }

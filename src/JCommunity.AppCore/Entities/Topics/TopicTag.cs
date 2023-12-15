@@ -1,13 +1,23 @@
 ﻿namespace JCommunity.AppCore.Entities.Topics;
 
 public class TopicTag : EntityBase
-{ 
+{
+    /* EF has a relationship mapping and retains its properties and without Dto,
+     * infinite loop problems may occur during 
+     * the Json direct deterioration process, so be sure to attach the tag
+     * !!!!Must to add properties in child relationship properties!!!!!
+     */
+    [JsonIgnore]
+    public Guid TopicId { get; private set; }
+    [JsonIgnore]
+    public Topic Topic { get; private set; } = null!;
     public Tag Value { get; private set; }
     public string Name { get; private set; } = string.Empty;
 
     public static TopicTag Create(Tag tag)
     {
-        return new() { 
+        return new() {
+            Id = Guid.NewGuid(),
             Name = Enum.GetName(tag)!, 
             Value = tag
         };
@@ -20,6 +30,7 @@ public class TopicTag : EntityBase
 
         return new()
         {
+            Id = Guid.NewGuid(),
             Name = name,
             Value = tag
         };

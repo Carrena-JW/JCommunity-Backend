@@ -1,6 +1,4 @@
-﻿using JCommunity.AppCore.Entities.Topics;
-
-namespace JCommunity.Services.TopicService.Commands;
+﻿namespace JCommunity.Services.TopicService.Commands;
 
 public class CreateTopic 
 {
@@ -70,9 +68,8 @@ public class CreateTopic
                 _repository.Add(topic);
                 await _repository.UnitOfWork.SaveChangesAsync(ct);
 
+                _logger.LogInformation("Creating Topic : {@topic}", topic);
                 return topic.Id.ToString();
-
-
 
             }
         }
@@ -80,11 +77,3 @@ public class CreateTopic
     }
 }
 
-
-
-//public const int NAME_MIN_LENGTH = 2;
-//public const int NAME_MAX_LENGTH = 20;
-
-//public const int CATEGORY_NAME_MAX_LENGTH = 20;
-
-//public const int DESCRIPTION_MAX_LENGTH = 100;

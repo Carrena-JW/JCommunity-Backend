@@ -16,6 +16,19 @@ public class TopicError
         }
     }
 
+    public class TagNotFound : Error, IError
+    {
+        private const string TOPIC_TAG_NOT_FOUND_ERROR_CODE = "Topic.Tag.NotFound";
+        public TagNotFound(string topicTagid) : base()
+        {
+            this.Message = "Topic tag not found.";
+
+            WithMetadata("PropertyName", nameof(topicTagid));
+            WithMetadata("AttemptedValue", topicTagid);
+            WithMetadata("ErrorCode", TOPIC_TAG_NOT_FOUND_ERROR_CODE);
+        }
+    }
+
 
     public class NameNotUnique : Error, IError
     {

@@ -23,22 +23,24 @@ public class TopicRepository : ITopicRepository
     }
 
     public async Task<Topic?> GetTopicByIdAsync(
-         TopicIncludeOptions options, 
          Guid topicId, 
-         CancellationToken token)
+         TopicIncludeOptions? options = null, 
+         CancellationToken token = new())
     {
         var query = _appDbContext.Topics.AsQueryable();
-        query = IncludeOption(options, query);
+        
+        if(options != null) query = IncludeOption(options, query);
 
         return await query.SingleOrDefaultAsync(t => t.Id == topicId, token);
     }
 
     public async Task<IEnumerable<Topic>> GetAllTopicsAsync(
-        TopicIncludeOptions options,
+        TopicIncludeOptions? options,
         CancellationToken token)
     {
         var query = _appDbContext.Topics.AsNoTracking();
-        query = IncludeOption(options, query);
+
+        if(options != null) query = IncludeOption(options, query);
       
         return await query.ToListAsync(token);
     }

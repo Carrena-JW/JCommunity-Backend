@@ -13,12 +13,14 @@ internal class TopicTagTypeConfiguration : IEntityTypeConfiguration<TopicTag>
            .HasConversion(
                Id => Id.ToString(),
                value => Guid.Parse(value)
-           );
+           )
+           .ValueGeneratedNever();
          
 
-        builder.Property(b => b.Name)
+        builder.Property(builder => builder.Name)
             .HasMaxLength(TopicRestriction.TAG_NAME_MAX_LENGTH);
 
+        //[DatabaseGenerated(DatabaseGeneratedOption.None)]
     }
 }
 

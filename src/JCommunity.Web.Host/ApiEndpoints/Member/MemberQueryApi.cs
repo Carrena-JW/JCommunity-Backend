@@ -24,7 +24,7 @@ internal static class MemberQueryApi
     }
 
     private static async Task<IResult> GetMembersAsync(
-        [AsParameters] GetTopics.Query request,
+        [AsParameters] GetMembers.Query request,
         [AsParameters] MemberApiService services,
         CancellationToken token = new())
     {

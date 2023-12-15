@@ -49,7 +49,10 @@ public class Topic : ArregateRoot
         if (Sort != sort) Sort = sort;
     }
 
-    
+    public void UpdateTags(IEnumerable<TopicTag> tags)
+    {
+        this.Tags = tags.ToHashSet();
+    }
 
     public void AddTag(TopicTag tag)
     {
@@ -59,6 +62,8 @@ public class Topic : ArregateRoot
 
     public void AddTags(TopicTag[] tags)
     {
+        
+
         foreach (var tag in tags.AsEnumerable())
         {
             Tags.Add(tag);

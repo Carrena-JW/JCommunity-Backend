@@ -54,14 +54,16 @@ public class UpdateMember
                 if (findMember == null) return Result.Fail(new MemberError.NotFound(command.Id));
 
                 //check if nickname and email is the unique value
-                if (!string.IsNullOrEmpty(command.Email))
+                if (!string.IsNullOrEmpty(command.Email) &&
+                    findMember.Email != command.Email)
                 {
                     var isUniqueEmail = await _memberRepository.IsUniqueEmailAsync(command.Email, ct);
                     if (isUniqueEmail == false) return Result.Fail(new MemberError.EmailNotUnique(command.Email));
                     findMember.UpdateEmail(command.Email);
                 }
 
-                if (!string.IsNullOrEmpty(command.Nickname))
+                if (!string.IsNullOrEmpty(command.Nickname) &&
+                    findMember.NickName != command.Nickname)
                 {
                     var IsUniqueNickNameAsync = await _memberRepository.IsUniqueNickNameAsync(command.Nickname, ct);
                     if (IsUniqueNickNameAsync == false) return Result.Fail(new MemberError.NicknameNotUnique(command.Nickname));

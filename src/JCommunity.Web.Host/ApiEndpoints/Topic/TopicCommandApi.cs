@@ -11,8 +11,8 @@ public static class TopicCommandApi
         app.MapPut("/", UpdateTopicAsync);
         app.MapDelete("/{id}", DeleteTopicAsync);
 
-        app.MapPost("/{topicId}/topictags", CreateTopicTagAsync);
-        app.MapDelete("/{topicId}/topictags/{topicTagId}", DeleteTopicTagAsync);
+        app.MapPost("/{topicId}/TopicTags", AddTopicTagAsync);
+        app.MapDelete("/{topicId}/TopicTags/{topicTagId}", DeleteTopicTagAsync);
         #endregion
 
         return app;
@@ -26,28 +26,54 @@ public static class TopicCommandApi
         var result = await services.Mediator.Send(request, token);
 
         return result.IsSuccess ? Results.Ok(result.Value) :
-                                 Results.BadRequest(result.Errors);
+                                  Results.BadRequest(result.Errors);
+    }
+    private static async Task<IResult> DeleteTopicAsync(
+        [AsParameters] DeleteTopic.Command request,
+        [AsParameters] TopicApiService services,
+        CancellationToken token = new())
+    {
+        var result = await services.Mediator.Send(request, token);
+
+        return result.IsSuccess ? Results.Ok(result.Value) :
+                                  Results.BadRequest(result.Errors);
     }
 
-    private static Task CreateTopicTagAsync(HttpContext context)
+
+    private static async Task<IResult> UpdateTopicAsync(
+        [FromBody] UpdateTopic.Command request,
+        [AsParameters] TopicApiService services,
+        CancellationToken token = new())
     {
-        throw new NotImplementedException();
+        var result = await services.Mediator.Send(request, token);
+
+        return result.IsSuccess ? Results.Ok(result.Value) :
+                                  Results.BadRequest(result.Errors);
     }
 
-    private static Task DeleteTopicTagAsync(HttpContext context)
+    private static async Task<IResult> AddTopicTagAsync(
+        [FromBody] AddTopicTag.Command request,
+        [AsParameters] TopicApiService services,
+        CancellationToken token = new())
     {
-        throw new NotImplementedException();
+        var result = await services.Mediator.Send(request, token);
+
+        return result.IsSuccess ? Results.Ok(result.Value) :
+                                  Results.BadRequest(result.Errors);
     }
 
-    private static Task DeleteTopicAsync(HttpContext context)
+
+    private static async Task<IResult> DeleteTopicTagAsync(
+        [AsParameters] DeleteTopicTag.Command request,
+        [AsParameters] TopicApiService services,
+        CancellationToken token = new())
     {
-        throw new NotImplementedException();
+        var result = await services.Mediator.Send(request, token);
+
+        return result.IsSuccess ? Results.Ok(result.Value) :
+                                  Results.BadRequest(result.Errors);
     }
 
-    private static Task UpdateTopicAsync(HttpContext context)
-    {
-        throw new NotImplementedException();
-    }
 
 }
 

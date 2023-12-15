@@ -6,15 +6,15 @@ public interface ITopicRepository : IRepository<Topic>
     void Remove(Topic topic);
 
     Task<Topic?> GetTopicByIdAsync(
-        TopicIncludeOptions options,
         Guid topicId, 
-        CancellationToken token);
+        TopicIncludeOptions? options = null, 
+        CancellationToken token = new());
 
     Task<IEnumerable<Topic>> GetAllTopicsAsync(
-        TopicIncludeOptions options,
-        CancellationToken token);
+        TopicIncludeOptions? options = null,
+        CancellationToken token = new());
 
-    Task<bool> IsUniqueTopicNameAsync(string name, CancellationToken token);
+    Task<bool> IsUniqueTopicNameAsync(string name, CancellationToken token = new());
  
 }
 

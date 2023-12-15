@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Reflection.Emit;
+using System.Reflection.Metadata;
 
 namespace JCommunity.Infrastructure.Entitybuilderurations;
 
@@ -30,19 +32,19 @@ internal class TopicTypeConfiguration : IEntityTypeConfiguration<Topic>
 
 
         // Tags
-        builder.HasMany(e => e.Tags)
-           .WithMany()
-           .UsingEntity<TopicTagMap>();
-           
+        builder.HasMany(builder => builder.Tags)
+             .WithOne(builder => builder.Topic)
+             .HasForeignKey(builder => builder.TopicId);
+
 
         // Author
         builder.HasOne(builder => builder.Author)
             .WithMany()
-            .HasForeignKey(b => b.AuthorId);
+            .HasForeignKey(builder => builder.AuthorId);
 
 
 
-        builder.Property(b => b.AuthorId)
+        builder.Property(builder => builder.AuthorId)
             .HasConversion(
                 Id => Id.ToString(),
                 value => Guid.Parse(value)

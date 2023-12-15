@@ -134,27 +134,18 @@ namespace JCommunity.Infrastructure.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
 
+                    b.Property<string>("TopicId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<int>("Value")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("TopicId");
+
                     b.ToTable("topic_tags", (string)null);
-                });
-
-            modelBuilder.Entity("JCommunity.AppCore.Entities.Topics.TopicTagMap", b =>
-                {
-                    b.Property<string>("TopicId")
-                        .HasColumnType("text");
-
-                    b.Property<string>("TopicTagId")
-                        .HasColumnType("text");
-
-                    b.HasKey("TopicId", "TopicTagId");
-
-                    b.HasIndex("TopicTagId");
-
-                    b.ToTable("topic_tag_map", (string)null);
                 });
 
             modelBuilder.Entity("JCommunity.AppCore.Entities.Topics.Topic", b =>
@@ -168,19 +159,20 @@ namespace JCommunity.Infrastructure.Migrations
                     b.Navigation("Author");
                 });
 
-            modelBuilder.Entity("JCommunity.AppCore.Entities.Topics.TopicTagMap", b =>
+            modelBuilder.Entity("JCommunity.AppCore.Entities.Topics.TopicTag", b =>
                 {
-                    b.HasOne("JCommunity.AppCore.Entities.Topics.Topic", null)
-                        .WithMany()
+                    b.HasOne("JCommunity.AppCore.Entities.Topics.Topic", "Topic")
+                        .WithMany("Tags")
                         .HasForeignKey("TopicId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("JCommunity.AppCore.Entities.Topics.TopicTag", null)
-                        .WithMany()
-                        .HasForeignKey("TopicTagId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Topic");
+                });
+
+            modelBuilder.Entity("JCommunity.AppCore.Entities.Topics.Topic", b =>
+                {
+                    b.Navigation("Tags");
                 });
 #pragma warning restore 612, 618
         }

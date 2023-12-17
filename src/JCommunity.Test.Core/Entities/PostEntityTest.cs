@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
-using JCommunity.AppCore.Entities.Member;
-using JCommunity.AppCore.Entities.Post;
-using JCommunity.AppCore.Entities.Topics;
+using JCommunity.AppCore.Entities.MemberAggregate;
+using JCommunity.AppCore.Entities.PostAggregate;
+using JCommunity.AppCore.Entities.TopicAggregate;
 using JCommunity.Test.Core.Utils;
 using Microsoft.EntityFrameworkCore;
 

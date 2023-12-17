@@ -1,4 +1,4 @@
-﻿namespace JCommunity.AppCore.Entities.Member;
+﻿namespace JCommunity.AppCore.Entities.MemberAggregate;
 
 public static class MemberRestriction
 {

@@ -25,7 +25,7 @@ namespace JCommunity.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("JCommunity.AppCore.Entities.Member.Member", b =>
+            modelBuilder.Entity("JCommunity.AppCore.Entities.MemberAggregate.Member", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
@@ -79,7 +79,7 @@ namespace JCommunity.Infrastructure.Migrations
                     b.ToTable("members", (string)null);
                 });
 
-            modelBuilder.Entity("JCommunity.AppCore.Entities.Topics.Topic", b =>
+            modelBuilder.Entity("JCommunity.AppCore.Entities.TopicAggregate.Topic", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
@@ -126,7 +126,7 @@ namespace JCommunity.Infrastructure.Migrations
                     b.ToTable("topics", (string)null);
                 });
 
-            modelBuilder.Entity("JCommunity.AppCore.Entities.Topics.TopicTag", b =>
+            modelBuilder.Entity("JCommunity.AppCore.Entities.TopicAggregate.TopicTag", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
@@ -151,9 +151,9 @@ namespace JCommunity.Infrastructure.Migrations
                     b.ToTable("topic_tags", (string)null);
                 });
 
-            modelBuilder.Entity("JCommunity.AppCore.Entities.Topics.Topic", b =>
+            modelBuilder.Entity("JCommunity.AppCore.Entities.TopicAggregate.Topic", b =>
                 {
-                    b.HasOne("JCommunity.AppCore.Entities.Member.Member", "Author")
+                    b.HasOne("JCommunity.AppCore.Entities.MemberAggregate.Member", "Author")
                         .WithMany()
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -162,9 +162,9 @@ namespace JCommunity.Infrastructure.Migrations
                     b.Navigation("Author");
                 });
 
-            modelBuilder.Entity("JCommunity.AppCore.Entities.Topics.TopicTag", b =>
+            modelBuilder.Entity("JCommunity.AppCore.Entities.TopicAggregate.TopicTag", b =>
                 {
-                    b.HasOne("JCommunity.AppCore.Entities.Topics.Topic", "Topic")
+                    b.HasOne("JCommunity.AppCore.Entities.TopicAggregate.Topic", "Topic")
                         .WithMany("Tags")
                         .HasForeignKey("TopicId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -173,7 +173,7 @@ namespace JCommunity.Infrastructure.Migrations
                     b.Navigation("Topic");
                 });
 
-            modelBuilder.Entity("JCommunity.AppCore.Entities.Topics.Topic", b =>
+            modelBuilder.Entity("JCommunity.AppCore.Entities.TopicAggregate.Topic", b =>
                 {
                     b.Navigation("Tags");
                 });

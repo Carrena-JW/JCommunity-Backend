@@ -1,4 +1,4 @@
-﻿namespace JCommunity.AppCore.Entities.Post;
+﻿namespace JCommunity.AppCore.Entities.PostAggregate;
 
 public class PostComment : EntityBase
 {
@@ -6,7 +6,7 @@ public class PostComment : EntityBase
     public Guid? ParentCommentId { get; private set; } = null;
     public string Contents { get; private set; } = string.Empty;
     public Guid AuthorId { get; private set; }
-    public Member.Member Author { get; private set; } = null!;
+    public Member Author { get; private set; } = null!;
     public DateTime CreatedOrUpdatedAt { get; protected set; } = SystemTime.now();
 
 

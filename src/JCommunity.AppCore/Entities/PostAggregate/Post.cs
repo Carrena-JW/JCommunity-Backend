@@ -1,6 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-
-namespace JCommunity.AppCore.Entities.Post;
+﻿namespace JCommunity.AppCore.Entities.PostAggregate;
 
 public class Post : AggregateRoot
 {
@@ -18,7 +16,7 @@ public class Post : AggregateRoot
     public List<PostReport> Reports { get; private set; } = new();
     [JsonIgnore]
     public Guid AuthorId { get; private set; }
-    public Member.Member Author { get; private set; } = null!;
+    public Member Author { get; private set; } = null!;
 
     public static Post Create(
         Guid topicId,

@@ -1,4 +1,4 @@
-﻿namespace JCommunity.AppCore.Entities.Post;
+﻿namespace JCommunity.AppCore.Entities.PostAggregate;
 
 public static class PostRestriction
 {

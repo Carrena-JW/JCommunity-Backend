@@ -1,5 +1,5 @@
 ﻿
-using JCommunity.AppCore.Entities.Topics;
+using JCommunity.AppCore.Entities.TopicAggregate;
 
 namespace JCommunity.Web.Host.ApiEndpoints.Topic;
 

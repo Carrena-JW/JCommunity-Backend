@@ -1,5 +1,4 @@
-﻿namespace JCommunity.AppCore.Entities.Topics;
-
+﻿namespace JCommunity.AppCore.Entities.TopicAggregate;
 public class Topic : AggregateRoot 
 {
     
@@ -7,7 +6,7 @@ public class Topic : AggregateRoot
     public string Description { get; set; } = string.Empty;
     public HashSet<TopicTag> Tags { get; private set; } = new();
     public int Sort { get; private set; }
-    public Member.Member Author { get; private set; } = null!;
+    public Member Author { get; private set; } = null!;
     [JsonIgnore]
     public Guid AuthorId { get; private set; }
     

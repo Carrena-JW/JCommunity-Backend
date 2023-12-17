@@ -1,4 +1,4 @@
-﻿namespace JCommunity.AppCore.Entities.Topics;
+﻿namespace JCommunity.AppCore.Entities.TopicAggregate;
 public class TopicIncludeOptions
 {
     public bool? IncludeAuthor { get; init; }

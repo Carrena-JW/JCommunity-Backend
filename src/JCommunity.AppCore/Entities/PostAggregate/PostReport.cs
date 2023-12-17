@@ -1,4 +1,4 @@
-﻿namespace JCommunity.AppCore.Entities.Post;
+﻿namespace JCommunity.AppCore.Entities.PostAggregate;
 
 public class PostReport : EntityBase
 {
@@ -9,7 +9,7 @@ public class PostReport : EntityBase
     public DateTime CreatedOrUpdatedAt { get; private set; } = SystemTime.now();
 
     public Guid AuthorId { get; private set; }
-    public Member.Member Author { get; private set; } = new();
+    public Member Author { get; private set; } = new();
 }
 
 public enum ReportCategory

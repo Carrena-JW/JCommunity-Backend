@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
 using JCommunity.AppCore.Core.Utils;
-using JCommunity.AppCore.Entities.Member;
+using JCommunity.AppCore.Entities.MemberAggregate;
 using JCommunity.Test.Core.Utils;
 
 namespace JCommunity.Test.Core.Entities;

@@ -1,10 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Processing;
-
-namespace JCommunity.Infrastructure.Repository;
+﻿namespace JCommunity.Infrastructure.Repository;
 
 public class FileRepository : IFileRepository
 {
@@ -68,14 +62,6 @@ public class FileRepository : IFileRepository
 
         _logger.LogInformation("Uploading file - file: {@path}", path);
         return path;
-    }
-
-    private void CreateThumbnail(string originFilePath, string outFilePath, int thumbnailWidth)
-    {
-        var image = Image.Load(originFilePath);
-        image.Mutate(x => x.Resize(thumbnailWidth, 0));
-
-        image.Save(outFilePath);  // 지정된 경로에 이미지를 저장합니다.
     }
 }
 

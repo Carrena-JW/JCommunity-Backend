@@ -1,8 +1,7 @@
-﻿using JCommunity.AppCore.Entities.Member;
-using JCommunity.AppCore.Entities.Post;
-using JCommunity.AppCore.Entities.Topics;
+﻿using JCommunity.AppCore.Entities.MemberAggregate;
+using JCommunity.AppCore.Entities.PostAggregate;
+using JCommunity.AppCore.Entities.TopicAggregate;
 using Microsoft.EntityFrameworkCore;
-using System.Xml;
 
 namespace JCommunity.Test.Core.Utils;
 

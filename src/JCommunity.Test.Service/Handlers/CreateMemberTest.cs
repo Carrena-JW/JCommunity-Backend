@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using JCommunity.AppCore.Core.Abstractions;
 using JCommunity.AppCore.Core.Errors;
-using JCommunity.AppCore.Entities.Member;
+using JCommunity.AppCore.Entities.MemberAggregate;
 using JCommunity.Services.MemberService.Commands;
 using Microsoft.Extensions.Logging;
 using Moq;

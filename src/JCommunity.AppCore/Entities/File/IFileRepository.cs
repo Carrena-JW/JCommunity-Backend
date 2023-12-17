@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-
-namespace JCommunity.AppCore.Entities.Member;
+﻿namespace JCommunity.AppCore.Entities.File;
 
 public interface IFileRepository 
 {

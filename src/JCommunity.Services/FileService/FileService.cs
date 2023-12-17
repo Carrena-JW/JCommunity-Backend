@@ -1,4 +1,5 @@
 ﻿namespace JCommunity.Services.FileService;
+
 public interface IFileService
 {
     Task<string> SaveFileAsync(IFormFile file, bool containThumnail = false, CancellationToken token=default);

@@ -10,6 +10,7 @@ public static class Extentions
 
         builder.Services.AddScoped<IMemberRepository, MemberRepository>();
         builder.Services.AddScoped<ITopicRepository, TopicRepository>();
+        builder.Services.AddScoped<IPostRepository, PostRepository>();
 
         builder.Services.AddSingleton<IFileRepository, FileRepository>();
         builder.Services.AddSingleton<IFileService, FileService.FileService>();
@@ -22,3 +23,4 @@ public static class Extentions
     }
  
 }
+

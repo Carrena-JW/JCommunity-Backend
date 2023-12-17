@@ -1,6 +1,4 @@
-﻿using FluentResults;
-
-namespace JCommunity.Infrastructure.Repository;
+﻿namespace JCommunity.Infrastructure.Repository;
 
 public class TopicRepository : ITopicRepository
 {

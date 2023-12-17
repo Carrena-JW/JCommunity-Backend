@@ -28,15 +28,10 @@ public class PostTypeConfiguration : IEntityTypeConfiguration<Post>
             .HasForeignKey(builder => builder.TopicId);
 
         // PostContents (one to many)
-        builder.Property(builder => builder.PostContentsId)
-            .HasConversion(
-                Id => Id.ToString(),
-                value => Guid.Parse(value)
-            );
-
         builder.HasOne(builder => builder.Contents)
-            .WithMany()
-            .HasForeignKey(builder => builder.PostContentsId);
+            .WithOne()
+            .HasForeignKey<PostContent>(builder => builder.PostId)
+            .IsRequired();
 
         // Author (one to many)
         builder.Property(builder => builder.AuthorId)

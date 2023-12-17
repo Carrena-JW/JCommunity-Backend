@@ -13,15 +13,10 @@ public class PostContentTypeConfiguration : IEntityTypeConfiguration<PostContent
                 value => Guid.Parse(value)
             );
 
-        builder.Property(builder => builder.PostId)
-          .HasConversion(
-              Id => Id.ToString(),
-              value => Guid.Parse(value)
-          );
-
         // Attachments (many to one)
         builder.HasMany(builder => builder.Attachments)
             .WithOne()
             .HasForeignKey(builder => builder.PostContentId);
+        
     }
 }

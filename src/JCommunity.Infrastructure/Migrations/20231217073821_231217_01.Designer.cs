@@ -3,6 +3,7 @@ using System;
 using JCommunity.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace JCommunity.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231217073821_231217_01")]
+    partial class _231217_01
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -109,6 +112,10 @@ namespace JCommunity.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("PostContentsId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("Sources")
                         .IsRequired()
                         .HasColumnType("text");
@@ -125,6 +132,8 @@ namespace JCommunity.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AuthorId");
+
+                    b.HasIndex("PostContentsId");
 
                     b.HasIndex("TopicId");
 
@@ -188,9 +197,6 @@ namespace JCommunity.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PostId")
-                        .IsUnique();
 
                     b.ToTable("post_contents", (string)null);
                 });
@@ -374,6 +380,12 @@ namespace JCommunity.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("JCommunity.AppCore.Entities.Post.PostContent", "Contents")
+                        .WithMany()
+                        .HasForeignKey("PostContentsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("JCommunity.AppCore.Entities.Topics.Topic", "Topic")
                         .WithMany()
                         .HasForeignKey("TopicId")
@@ -381,6 +393,8 @@ namespace JCommunity.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Author");
+
+                    b.Navigation("Contents");
 
                     b.Navigation("Topic");
                 });
@@ -400,15 +414,6 @@ namespace JCommunity.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Author");
-                });
-
-            modelBuilder.Entity("JCommunity.AppCore.Entities.Post.PostContent", b =>
-                {
-                    b.HasOne("JCommunity.AppCore.Entities.Post.Post", null)
-                        .WithOne("Contents")
-                        .HasForeignKey("JCommunity.AppCore.Entities.Post.PostContent", "PostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("JCommunity.AppCore.Entities.Post.PostContentAttachment", b =>
@@ -477,9 +482,6 @@ namespace JCommunity.Infrastructure.Migrations
             modelBuilder.Entity("JCommunity.AppCore.Entities.Post.Post", b =>
                 {
                     b.Navigation("Comments");
-
-                    b.Navigation("Contents")
-                        .IsRequired();
 
                     b.Navigation("Likes");
 

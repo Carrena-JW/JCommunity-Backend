@@ -1,4 +1,5 @@
-﻿using JCommunity.Web.Host.ApiEndpoints.Topic;
+﻿using JCommunity.Web.Host.ApiEndpoints.File;
+using JCommunity.Web.Host.ApiEndpoints.Topic;
 
 namespace JCommunity.Web.Host.SeedWork;
 
@@ -102,6 +103,10 @@ public static class Extentions
         rootMapPath.MapGroup("/api/v1/Topics")
             .WithTags(new[] { "Topic Query API" })
             .MapTopicQueryApi();
+
+        rootMapPath.MapGroup("/api/v1/file")
+            .WithTags(new[] { "File API" })
+            .MapFileApi();
         #endregion
 
         #region [Health check]

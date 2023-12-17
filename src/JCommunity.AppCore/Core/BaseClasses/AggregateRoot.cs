@@ -1,6 +1,6 @@
 ﻿namespace JCommunity.AppCore.Core.BaseClasses;
 
-public class ArregateRoot : EntityBase, IAggregateRoot, IAuditEntity
+public class AggregateRoot : EntityBase, IAggregateRoot, IAuditEntity
 {
     public DateTime CreatedAt { get; protected set; } = SystemTime.now();
 

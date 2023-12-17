@@ -6,7 +6,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<Folder Include="Entities\Articles\" />
 		<Folder Include="Core\BaseClasses\" />
 	</ItemGroup>
 

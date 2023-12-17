@@ -1,6 +1,6 @@
 ﻿namespace JCommunity.AppCore.Entities.Topics;
 
-public class Topic : ArregateRoot 
+public class Topic : AggregateRoot 
 {
     
     public string Name { get; private set; } = string.Empty;

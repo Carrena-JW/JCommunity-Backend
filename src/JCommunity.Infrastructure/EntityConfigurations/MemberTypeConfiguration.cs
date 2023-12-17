@@ -1,6 +1,4 @@
-﻿using JCommunity.AppCore.Entities.Member;
-
-namespace JCommunity.Infrastructure.Entitybuilderurations;
+﻿namespace JCommunity.Infrastructure.Entitybuilderurations;
 
 internal class MemberTypebuilderuration : IEntityTypeConfiguration<Member>
 

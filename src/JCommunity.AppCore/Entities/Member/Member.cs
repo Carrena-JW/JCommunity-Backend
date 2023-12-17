@@ -18,6 +18,7 @@ public class Member : AggregateRoot
         return Guid.Parse(id);
     }
 
+    
 
     public static Member Create(
         string name,

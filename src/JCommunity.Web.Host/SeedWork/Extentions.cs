@@ -61,6 +61,9 @@ public static class Extentions
         services.AddExceptionHandler<GlobalUnhandleExceptionHandler>();
         services.AddProblemDetails();
 
+       
+
+
         return services;
     }
 
@@ -141,6 +144,9 @@ public static class Extentions
             SetupTestMemberSeed.Setup(services);
         }
         #endregion
+
+
+       
 
         return app;
     }

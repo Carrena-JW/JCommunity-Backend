@@ -1,27 +1,31 @@
-﻿
-namespace JCommunity.Web.Host.ApiEndpoints.File;
+﻿namespace JCommunity.Web.Host.ApiEndpoints.File;
 
 internal static class FileApi
 {
     public static IEndpointRouteBuilder MapFileApi(this IEndpointRouteBuilder app)
     {
-        app.MapPost("/", UploadFileAsync);
-        app.MapGet("/", DownloadFileAsync);
+        app.MapPost("/", UploadFileAsync).DisableAntiforgery();
+        app.MapGet("/{fileName}", DownloadFileAsync);
         return app;
     }
-
+   
     private static async Task<IResult> UploadFileAsync(
-        IFormFile file, 
-        CancellationToken token = new())
+        IFormFile file,
+        [FromQuery] bool containThumnail,
+        [AsParameters] FileApiService services,
+        CancellationToken token = default)
     {
-        
-        return Results.Ok(Task.CompletedTask);
+        var result = await services.fileService.SaveFileAsync(file, containThumnail, token);
+
+        return Results.Ok(result);
     }
 
     private static async Task<IResult> DownloadFileAsync(
-        string fileId, 
+        string fileName,
+        [AsParameters] FileApiService services,
         CancellationToken token = new())
     {
-        return Results.Ok(Task.CompletedTask);
+        var (fileType, fileStream) = await services.fileService.GetFileAsync(fileName,token);
+        return Results.File(fileStream, fileType);
     }
 }

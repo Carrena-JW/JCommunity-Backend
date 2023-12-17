@@ -1,4 +1,6 @@
-﻿namespace JCommunity.Services.Extentions;
+﻿using JCommunity.Services.FileService;
+
+namespace JCommunity.Services.Extentions;
 
 public static class Extentions
 {
@@ -8,6 +10,9 @@ public static class Extentions
 
         builder.Services.AddScoped<IMemberRepository, MemberRepository>();
         builder.Services.AddScoped<ITopicRepository, TopicRepository>();
+
+        builder.Services.AddSingleton<IFileRepository, FileRepository>();
+        builder.Services.AddSingleton<IFileService, FileService.FileService>();
 
         builder.Services.AddMediatR(cfg =>
         {

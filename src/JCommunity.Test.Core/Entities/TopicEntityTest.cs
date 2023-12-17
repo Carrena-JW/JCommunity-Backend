@@ -15,7 +15,6 @@ public class TopicEntityTest
     const string NAME = "TOPIC_NAME";
     const string DESCRIPTION = "This is Description";
     const int SROT = 1;
-    const string PASSWORD = "Pa$$w0rd";
     
     const string MEMBER_NAME = "Ji-Woong Hwang";
 	const string MEMBER_NICKNAME = "102boy";

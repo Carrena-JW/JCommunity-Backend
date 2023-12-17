@@ -1,4 +1,5 @@
 ﻿using JCommunity.AppCore.Entities.Member;
+using JCommunity.AppCore.Entities.Post;
 using JCommunity.AppCore.Entities.Topics;
 using Microsoft.EntityFrameworkCore;
 using System.Xml;
@@ -9,6 +10,7 @@ public class MemoryDbContext : DbContext
 {
     public DbSet<Member> Members { get; set; }
     public DbSet<Topic> Topics { get; set; }
+    public DbSet<Post> Posts { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

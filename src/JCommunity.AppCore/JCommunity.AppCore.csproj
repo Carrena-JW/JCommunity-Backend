@@ -6,7 +6,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<Folder Include="Entities\Articles\" />
 		<Folder Include="Core\BaseClasses\" />
 	</ItemGroup>
 
@@ -18,8 +17,13 @@
 		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.0" />
 		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.0" />
 		<PackageReference Include="FluentResults" Version="3.15.2" />
+		<PackageReference Include="SixLabors.ImageSharp" Version="3.1.1" />
 	</ItemGroup>
 
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+	
 	<ItemGroup>
 		<InternalsVisibleTo Include="JCommunity.Test.Service" />
 		<InternalsVisibleTo Include="JCommunity.Test.Architecture" />

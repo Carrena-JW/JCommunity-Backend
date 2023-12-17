@@ -1,6 +1,6 @@
 ﻿namespace JCommunity.AppCore.Entities.Member;
 
-public class Member : ArregateRoot
+public class Member : AggregateRoot
 {
     public string Name { get; private set; } = string.Empty;
     public string NickName { get; private set; } = string.Empty;
@@ -18,6 +18,7 @@ public class Member : ArregateRoot
         return Guid.Parse(id);
     }
 
+    
 
     public static Member Create(
         string name,

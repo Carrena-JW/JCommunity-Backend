@@ -1,8 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Reflection.Emit;
-using System.Reflection.Metadata;
-
-namespace JCommunity.Infrastructure.Entitybuilderurations;
+﻿namespace JCommunity.Infrastructure.Entitybuilderurations;
 
 internal class TopicTypeConfiguration : IEntityTypeConfiguration<Topic>
 {
@@ -31,7 +27,7 @@ internal class TopicTypeConfiguration : IEntityTypeConfiguration<Topic>
         builder.Property(builder => builder.Sort);
 
 
-        // Tags
+        // Tags 
         builder.HasMany(builder => builder.Tags)
              .WithOne()
              .HasForeignKey(builder => builder.TopicId);

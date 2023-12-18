@@ -48,4 +48,51 @@ public class UtilTest
         hashed1.Length.Should().Be(hashed2.Length);
         hashed1.Should().Be(hashed2);
     }
+
+    [Fact]
+    void Detect_Image_From_Stream_Test()
+    {
+        // Arrange
+        string root = AppDomain.CurrentDomain.BaseDirectory
+            .Replace("\\bin\\Debug\\net8.0\\", "");
+
+        var filePath = Path.Combine(root, "Resources", "Test_Image_file.jpg");
+
+        using var stream = File.OpenRead(filePath);
+        // Act
+        var result = DetectImage.IsImage(stream);
+
+        // Assert
+        result.Should().BeTrue();
+    }
+
+
+    [Fact]
+    void Detect_Image_From_File_Path_Test()
+    {
+        // Arrange
+        string root = AppDomain.CurrentDomain.BaseDirectory
+            .Replace("\\bin\\Debug\\net8.0\\", "");
+
+        var filePath = Path.Combine(root, "Resources", "Test_Image_file.jpg");
+
+        // Act
+        var result = DetectImage.IsImage(filePath);
+
+        // Assert
+        result.Should().BeTrue();
+    }
+
+    [Fact]
+    void Convert_To_Guid_From_String_Test()
+    {
+        // Arrange
+        var strGuid = Guid.NewGuid();
+
+        // Act
+        var guid = strGuid.ToString().ConvertToGuid();
+
+        // Assert
+        strGuid.Should().Be(guid);
+    }
 }

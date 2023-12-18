@@ -35,6 +35,7 @@
     <None Remove="Entities\" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Resources\" />
     <Folder Include="Utils\" />
   </ItemGroup>
 </Project>

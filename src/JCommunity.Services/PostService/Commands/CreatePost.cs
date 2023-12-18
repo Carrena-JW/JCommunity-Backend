@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace JCommunity.Services.PostService.Commands;
+﻿namespace JCommunity.Services.PostService.Commands;
 
 public class CreatePost
 {
@@ -10,6 +8,7 @@ public class CreatePost
         #region [Command Parameters Model]
         [JsonIgnore]
         public IFormFile Image { get; init; } = null!;
+        public Guid TopicId { get; init; } 
         public string Title { get; init; } = string.Empty;
         public string Sources { get; init; } = string.Empty;
         public string AuthorId { get; init; } = string.Empty;
@@ -39,8 +38,29 @@ public class CreatePost
                 _fileService = fileService;
             }
 
-            public async Task<Result<string>> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<Result<string>> Handle(Command command, CancellationToken token)
             {
+                // #01. Check image file
+                if (!command.Image.IsImage())
+                {
+                    return Result.Fail(new PostError.NotImage(command.Image));
+                }
+
+                // #02. Save image file
+                await _fileService.SaveFileAsync(command.Image, true, token);
+
+                // #03. Create post entity
+                var post = Post.Create(
+                    command.TopicId,
+                    command.Title,
+                    command.HtmlBody,
+                    command.Sources,
+                     command.AuthorId)
+
+                // #04. Save to dbcontext
+
+                // #05. return created post id
+
                 return await Task.FromResult("Dddddd");
             }
         }

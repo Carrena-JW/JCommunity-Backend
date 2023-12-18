@@ -7,6 +7,7 @@ global using JCommunity.AppCore.Entities.MemberAggregate;
 global using JCommunity.AppCore.Entities.TopicAggregate;
 global using MediatR;
 global using Microsoft.AspNetCore.Http;
+global using SixLabors.ImageSharp;
 global using System.Reflection;
 global using System.Security.Cryptography;
 global using System.Text;

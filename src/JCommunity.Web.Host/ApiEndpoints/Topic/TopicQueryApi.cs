@@ -1,7 +1,4 @@
-﻿
-using JCommunity.AppCore.Entities.TopicAggregate;
-
-namespace JCommunity.Web.Host.ApiEndpoints.Topic;
+﻿namespace JCommunity.Web.Host.ApiEndpoints.Topic;
 
 internal static class TopicQueryApi
 {

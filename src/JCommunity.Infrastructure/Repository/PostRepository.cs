@@ -15,4 +15,21 @@ public class PostRepository : IPostRepository
     {
         return _appDbContext.Posts.Add(topic).Entity;
     }
+
+    public async Task<Post?> GetPostById(Guid postId, CancellationToken token)
+    {
+        return await _appDbContext.Posts.FindAsync(postId);
+        
+    }
+
+    public async Task<IEnumerable<Post>> GetPostsAsync(CancellationToken token)
+    {
+        return await _appDbContext.Posts.ToListAsync(token);
+    }
+
+    public async Task<IEnumerable<T>> GetPostsAsync<T>(CancellationToken token)
+    {
+        return await _appDbContext.Posts
+            .Select(x => (T)Activator.CreateInstance(typeof(T))!).ToArrayAsync(token);                 
+    }
 }

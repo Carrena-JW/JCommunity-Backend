@@ -57,14 +57,13 @@ public class CreatePost
                 }
 
                 // #02. Save image file
-                var (fileName, filePath) =  
-                    await _fileService.SaveFileAsync(command.Image, true, token);
+                var filePath = await _fileService.SaveFileAsync(command.Image, true, token);
 
                 
                 var baseUri = new Uri("http://localhost:5149");
                 var attachment = PostContentAttachment
                     .Create(command.Image.FileName, filePath, baseUri, command.Image.Length);
-                #endregion
+                
                 
                 // #03. Create post entity
                 var post = Post.Create(
@@ -88,7 +87,8 @@ public class CreatePost
                 return post.Id.ToString();
             }
         }
-        
+        #endregion
+
     }
 }
 

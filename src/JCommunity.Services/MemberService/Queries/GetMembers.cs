@@ -13,7 +13,7 @@ public class GetMembers
         #endregion
 
         #region [Handler]
-        internal class Handler : IRequestHandler<Query, Result<IEnumerable<MemberDto>>>
+        internal sealed class Handler : IRequestHandler<Query, Result<IEnumerable<MemberDto>>>
         {
             private readonly ILogger<Handler> _logger;
             private readonly IMemberRepository _memberRepository;

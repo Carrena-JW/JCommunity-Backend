@@ -92,28 +92,32 @@ public static class Extentions
         #region [Map Endpoints]
 
         rootMapPath.MapGroup("/api/v1/Members")
-            .WithTags(new[] { "01. Member Query API" })
+            .WithTags(new[] { "#01. Member Query API" })
             .MapMemberQueryApi();
 
         rootMapPath.MapGroup("/api/v1/Members")
-            .WithTags(new[] { "02. Member Command API" })
+            .WithTags(new[] { "#02. Member Command API" })
             .MapMemberCommandApi();
 
         rootMapPath.MapGroup("/api/v1/Topics")
-            .WithTags(new[] { "03. Topic Command API" })
+            .WithTags(new[] { "#03. Topic Command API" })
             .MapTopicCommandApi();
 
         rootMapPath.MapGroup("/api/v1/Topics")
-            .WithTags(new[] { "04. Topic Query API" })
+            .WithTags(new[] { "#04. Topic Query API" })
             .MapTopicQueryApi();
 
 
         rootMapPath.MapGroup("/api/v1/posts")
-            .WithTags(new[] { "05. Post Command API" })
+            .WithTags(new[] { "#05. Post Command API" })
             .MapPostCommandApi();
 
+        rootMapPath.MapGroup("/api/v1/posts")
+           .WithTags(new[] { "#06. Post Query API" })
+           .MapPostQueryApi();
+
         rootMapPath.MapGroup("/api/v1/file")
-            .WithTags(new[] { "06. File API" })
+            .WithTags(new[] { "#07. File API" })
             .MapFileApi();
         #endregion
 
@@ -139,7 +143,10 @@ public static class Extentions
 
         #region [Setup Seed Data]
         var enableSeedJob = app.Configuration.GetValue("EnableSetupSeed", false);
-             
+
+#if DEBUG
+        enableSeedJob = false;
+#endif
 
         if (enableSeedJob)
         {

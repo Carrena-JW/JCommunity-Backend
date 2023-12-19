@@ -2,7 +2,7 @@
 
 public interface IFileService
 {
-    Task<(string fileName, string filePath)> SaveFileAsync(IFormFile file, bool containThumnail = false, CancellationToken token=default);
+    Task<string> SaveFileAsync(IFormFile file, bool containThumnail = false, CancellationToken token=default);
     Task<(string FileType, Stream FileStream)> GetFileAsync(string fileName, CancellationToken token = default);
 }
 
@@ -15,14 +15,10 @@ public class FileService : IFileService
         _fileRepository = fileRepository;
     }
 
-    public async Task<(string fileName, string filePath)> SaveFileAsync(IFormFile file, bool containThumnail = false, CancellationToken token = default)
+    public async Task<string> SaveFileAsync(IFormFile file, bool containThumnail = false, CancellationToken token = default)
     {
-        var filePath = await _fileRepository
+        return await _fileRepository
             .SaveFileAsync(file, containThumnail, token);
-
-        var fileName = Path.GetFileName(filePath);
-
-        return (fileName, filePath) ;
     }
 
     public async Task<(string FileType, Stream FileStream)> GetFileAsync(string fileName, CancellationToken token = default)

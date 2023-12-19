@@ -1,10 +1,20 @@
-﻿using JCommunity.Services.TopicService.Commands;
+﻿namespace JCommunity.Web.Host.ApiEndpoints.Topic;
 
-namespace JCommunity.Web.Host.ApiEndpoints.Topic;
-
-public static class TopicCommandApi
+internal static class TopicCommandEndpoints
 {
-    public static IEndpointRouteBuilder MapTopicCommandApi(this IEndpointRouteBuilder app)
+    private static readonly string API_ROOT = "/api/v1/Topics";
+    private static readonly string[] API_TAG = { "#04. Topic Command API" };
+
+    internal static IEndpointRouteBuilder ConfigureTopicCommandEndpoints(this RouteGroupBuilder app)
+    {
+        app.MapGroup(API_ROOT)
+           .WithTags(API_TAG)
+           .MapTopicCommandEndpoints();
+
+        return app;
+    }
+
+    private static IEndpointRouteBuilder MapTopicCommandEndpoints(this IEndpointRouteBuilder app)
     {
         #region [Map Path]
         app.MapPost("/", CreateTopicAsync);

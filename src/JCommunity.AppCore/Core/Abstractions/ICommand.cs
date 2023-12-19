@@ -4,8 +4,5 @@ public interface ICommand<TRequest, TResponse> : IRequest<Result<TResponse>>, IR
     where TRequest : notnull
     where TResponse : notnull
 {
-    public static TRequest CreateModel()
-    {
-        throw new NotImplementedException();
-    }
+
 }

@@ -1,9 +1,20 @@
 ﻿namespace JCommunity.Web.Host.ApiEndpoints.Member;
 
-internal static class MemberQueryApi
+internal static class MemberQueryEndpoints
 {
+    private static readonly string API_ROOT = "/api/v1/Members";
+    private static readonly string[] API_TAG = { "#03. Member Query API" };
 
-    internal static IEndpointRouteBuilder MapMemberQueryApi(this IEndpointRouteBuilder app)
+    internal static IEndpointRouteBuilder ConfigureMemberQueryEndpoints(this RouteGroupBuilder app)
+    {
+        app.MapGroup(API_ROOT)
+            .WithTags(API_TAG)
+            .MapMemberQueryEndpoints();
+
+        return app;
+    }
+
+    private static IEndpointRouteBuilder MapMemberQueryEndpoints(this IEndpointRouteBuilder app)
     {
         #region [Map Path]
         app.MapGet("/", GetMembersAsync);

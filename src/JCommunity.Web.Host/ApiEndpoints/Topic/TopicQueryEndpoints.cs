@@ -1,8 +1,22 @@
 ﻿namespace JCommunity.Web.Host.ApiEndpoints.Topic;
 
-internal static class TopicQueryApi
+internal static class TopicQueryEndpoints
 {
-    internal static IEndpointRouteBuilder MapTopicQueryApi(this IEndpointRouteBuilder app)
+    private static readonly string API_ROOT = "/api/v1/Topics";
+    private static readonly string[] API_TAG = { "#05. Topic Query API" };
+
+    internal static IEndpointRouteBuilder ConfigureTopicQueryEndpoints(this RouteGroupBuilder app)
+    {
+        #region [Map Path]
+        app.MapGroup(API_ROOT)
+           .WithTags(API_TAG)
+           .MapTopicQueryEndpoints();
+        #endregion
+
+        return app;
+    }
+
+    private static IEndpointRouteBuilder MapTopicQueryEndpoints(this IEndpointRouteBuilder app)
     {
         #region [Map Path]
         app.MapGet("/", GetTopicsAsync);

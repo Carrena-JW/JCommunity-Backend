@@ -1,8 +1,4 @@
-﻿using JCommunity.Web.Host.ApiEndpoints.File;
-using JCommunity.Web.Host.ApiEndpoints.Post;
-using JCommunity.Web.Host.ApiEndpoints.Topic;
-
-namespace JCommunity.Web.Host.SeedWork;
+﻿namespace JCommunity.Web.Host.SeedWork;
 
 public static class Extentions
 {
@@ -90,35 +86,13 @@ public static class Extentions
         #endregion
 
         #region [Map Endpoints]
-
-        rootMapPath.MapGroup("/api/v1/Members")
-            .WithTags(new[] { "#01. Member Query API" })
-            .MapMemberQueryApi();
-
-        rootMapPath.MapGroup("/api/v1/Members")
-            .WithTags(new[] { "#02. Member Command API" })
-            .MapMemberCommandApi();
-
-        rootMapPath.MapGroup("/api/v1/Topics")
-            .WithTags(new[] { "#03. Topic Command API" })
-            .MapTopicCommandApi();
-
-        rootMapPath.MapGroup("/api/v1/Topics")
-            .WithTags(new[] { "#04. Topic Query API" })
-            .MapTopicQueryApi();
-
-
-        rootMapPath.MapGroup("/api/v1/posts")
-            .WithTags(new[] { "#05. Post Command API" })
-            .MapPostCommandApi();
-
-        rootMapPath.MapGroup("/api/v1/posts")
-           .WithTags(new[] { "#06. Post Query API" })
-           .MapPostQueryApi();
-
-        rootMapPath.MapGroup("/api/v1/file")
-            .WithTags(new[] { "#07. File API" })
-            .MapFileApi();
+        rootMapPath.ConfigureFileEndpoints();
+        rootMapPath.ConfigureMemberCommandEndpoints();
+        rootMapPath.ConfigureMemberQueryEndpoints();
+        rootMapPath.ConfigureTopicCommandEndpoints();
+        rootMapPath.ConfigureTopicQueryEndpoints();
+        rootMapPath.ConfigurePostCommandEndpoints();
+        rootMapPath.ConfigurePostQueryEndpoints();
         #endregion
 
         #region [Health check]
@@ -138,7 +112,7 @@ public static class Extentions
                                   CustomHealthReport.Create(result);
             
             return Results.Ok(new { Environment.MachineName, resultReport });
-        }).WithTags(new[] {"00. Healthcheck Report API"} );
+        }).WithTags(new[] {"#00. Healthcheck Report API"} );
         #endregion
 
         #region [Setup Seed Data]

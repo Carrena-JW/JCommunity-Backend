@@ -1,11 +1,26 @@
 ﻿namespace JCommunity.Web.Host.ApiEndpoints.File;
 
-internal static class FileApi
+internal static class FileEndpoints
 {
-    public static IEndpointRouteBuilder MapFileApi(this IEndpointRouteBuilder app)
+    private static readonly string API_ROOT = "/api/v1/file";
+    private static readonly string[] API_TAG = { "#01. File API" };
+
+    internal static IEndpointRouteBuilder ConfigureFileEndpoints(this RouteGroupBuilder app)
     {
+        app.MapGroup(API_ROOT)
+           .WithTags(API_TAG)
+           .MapFileEndpoints();
+       
+        return app;
+    }
+
+    private static IEndpointRouteBuilder MapFileEndpoints(this IEndpointRouteBuilder app)
+    {
+        #region [Map Path]
         app.MapPost("/", UploadFileAsync).DisableAntiforgery();
         app.MapGet("/{fileName}", DownloadFileAsync);
+        #endregion
+
         return app;
     }
    

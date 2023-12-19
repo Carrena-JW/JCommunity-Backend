@@ -1,4 +1,5 @@
-﻿global using FluentResults;
+﻿global using AutoMapper;
+global using FluentResults;
 global using FluentValidation;
 global using JCommunity.AppCore.Core.Abstractions;
 global using JCommunity.AppCore.Core.Errors;

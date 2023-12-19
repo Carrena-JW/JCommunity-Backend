@@ -1,8 +1,19 @@
 ﻿namespace JCommunity.Web.Host.ApiEndpoints.Post;
 
-internal static class PostQueryApi
+internal static class PostQueryEndpoints
 {
-    internal static IEndpointRouteBuilder MapPostQueryApi(this IEndpointRouteBuilder app)
+    private static readonly string API_ROOT = "/api/v1/Posts";
+    private static readonly string[] API_TAG = { "#07. Post Query API" };
+
+    internal static IEndpointRouteBuilder ConfigurePostQueryEndpoints(this RouteGroupBuilder app)
+    {
+        app.MapGroup(API_ROOT)
+           .WithTags(API_TAG)
+           .MapPostQueryEndpoints();
+
+        return app;
+    }
+    private static IEndpointRouteBuilder MapPostQueryEndpoints(this IEndpointRouteBuilder app)
     {
         #region [Map Path]
         app.MapGet("/", GetPostsAsync);

@@ -1,8 +1,19 @@
 ﻿namespace JCommunity.Web.Host.ApiEndpoints.Member;
 
-internal static class MemberCommandApi
+internal static class MemberCommandEndpoints 
 {
-    public static IEndpointRouteBuilder MapMemberCommandApi(this IEndpointRouteBuilder app)
+    private static readonly string API_ROOT = "/api/v1/Members";
+    private static readonly string[] API_TAG = { "#02. Member Command API" };
+
+    internal static IEndpointRouteBuilder ConfigureMemberCommandEndpoints(this RouteGroupBuilder app)
+    {
+        app.MapGroup(API_ROOT)
+           .WithTags(API_TAG)
+           .MapMemberCommandEndpoints();
+
+        return app;
+    }
+    private static IEndpointRouteBuilder MapMemberCommandEndpoints(this IEndpointRouteBuilder app)
     {
         #region [Map Path]
         app.MapPost("/", CreateMemberAsync);

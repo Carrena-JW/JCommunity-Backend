@@ -20,6 +20,17 @@ public class CreatePost
         {
             public Validator()
             {
+                RuleFor(x => x.Image)
+                    .NotNull()
+                    .Must(image => image.IsImage());
+
+                RuleFor(x => x.Image)
+                    .Must(image => image.Length < 10485760)
+                    .WithMessage("Image files cannot be more than 10 megabytes.");
+               
+
+                RuleFor(x => x.Title)
+                    .MaximumLength(PostRestriction.TITLE_MAX_LENGTH);
             }
         }
         #endregion
@@ -47,7 +58,16 @@ public class CreatePost
                 }
 
                 // #02. Save image file
-                await _fileService.SaveFileAsync(command.Image, true, token);
+                var (fileName, filePath) =  await _fileService.SaveFileAsync(command.Image, true, token);
+
+                //#region [Create return model]
+                var baseUri = new Uri("http://localhost");
+                var downloadUri = new Uri(baseUri, fileName).ToString();
+                var extention = Path.GetExtension(command.Image.FileName);
+                var attachment = PostContentAttachment
+                    .Create(fileName, filePath, downloadUri, extention, command.Image.Length);
+                #endregion
+
 
                 // #03. Create post entity
                 var post = Post.Create(
@@ -55,16 +75,21 @@ public class CreatePost
                     command.Title,
                     command.HtmlBody,
                     command.Sources,
-                     command.AuthorId)
+                    command.AuthorId.ConvertToGuid(),
+                    attachment
+                    );
 
                 // #04. Save to dbcontext
+                _postRepository.Add(post);
+                await _postRepository.UnitOfWork.SaveChangesAsync(token);
+
 
                 // #05. return created post id
 
-                return await Task.FromResult("Dddddd");
+                return post.Id.ToString();
             }
         }
-        #endregion
+        
     }
 }
 

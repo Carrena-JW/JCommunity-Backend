@@ -4,12 +4,13 @@ public class FileRepository : IFileRepository
 {
     private readonly string FILE_ROOT_PATH;
     private readonly int THUMBNAIL_WIDTH;
+
     private readonly ILogger<FileRepository> _logger;
 
     public FileRepository(IConfiguration configuration, ILogger<FileRepository> logger)
     {
         _logger = logger;
-        FILE_ROOT_PATH = configuration.GetValue("File:FileUploadRootPath", string.Empty) ?? string.Empty;
+        FILE_ROOT_PATH = configuration.GetValue("File:FileUploadRootPath", string.Empty)!;
         THUMBNAIL_WIDTH = configuration.GetValue("File:ThumbnailWidth", 20);
     }
 
@@ -41,27 +42,27 @@ public class FileRepository : IFileRepository
 
         var saveFileName = guid + extension;
 
-        var path = Path.Combine(FILE_ROOT_PATH, saveFileName);
+        var originSavePath = Path.Combine(FILE_ROOT_PATH, saveFileName);
 
-        using (var stream = File.Create(path))
+        using (var stream = File.Create(originSavePath))
         {
             await file.CopyToAsync(stream, ct);
         }
 
         #region [Create Thumbnail]
-        var imageFormat = Image.DetectFormat(path);
+        var imageFormat = Image.DetectFormat(originSavePath);
         if (containThumbnail && imageFormat != null)
         {
             var ThumbnailPath = Path.Combine(FILE_ROOT_PATH, "thum_" + saveFileName);
-            var image = Image.Load(path);
+            var image = Image.Load(originSavePath);
             image.Mutate(x => x.Resize(THUMBNAIL_WIDTH, 0));
 
             image.Save(ThumbnailPath);   
         }
         #endregion
 
-        _logger.LogInformation("Uploading file - file: {@path}", path);
-        return path;
+        _logger.LogInformation("Uploading file - file: {@result}", originSavePath);
+        return originSavePath;
     }
 }
 

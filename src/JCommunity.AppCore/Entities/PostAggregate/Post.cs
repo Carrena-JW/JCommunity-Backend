@@ -23,7 +23,8 @@ public class Post : AggregateRoot
         string title,
         string htmlBody,
         string sources,
-        Guid authorId
+        Guid authorId,
+        PostContentAttachment attachment
         )
     {
         var draft = new Post
@@ -35,6 +36,7 @@ public class Post : AggregateRoot
         };
 
         draft.Contents.HtmlBody = htmlBody;
+        draft.Contents.Attachments.Add(attachment);
 
         return draft;
     }

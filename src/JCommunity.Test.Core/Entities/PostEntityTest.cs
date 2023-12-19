@@ -45,11 +45,15 @@ public class PostEntityTest
         var htmlBody = "this is body";
         var sources = "this is sources";
 
+        var attachment = new PostContentAttachment();
+
         var post = Post.Create(
             CreatedTopic.Id, 
             title, 
             htmlBody, 
-            sources, CreatedMember.Id);
+            sources, 
+            CreatedMember.Id, 
+            attachment);
 
         dbContext.Posts.Add(post);
         dbContext.SaveChanges();

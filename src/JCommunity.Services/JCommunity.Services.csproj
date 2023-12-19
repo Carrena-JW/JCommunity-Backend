@@ -24,8 +24,10 @@
 	  <None Remove="TopicService\" />
 	  <None Remove="TopicService\Commands\" />
 	  <None Remove="TopicService\Queries\" />
+	  <None Remove="TopicService\Dtos\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="PostService\Queries\" />
+	  <Folder Include="TopicService\Dtos\" />
 	</ItemGroup>
 </Project>

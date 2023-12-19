@@ -6,7 +6,7 @@ public interface IPostRepository : IRepository<Post>
 
 
     Task<IEnumerable<Post>> GetPostsAsync(CancellationToken token);
-    Task<Post?> GetPostById(Guid postId, CancellationToken token);
+    Task<Post?> GetPostById(Guid postId, PostIncludOptions? options, CancellationToken token);
 
        
 }

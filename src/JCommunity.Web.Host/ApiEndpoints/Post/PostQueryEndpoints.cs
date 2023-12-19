@@ -42,9 +42,14 @@ internal static class PostQueryEndpoints
         throw new NotImplementedException();
     }
 
-    private static Task GetPostCommentsAsync(HttpContext context)
+    private static async Task<IResult> GetPostCommentsAsync(
+        [AsParameters] GetPostComments.Query request,
+        [AsParameters] TopicApiService services,
+        CancellationToken token = new())
     {
-        throw new NotImplementedException();
+        var result = await services.Mediator.Send(request, token);
+        return result.IsSuccess ? Results.Ok(result.Value) :
+                                  Results.BadRequest(result.Errors);
     }
 
     private static async Task<IResult> GetPostsAsync(

@@ -53,7 +53,7 @@ public class FileRepository : IFileRepository
         var imageFormat = Image.DetectFormat(originSavePath);
         if (containThumbnail && imageFormat != null)
         {
-            var ThumbnailPath = Path.Combine(FILE_ROOT_PATH, "thum_" + saveFileName);
+            var ThumbnailPath = Path.Combine(FILE_ROOT_PATH, "thumb_" + saveFileName);
             var image = Image.Load(originSavePath);
             image.Mutate(x => x.Resize(THUMBNAIL_WIDTH, 0));
 

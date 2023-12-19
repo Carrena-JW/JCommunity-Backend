@@ -11,18 +11,21 @@ public class PostContentAttachment : EntityBase
     public DateTime CreatedAt { get; private set; } = SystemTime.now();
 
     public static PostContentAttachment Create(
-        string name,
-        string path,
-        string url,
-        string fileExtention,
+        string fileName,
+        string filePath,
+        Uri baseUri,
         long size)
     {
+        var savedFileName = System.IO.Path.GetFileName(filePath);
+        var downloadUri = new Uri(baseUri, savedFileName).ToString();
+        var extention = System.IO.Path.GetExtension(fileName);
+
         return new()
         {
-            Name = name,
-            Path = path,
-            Url = url,
-            FileExtention = fileExtention,
+            Name = fileName,
+            Path = filePath,
+            Url = downloadUri,
+            FileExtention = extention,
             Size = size
         };
     }

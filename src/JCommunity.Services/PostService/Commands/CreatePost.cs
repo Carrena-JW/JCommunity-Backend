@@ -2,13 +2,12 @@
 
 public class CreatePost
 {
-   
     public record Command : ICommand<Command, string>
     {
         #region [Command Parameters Model]
         [JsonIgnore]
         public IFormFile Image { get; init; } = null!;
-        public Guid TopicId { get; init; } 
+        public string TopicId { get; init; } = string.Empty;
         public string Title { get; init; } = string.Empty;
         public string Sources { get; init; } = string.Empty;
         public string AuthorId { get; init; } = string.Empty;
@@ -26,7 +25,7 @@ public class CreatePost
 
                 RuleFor(x => x.Image)
                     .Must(image => image.Length < 10485760)
-                    .WithMessage("Image files cannot be more than 10 megabytes.");
+                    .WithMessage("Image files cannot be more than 10MB.");
                
 
                 RuleFor(x => x.Title)
@@ -58,26 +57,26 @@ public class CreatePost
                 }
 
                 // #02. Save image file
-                var (fileName, filePath) =  await _fileService.SaveFileAsync(command.Image, true, token);
+                var (fileName, filePath) =  
+                    await _fileService.SaveFileAsync(command.Image, true, token);
 
-                //#region [Create return model]
-                var baseUri = new Uri("http://localhost");
-                var downloadUri = new Uri(baseUri, fileName).ToString();
-                var extention = Path.GetExtension(command.Image.FileName);
+                
+                var baseUri = new Uri("http://localhost:5149");
                 var attachment = PostContentAttachment
-                    .Create(fileName, filePath, downloadUri, extention, command.Image.Length);
+                    .Create(command.Image.FileName, filePath, baseUri, command.Image.Length);
                 #endregion
-
-
+                
                 // #03. Create post entity
                 var post = Post.Create(
-                    command.TopicId,
+                    command.TopicId.ConvertToGuid(),
                     command.Title,
                     command.HtmlBody,
                     command.Sources,
                     command.AuthorId.ConvertToGuid(),
-                    attachment
-                    );
+                    attachment);
+
+                // Set Draf = false
+                post.SetFinished();
 
                 // #04. Save to dbcontext
                 _postRepository.Add(post);
@@ -85,7 +84,7 @@ public class CreatePost
 
 
                 // #05. return created post id
-
+                _logger.LogInformation("Creating Post - post: {@post}", post);
                 return post.Id.ToString();
             }
         }

@@ -27,17 +27,23 @@ public class Post : AggregateRoot
         PostContentAttachment attachment
         )
     {
-        var draft = new Post
+         
+        var contents = PostContent
+            .Create($"thumb_{attachment.Url}", attachment.Url, htmlBody);
+        contents.AddAttachment(attachment);
+
+        return new ()
         {
             TopicId = topicId,
             Title = title,
             Sources = sources,
-            AuthorId = authorId
-        };
+            AuthorId = authorId,
+            Contents = contents
+        }; 
+    }
 
-        draft.Contents.HtmlBody = htmlBody;
-        draft.Contents.Attachments.Add(attachment);
-
-        return draft;
+    public void SetFinished()
+    {
+        this.IsDraft = false;
     }
 }

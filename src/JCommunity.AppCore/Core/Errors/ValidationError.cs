@@ -14,6 +14,7 @@ public class ValidationError : Error, IError
                 .WithMetadata("PropertyName", error.PropertyName)
                 .WithMetadata("ErrorCode", error.ErrorCode);
 
+            //If has CustomState Obj, add to metadata
             if (error.CustomState != null)
             {
                 errorObj.WithMetadata("CustomState", error.CustomState);

@@ -41,6 +41,9 @@ public class PostCommentTypeConfiguration
             .WithMany()
             .HasForeignKey(builder => builder.AuthorId);
 
-       
+        // Like (many to one)
+        builder.HasMany(builder => builder.Likes)
+           .WithOne()
+           .HasForeignKey(builder => builder.CommentId);
     }
 }

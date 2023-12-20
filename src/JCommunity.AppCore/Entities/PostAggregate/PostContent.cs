@@ -21,8 +21,33 @@ public class PostContent : EntityBase
         };
     }
 
+    public void UpdateMainImage(PostContentAttachment attachment)
+    {
+        var previousImage = Attachments.SingleOrDefault(a => a.Url == this.MainImageUrl);
+
+        if(previousImage != null)
+        {
+            this.Attachments.Remove(previousImage);
+        }
+
+        AddAttachment(attachment);
+
+        this.MainImageUrl = attachment.Url;
+        var fileName = Path.GetFileName(attachment.Path);
+        this.ThumbnailUrl = attachment.Url.Replace(fileName, $"thumb_{fileName}");
+    }
+
     public void AddAttachment(PostContentAttachment attachment)
     {
         this.Attachments.Add(attachment);
+    }
+
+    public void UpdateHtmlBody(string htmlBody)
+    {
+        // #01. Conditioin for Length
+        if (this.HtmlBody != htmlBody)
+        {
+            this.HtmlBody = htmlBody;
+        }
     }
 }

@@ -42,4 +42,10 @@ public class MemberRepository : IMemberRepository
     {
         _appDbContext.Members.Remove(member);
     }
+
+    public async Task<bool> IsExistsMemberAsync(Guid memberId, CancellationToken token)
+    {
+        return await _appDbContext.Members.AsNoTracking()
+            .AnyAsync(m => m.Id == memberId, token);
+    }
 }

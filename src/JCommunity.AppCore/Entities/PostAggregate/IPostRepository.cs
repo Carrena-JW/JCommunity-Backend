@@ -2,12 +2,9 @@
 
 public interface IPostRepository : IRepository<Post>
 {
-    Post Add(Post topic);
-
-
-    Task<IEnumerable<Post>> GetPostsAsync(CancellationToken token);
-    Task<Post?> GetPostById(Guid postId, PostIncludOptions? options, CancellationToken token);
-
-       
+    Post Add(Post post);
+    void Remove(Post post);
+    Task<IEnumerable<Post>> GetPostsAsync(PostIncludeOptions? options, CancellationToken token);
+    Task<Post?> GetPostByIdAsync(Guid postId, PostIncludeOptions? options, CancellationToken token);
 }
 

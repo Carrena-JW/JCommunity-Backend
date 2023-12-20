@@ -6,7 +6,13 @@ public class GetPostById
 	{
         #region [Query Parameters]
         public string Id { get; init; } = string.Empty;
-        // has no parameters
+        //Include Options
+        public bool? IncludeAuthor { get; init; } = null;
+        public bool? IncludeTopic { get; init; } = null;
+        public bool? IncludeLike { get; init; } = null;
+        public bool? IncludeComments { get; init; } = null;
+        public bool? IncludeReports { get; init; } = null;
+        public bool? IncludeContents { get; init; } = null;
         #endregion
 
         #region [Validator]
@@ -28,8 +34,16 @@ public class GetPostById
 
             public async Task<Result<Post>> Handle(Query query, CancellationToken token)
             {
+                var options = PostIncludeOptions.Build()
+                    .BindLikeOption(query.IncludeLike)
+                    .BindAuthorOption(query.IncludeAuthor)
+                    .BindCommentsOption(query.IncludeComments)
+                    .BindContentsOption(query.IncludeContents)
+                    .BindReportsOption(query.IncludeReports)
+                    .BindTopicOption(query.IncludeTopic);
+
                 var post = await _postRepository
-                    .GetPostById(query.Id.ConvertToGuid(), token);
+                    .GetPostByIdAsync(query.Id.ConvertToGuid(), options, token);
 
                 if (post == null) return Result.Fail(new PostError.NotFound(query.Id));
 

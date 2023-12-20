@@ -29,7 +29,12 @@ public class CreatePost
                
 
                 RuleFor(x => x.Title)
+                    .NotEmpty()
+                    .MinimumLength(PostRestriction.TITLE_MIN_LENGTH)
                     .MaximumLength(PostRestriction.TITLE_MAX_LENGTH);
+
+                RuleFor(x => x.Sources)
+                 .MaximumLength(PostRestriction.SOURCES_MAX_LENGTH);
             }
         }
         #endregion
@@ -40,16 +45,34 @@ public class CreatePost
             private readonly ILogger<Handler> _logger;
             private readonly IPostRepository _postRepository;
             private readonly IFileService _fileService;
+            private readonly IMemberRepository _memberRepository;
+            private readonly ITopicRepository _topicRepository;
 
-            public Handler(ILogger<Handler> logger, IPostRepository postRepository, IFileService fileService)
+            public Handler(
+                ILogger<Handler> logger,
+                IPostRepository postRepository,
+                IFileService fileService,
+                IMemberRepository memberRepository,
+                ITopicRepository topicRepository)
             {
-                _logger = logger;
-                _postRepository = postRepository;
-                _fileService = fileService;
+                _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+                _postRepository = postRepository ?? throw new ArgumentNullException(nameof(postRepository));
+                _fileService = fileService ?? throw new ArgumentNullException(nameof(fileService));
+                _memberRepository = memberRepository ?? throw new ArgumentNullException(nameof(memberRepository));
+                _topicRepository = topicRepository ?? throw new ArgumentNullException(nameof(topicRepository));
             }
 
             public async Task<Result<string>> Handle(Command command, CancellationToken token)
             {
+                // #00. Find Member by AuthorId
+                var IsExistsMemberAsync = await _memberRepository
+                    .IsExistsMemberAsync(command.AuthorId.ConvertToGuid(), token);
+
+                if (!IsExistsMemberAsync)
+                {
+                    return Result.Fail(new MemberError.NotFound(command.AuthorId));
+                }
+
                 // #01. Check image file
                 if (!command.Image.IsImage())
                 {
@@ -63,7 +86,15 @@ public class CreatePost
                 var baseUri = new Uri("http://localhost:5149");
                 var attachment = PostContentAttachment
                     .Create(command.Image.FileName, filePath, baseUri, command.Image.Length);
-                
+
+                // ## Check IsExists Topic
+                var isExistsTopic = await _topicRepository.IsExistsTopicAsync(command.TopicId.ConvertToGuid(), token);
+
+                if (!isExistsTopic)
+                {
+                    return Result.Fail(new TopicError.NotFound(command.TopicId));
+                }
+
                 
                 // #03. Create post entity
                 var post = Post.Create(

@@ -21,4 +21,25 @@ internal class PostApiService(
 
         return bindRequest! with { Image = request.Image };
     }
+
+    public UpdatePost.Command BindRequest(UpdatePost.Command request)
+    {
+        var options = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true,
+        };
+
+        var json = HttpContext.Request.Form.SingleOrDefault();
+        var bindRequest = JsonSerializer.Deserialize<UpdatePost.Command>(json.Value!, options);
+
+        if(request.Image != null)
+        {
+            return bindRequest! with { Image = request.Image };
+        }
+        else
+        {
+            return bindRequest!;
+        }
+
+    }
 }

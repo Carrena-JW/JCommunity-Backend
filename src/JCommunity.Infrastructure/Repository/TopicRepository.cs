@@ -21,13 +21,13 @@ public class TopicRepository : ITopicRepository
     }
 
     public async Task<Topic?> GetTopicByIdAsync(
-         Guid topicId, 
-         TopicIncludeOptions? options = null, 
+         Guid topicId,
+         TopicIncludeOptions? options = null,
          CancellationToken token = new())
     {
         var query = _appDbContext.Topics.AsQueryable();
-        
-        if(options != null) query = IncludeOption(options, query);
+
+        if (options != null) query = IncludeOption(options, query);
 
         return await query.SingleOrDefaultAsync(t => t.Id == topicId, token);
     }
@@ -38,8 +38,8 @@ public class TopicRepository : ITopicRepository
     {
         var query = _appDbContext.Topics.AsNoTracking();
 
-        if(options != null) query = IncludeOption(options, query);
-      
+        if (options != null) query = IncludeOption(options, query);
+
         return await query.ToListAsync(token);
     }
 
@@ -49,7 +49,7 @@ public class TopicRepository : ITopicRepository
         return !await _appDbContext.Topics.AnyAsync(t => t.Name == name, token);
     }
 
-    private IQueryable<T> IncludeOption<T>(TopicIncludeOptions options , IQueryable<T> query) where T : Topic
+    private IQueryable<T> IncludeOption<T>(TopicIncludeOptions options, IQueryable<T> query) where T : Topic
     {
         if (options.IncludeAuthor.HasValue && options.IncludeAuthor.Value)
         {
@@ -60,7 +60,13 @@ public class TopicRepository : ITopicRepository
         {
             query = query.Include(t => t.Tags);
         }
-        
+
         return query;
+    }
+
+    public async Task<bool> IsExistsTopicAsync(Guid topicId, CancellationToken token)
+    {
+        return await _appDbContext.Members.AsNoTracking()
+            .AnyAsync(m => m.Id == topicId, token);
     }
 }

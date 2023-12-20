@@ -16,9 +16,14 @@ public class PostRepository : IPostRepository
         return _appDbContext.Posts.Add(topic).Entity;
     }
 
-    public async Task<Post?> GetPostById(
+    public void Remove(Post post)
+    {
+        _appDbContext.Posts.Remove(post);
+    }
+
+    public async Task<Post?> GetPostByIdAsync(
         Guid postId,
-        PostIncludOptions? options = null,
+        PostIncludeOptions? options = null,
         CancellationToken token = default)
     {
         var query = _appDbContext.Posts.AsQueryable();
@@ -29,20 +34,27 @@ public class PostRepository : IPostRepository
         
     }
 
-    public async Task<IEnumerable<Post>> GetPostsAsync(CancellationToken token)
+    public async Task<IEnumerable<Post>> GetPostsAsync(PostIncludeOptions? options,CancellationToken token)
     {
-        return await _appDbContext.Posts.ToListAsync(token);
+        var query = _appDbContext.Posts.AsQueryable();
+
+        if (options != null)
+        {
+            query = IncludeOption(options, query);
+        }
+
+        return await query.ToListAsync(token);
     }
 
-    public async Task<IEnumerable<T>> GetPostsAsync<T>(CancellationToken token)
+    private IQueryable<Post> IncludeOption(PostIncludeOptions options, IQueryable<Post> query) 
     {
-        return await _appDbContext.Posts
-            .Select(x => (T)Activator.CreateInstance(typeof(T))!).ToArrayAsync(token);                 
-    }
+        if(options.IncludeContents.HasValue && options.IncludeContents.Value)
+        {
+            query = query.Include(t => t.Contents)
+                .ThenInclude(c => c.Attachments);
 
+        }
 
-    private IQueryable<Post> IncludeOption(PostIncludOptions options, IQueryable<Post> query) 
-    {
         if (options.IncludeAuthor.HasValue && options.IncludeAuthor.Value)
         {
             query = query.Include(t => t.Author);
@@ -50,7 +62,9 @@ public class PostRepository : IPostRepository
 
         if (options.IncludeComments.HasValue && options.IncludeComments.Value)
         {
-            query = query.Include(t => t.Comments);
+            query = query.Include(t => t.Comments)
+                .ThenInclude(c => c.Likes);
+            //query = query.Include(t => t.Comments.SelectMany(c => c.Likes));
         }
 
         if (options.IncludeLike.HasValue && options.IncludeLike.Value)

@@ -40,15 +40,28 @@ public class CreateTopic
         {
             private readonly ILogger<Handler> _logger;
             private readonly ITopicRepository _repository;
+            private readonly IMemberRepository _memberRepository;
 
-            public Handler(ITopicRepository repository, ILogger<Handler> logger)
+            public Handler(
+                ILogger<Handler> logger, 
+                ITopicRepository repository, 
+                IMemberRepository memberRepository)
             {
-                _repository = repository;
-                _logger = logger;
+                _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+                _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+                _memberRepository = memberRepository ?? throw new ArgumentNullException(nameof(memberRepository));
             }
 
             public async Task<Result<string>> Handle(Command command, CancellationToken ct)
             {
+                var IsExistsMemberAsync = await _memberRepository
+                    .IsExistsMemberAsync(command.AuthorId.ConvertToGuid(), ct);
+
+                if (!IsExistsMemberAsync)
+                {
+                    return Result.Fail(new MemberError.NotFound(command.AuthorId));
+                }
+
                 var topic = Topic.Create(
                     command.Name,
                     command.Description,

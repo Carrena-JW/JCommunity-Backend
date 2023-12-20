@@ -1,7 +1,7 @@
 ﻿
 namespace JCommunity.Web.Host.ApiEndpoints.Post
 {
-    internal static class PostCommandEndpoints  
+    internal static class PostCommandEndpoints
     {
         private static readonly string API_ROOT = "/api/v1/Posts";
         private static readonly string[] API_TAG = { "#06. Post Command API" };
@@ -19,60 +19,118 @@ namespace JCommunity.Web.Host.ApiEndpoints.Post
         {
             #region [Map Path]
             app.MapPost("/", CreatePostAsync).DisableAntiforgery();
+            app.MapPut("/", UpdatePostAsync).DisableAntiforgery();
             app.MapDelete("/{id}", DeletePostAsync);
-            app.MapPut("/", UpdatePostAsync);
-
-            app.MapPost("/{postId}/Comments", CreatePostCommentAsync);
+            app.MapPost("/likes", SetPostLikeAsync);
+            app.MapPost("/Comments", CreatePostCommentAsync);
+            app.MapPut("/Comments", UpdatePostCommentAsync);
             app.MapDelete("/{postId}/Comments/{postCommentId}", DeletePostCommentAsync);
-            app.MapPut("/{postId}/Comments", UpdatePostCommentAsync);
-
-            app.MapPost("/{postId}/Likes", CreatePostLikeAsync);
-            app.MapDelete("/{postId}/Likes/{PostLikeId}", DeletePostLikeAsync);
-
-            app.MapPost("/{postId}/Reports", CreatePostReportAsync);
+            app.MapPost("/Comments/Likes", SetPostCommentLikeAsync);
+            app.MapPost("/Reports", CreatePostReportAsync);
             #endregion
 
             return app;
         }
 
-        private static Task CreatePostReportAsync(HttpContext context)
+       
+
+
+
+        #region [Post Report]
+        private static async Task<IResult> CreatePostReportAsync(
+            [FromBody] CreatePostReport.Command request,
+            [AsParameters] PostApiService services,
+            CancellationToken token = default)
         {
-            throw new NotImplementedException();
+            var result = await services.Mediator.Send(request, token);
+
+            return result.IsSuccess ? Results.Ok(result.Value) :
+                                      Results.BadRequest(result.Errors);
+        }
+        #endregion
+
+        #region [Post Like]
+        private static async Task<IResult> SetPostLikeAsync(
+            [FromBody] SetPostLike.Command request,
+            [AsParameters] PostApiService services,
+            CancellationToken token = default)
+        {
+            var result = await services.Mediator.Send(request, token);
+
+            return result.IsSuccess ? Results.Ok(result.Value) :
+                                      Results.BadRequest(result.Errors);
+        }
+        #endregion
+
+        #region [Post Comment]
+        private static async Task<IResult> SetPostCommentLikeAsync(
+            [FromBody] SetPostCommentLike.Command request,
+            [AsParameters] PostApiService services,
+            CancellationToken token = default)
+        {
+            var result = await services.Mediator.Send(request, token);
+
+            return result.IsSuccess ? Results.Ok(result.Value) :
+                                      Results.BadRequest(result.Errors);
         }
 
-        private static Task DeletePostLikeAsync(HttpContext context)
+        private static async Task<IResult> UpdatePostCommentAsync(
+            [FromBody] UpdatePostComment.Command request,
+            [AsParameters] PostApiService services,
+            CancellationToken token = default)
         {
-            throw new NotImplementedException();
+            var result = await services.Mediator.Send(request, token);
+
+            return result.IsSuccess ? Results.Ok(result.Value) :
+                                      Results.BadRequest(result.Errors);
         }
 
-        private static Task CreatePostLikeAsync(HttpContext context)
+        private static async Task<IResult> DeletePostCommentAsync(
+            [AsParameters] DeletePostComment.Command request,
+            [AsParameters] PostApiService services,
+            CancellationToken token = default)
         {
-            throw new NotImplementedException();
+            var result = await services.Mediator.Send(request, token);
+
+            return result.IsSuccess ? Results.Ok(result.Value) :
+                                      Results.BadRequest(result.Errors);
         }
 
-        private static Task UpdatePostCommentAsync(HttpContext context)
+        private static async Task<IResult> CreatePostCommentAsync(
+            [FromBody] CreatePostComment.Command request,
+            [AsParameters] PostApiService services,
+            CancellationToken token = default)
         {
-            throw new NotImplementedException();
+            var result = await services.Mediator.Send(request, token);
+
+            return result.IsSuccess ? Results.Ok(result.Value) :
+                                      Results.BadRequest(result.Errors);
+        }
+        #endregion
+
+        #region [Post]
+        private static async Task<IResult> UpdatePostAsync(
+            IFormFile Image,
+            [FromForm] UpdatePost.Command request,
+            [AsParameters] PostApiService services,
+            CancellationToken token = default)
+        {
+            request = services.BindRequest(request);
+            var result = await services.Mediator.Send(request, token);
+
+            return result.IsSuccess ? Results.Ok(result.Value) :
+                                      Results.BadRequest(result.Errors);
         }
 
-        private static Task DeletePostCommentAsync(HttpContext context)
+        private static async Task<IResult> DeletePostAsync(
+            [AsParameters] DeletePost.Command request,
+            [AsParameters] PostApiService services,
+            CancellationToken token = default)
         {
-            throw new NotImplementedException();
-        }
+            var result = await services.Mediator.Send(request, token);
 
-        private static Task CreatePostCommentAsync(HttpContext context)
-        {
-            throw new NotImplementedException();
-        }
-
-        private static Task UpdatePostAsync(HttpContext context)
-        {
-            throw new NotImplementedException();
-        }
-
-        private static Task DeletePostAsync(HttpContext context)
-        {
-            throw new NotImplementedException();
+            return result.IsSuccess ? Results.Ok(result.Value) :
+                                      Results.BadRequest(result.Errors);
         }
 
         private static async Task<IResult> CreatePostAsync(
@@ -89,6 +147,7 @@ namespace JCommunity.Web.Host.ApiEndpoints.Post
             return result.IsSuccess ? Results.Ok(result.Value) :
                                       Results.BadRequest(result.Errors);
         }
+        #endregion
     }
-     
+
 }

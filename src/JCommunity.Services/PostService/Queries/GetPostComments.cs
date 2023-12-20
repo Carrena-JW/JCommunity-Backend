@@ -6,7 +6,8 @@ public class GetPostComments
 	{
         #region [Query Parameters]
         public string Id { get; init; } = string.Empty;
-        
+
+
         #endregion
 
         #region [Validator]
@@ -28,8 +29,10 @@ public class GetPostComments
 
             public async Task<Result<IEnumerable<PostComment>>> Handle(Query query, CancellationToken token)
             {
-                var options = PostIncludOptions.Create(false, false, false, true, false);
-                var post = await _postRepository.GetPostById(query.Id.ConvertToGuid(), token);
+                var options = PostIncludeOptions.Build()
+                    .BindCommentsOption(true);
+
+                var post = await _postRepository.GetPostByIdAsync(query.Id.ConvertToGuid(), options, token);
 
                 if (post == null) return Result.Fail(new PostError.NotFound(query.Id));
 

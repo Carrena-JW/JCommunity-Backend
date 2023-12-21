@@ -66,7 +66,7 @@ public class TopicRepository : ITopicRepository
 
     public async Task<bool> IsExistsTopicAsync(Guid topicId, CancellationToken token)
     {
-        return await _appDbContext.Members.AsNoTracking()
+        return await _appDbContext.Topics.AsNoTracking()
             .AnyAsync(m => m.Id == topicId, token);
     }
 }

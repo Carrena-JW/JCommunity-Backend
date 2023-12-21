@@ -3,6 +3,8 @@ global using JCommunity.AppCore.Entities.File;
 global using JCommunity.AppCore.Entities.MemberAggregate;
 global using JCommunity.AppCore.Entities.PostAggregate;
 global using JCommunity.AppCore.Entities.TopicAggregate;
+global using JCommunity.IntergrationEvent;
+global using MassTransit;
 global using Microsoft.AspNetCore.Http;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore.Metadata.Builders;

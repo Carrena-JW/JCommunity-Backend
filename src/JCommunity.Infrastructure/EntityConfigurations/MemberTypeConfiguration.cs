@@ -33,5 +33,7 @@ internal class MemberTypebuilderuration : IEntityTypeConfiguration<Member>
         // Password
         builder.Property(builder => builder.Password)
             .HasMaxLength(MemberRestriction.PASSWORD_HASHED_MAX_LENGTH);
+
+        builder.Ignore(builder => builder.DomainEvents);
     }
 }

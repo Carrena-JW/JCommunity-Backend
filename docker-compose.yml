@@ -43,6 +43,17 @@ services:
         - ELASTICSEARCH_URL=http://localhost:9200
     networks:
         - elastic
+ 
+  rabbitmq:
+    container_name: "rabbitmq"
+    image: rabbitmq:3.8-management-alpine
+    environment:
+        - RABBITMQ_DEFAULT_USER=carrena
+        - RABBITMQ_DEFAULT_PASS=carrena
+    ports:
+        - "5672:5672"
+        - "15672:15672"
+        
 
 networks:
   elastic:

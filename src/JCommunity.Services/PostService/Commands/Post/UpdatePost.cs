@@ -125,7 +125,7 @@ public class UpdatePost
                 post.UpdateLastUpdateAt();
 
                 // #07. Save to dbcontext
-                await _postRepository.UnitOfWork.SaveChangesAsync(token);
+                await _postRepository.UnitOfWork.SaveEntitiesAsync(token);
 
                 _logger.LogInformation("Updating Post - post: {@post}", post);
                 return true;

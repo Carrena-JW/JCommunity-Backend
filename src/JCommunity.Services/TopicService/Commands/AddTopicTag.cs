@@ -53,7 +53,7 @@ public class AddTopicTag
 
                 findTopic.AddTags(tags.ToArray());
 
-                await _repository.UnitOfWork.SaveChangesAsync(ct);
+                await _repository.UnitOfWork.SaveEntitiesAsync(ct);
 
                 _logger.LogInformation("Adding Topic Tag: {@topic}", tags);
                 return Result.Ok(tags.AsEnumerable());

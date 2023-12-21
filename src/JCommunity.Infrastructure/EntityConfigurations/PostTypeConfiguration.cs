@@ -60,6 +60,7 @@ public class PostTypeConfiguration : IEntityTypeConfiguration<Post>
           .WithOne()
           .HasForeignKey(builder => builder.PostId);
 
-      
+
+        builder.Ignore(builder => builder.DomainEvents);
     }
 }

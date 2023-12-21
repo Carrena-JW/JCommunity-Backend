@@ -76,7 +76,7 @@ public class UpdateMember
                 }
 
                 findMember.UpdateLastUpdateAt();
-                await _memberRepository.UnitOfWork.SaveChangesAsync(ct);
+                await _memberRepository.UnitOfWork.SaveEntitiesAsync(ct);
                 
                 _logger.LogInformation("Updating Member - member: {@member}", findMember);
                 return true;

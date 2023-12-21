@@ -1,4 +1,6 @@
-﻿namespace JCommunity.Infrastructure.Setup;
+﻿using MediatR;
+
+namespace JCommunity.Infrastructure.Setup;
 
 public class SetupTestMemberSeed 
 {
@@ -6,7 +8,8 @@ public class SetupTestMemberSeed
     {
 
         using var dbContext = new AppDbContext(
-            serviceProvider.GetRequiredService<DbContextOptions<AppDbContext>>());
+            serviceProvider.GetRequiredService<DbContextOptions<AppDbContext>>(),
+            serviceProvider.GetRequiredService<IMediator>());
 
         // Setup Target
         /*

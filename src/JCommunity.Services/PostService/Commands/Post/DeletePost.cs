@@ -47,7 +47,7 @@ public class DeletePost
 
                 // #02. Save to dbcontext
                 _postRepository.Remove(post);
-                await _postRepository.UnitOfWork.SaveChangesAsync(token);
+                await _postRepository.UnitOfWork.SaveEntitiesAsync(token);
 
 
               

@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<UserSecretsId>dotnet-JCommunity.Notification.Host-b772eda5-d9f1-4d0f-892c-5058c1c18513</UserSecretsId>
+	</PropertyGroup>
+
+	
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+		<PackageReference Include="MassTransit" Version="8.1.2" />
+		<PackageReference Include="MassTransit.RabbitMQ" Version="8.1.2" />
+	</ItemGroup>
+
+	
+	<ItemGroup>
+	  <ProjectReference Include="..\JCommunity.IntergrationEvent\JCommunity.IntergrationEvent.csproj" />
+	</ItemGroup>
+</Project>

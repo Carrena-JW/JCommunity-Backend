@@ -8,10 +8,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\JCommunity.AppCore\JCommunity.AppCore.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Folder Include="Data\" />
+		<ProjectReference Include="..\JCommunity.IntergrationEvent\JCommunity.IntergrationEvent.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

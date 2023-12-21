@@ -1,5 +1,4 @@
-﻿
-namespace JCommunity.Web.Host.SeedWork;
+﻿namespace JCommunity.Web.Host.SeedWork;
 
 public static class Extentions
 {
@@ -67,17 +66,21 @@ public static class Extentions
         #region [MassTransit]
         services.AddMassTransit(config =>
         {
+          
+
             config.UsingRabbitMq((ctx, cfg) =>
             {
+                      
                 cfg.Host("localhost", "/", h =>
                 {
                     h.Username("carrena");
                     h.Password("carrena");
                 });
+
+                cfg.AutoStart = true;
             });
         });
         #endregion
-
 
         return services;
     }
@@ -148,9 +151,6 @@ public static class Extentions
             SetupTestMemberSeed.Setup(services);
         }
         #endregion
-
-
-       
 
         return app;
     }

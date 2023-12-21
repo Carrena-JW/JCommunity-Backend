@@ -15,6 +15,7 @@ global using JCommunity.Web.Host.ApiEndpoints.Topic;
 global using JCommunity.Web.Host.SeedWork;
 global using JCommunity.Web.Host.SeedWork.ExceptionHandlers;
 global using JCommunity.Web.Host.SeedWork.Filters;
+global using MassTransit;
 global using MediatR;
 global using Microsoft.AspNetCore.Diagnostics;
 global using Microsoft.AspNetCore.Mvc;

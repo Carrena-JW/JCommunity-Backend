@@ -1,4 +1,6 @@
-﻿namespace JCommunity.Services.PostService.Commands;
+﻿using JCommunity.AppCore.Events;
+
+namespace JCommunity.Services.PostService.Commands;
 
 public class CreatePost
 {
@@ -110,7 +112,8 @@ public class CreatePost
 
                 // #04. Save to dbcontext
                 _postRepository.Add(post);
-                await _postRepository.UnitOfWork.SaveChangesAsync(token);
+                post.AddDomainEvent(new PostCreatedEvent(post.Id));
+                await _postRepository.UnitOfWork.SaveEntitiesAsync(token);
 
 
                 // #05. return created post id

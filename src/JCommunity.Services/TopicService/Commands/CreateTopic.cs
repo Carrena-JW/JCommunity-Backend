@@ -79,7 +79,7 @@ public class CreateTopic
 
 
                 _repository.Add(topic);
-                await _repository.UnitOfWork.SaveChangesAsync(ct);
+                await _repository.UnitOfWork.SaveEntitiesAsync(ct);
 
                 _logger.LogInformation("Creating Topic : {@topic}", topic);
                 return topic.Id.ToString();

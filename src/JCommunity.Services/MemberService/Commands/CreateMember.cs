@@ -64,7 +64,7 @@ public class CreateMember
                 if(IsUniqueNickNameAsync == false) return Result.Fail(new MemberError.NicknameNotUnique(command.NickName));
 
                 var result = _memberRepository.Add(member);
-                await _memberRepository.UnitOfWork.SaveChangesAsync(ct);
+                await _memberRepository.UnitOfWork.SaveEntitiesAsync(ct);
 
                 _logger.LogInformation("Creating Member - member: {@member}", member);
                 return result.GetMemberId();
@@ -73,3 +73,5 @@ public class CreateMember
         #endregion
     }
 }
+
+ 

@@ -39,7 +39,7 @@ public class DeleteMember
                 if (findMember == null) return Result.Fail(new MemberError.NotFound(command.Id));
 
                 _memberRepository.Remove(findMember);
-                await _memberRepository.UnitOfWork.SaveChangesAsync(ct);
+                await _memberRepository.UnitOfWork.SaveEntitiesAsync(ct);
 
                 _logger.LogInformation("Deleting Member - member: {@member}", findMember);
                 return true;

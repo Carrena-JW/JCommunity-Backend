@@ -98,7 +98,7 @@ public class CreatePostReport
                         memberId);
 
                 // #04. Save to dbcontext
-                await _postRepository.UnitOfWork.SaveChangesAsync(token);
+                await _postRepository.UnitOfWork.SaveEntitiesAsync(token);
 
                 _logger.LogInformation("Creating Post Report - report: {@report}", addedReport);
                 return addedReport.Id.ToString();

@@ -46,7 +46,7 @@ internal class TopicTypeConfiguration : IEntityTypeConfiguration<Topic>
                 value => Guid.Parse(value)
             );
 
-
+        builder.Ignore(builder => builder.DomainEvents);
     }
 }
 

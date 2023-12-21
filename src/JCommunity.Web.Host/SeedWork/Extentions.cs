@@ -1,4 +1,5 @@
-﻿namespace JCommunity.Web.Host.SeedWork;
+﻿
+namespace JCommunity.Web.Host.SeedWork;
 
 public static class Extentions
 {
@@ -9,10 +10,12 @@ public static class Extentions
         IWebHostEnvironment env)
     {
         var configuration = new ConfigurationBuilder()
-            .AddJsonFile(env.IsDevelopment() ? "appsettings.Development.json" : "appsettings.json")
+            .AddJsonFile(env.IsDevelopment() ? "appsettings.Development.json" 
+                                             : "appsettings.json")
             .Build();
 
 
+        #region [Serilog]
         services.AddSerilog(conf =>
         {
             var elasticServerUri = config.GetSection("ElasticConfiguration").GetSection("Uri").Value ?? "http://localhost:9200";
@@ -28,23 +31,24 @@ public static class Extentions
             .WriteTo.Elasticsearch(elasticsearchOptions)
             .ReadFrom.Configuration(configuration);
         });
+        #endregion
 
+        #region [Database Context]
         var connectionStrings = config.GetConnectionString("PostgresConnection") ?? "http://localhost:5432";
-
         services.AddDbContext<AppDbContext>(
             options =>options.UseNpgsql(connectionStrings));
+        #endregion
 
-         
-
+        #region [Swagger]
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen(options =>
         {
             //Resolve schema redundancy due to nested classes
             options.CustomSchemaIds(type => type.ToString().Replace("+", "."));
         });
+        #endregion
 
-
-        // server health check
+        #region [Server Health Check]
         services.AddHealthChecks()
             .AddCheck("self", () => HealthCheckResult.Healthy())
             .AddNpgSql(connectionString: connectionStrings,
@@ -53,12 +57,26 @@ public static class Extentions
                        tags: new string[] { "db", "postgresql" }
                        )
             .AddCheck("message_queue", () => MessageQueueHealth.Checker());
+        #endregion
 
-        //global exception handler
+        #region [Global Exception Handler]
         services.AddExceptionHandler<GlobalUnhandleExceptionHandler>();
         services.AddProblemDetails();
+        #endregion
 
-       
+        #region [MassTransit]
+        services.AddMassTransit(config =>
+        {
+            config.UsingRabbitMq((ctx, cfg) =>
+            {
+                cfg.Host("localhost", "/", h =>
+                {
+                    h.Username("carrena");
+                    h.Password("carrena");
+                });
+            });
+        });
+        #endregion
 
 
         return services;

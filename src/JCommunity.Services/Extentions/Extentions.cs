@@ -12,9 +12,12 @@ public static class Extentions
         builder.Services.AddScoped<IMemberRepository, MemberRepository>();
         builder.Services.AddScoped<ITopicRepository, TopicRepository>();
         builder.Services.AddScoped<IPostRepository, PostRepository>();
-
         builder.Services.AddSingleton<IFileRepository, FileRepository>();
         builder.Services.AddSingleton<IFileService, FileService.FileService>();
+        #endregion
+
+        #region [RabbitMQ Publisher]
+        builder.Services.AddScoped<IMessagePublisherService, MessagePublisherService>();
         #endregion
 
         #region [MediatR]

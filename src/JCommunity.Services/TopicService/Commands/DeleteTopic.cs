@@ -42,7 +42,7 @@ public class DeleteTopic
 
                 _repository.Remove(findTopic);
                  
-                await _repository.UnitOfWork.SaveChangesAsync(ct);
+                await _repository.UnitOfWork.SaveEntitiesAsync(ct);
 
                 _logger.LogInformation("Delting Topic : {@findTopic}", findTopic);
                 return true;

@@ -32,6 +32,8 @@ public class Post : AggregateRoot
             .Create(attachment.Url.Replace(fileName, $"thumb_{fileName}"), attachment.Url, htmlBody);
         contents.AddAttachment(attachment);
 
+        
+
         return new ()
         {
             TopicId = topicId,
@@ -150,3 +152,4 @@ public class Post : AggregateRoot
         return this.Reports.Any(r => r.AuthorId == authorId);
     }
 }
+ 

@@ -84,7 +84,7 @@ public class UpdateTopic
 
                 #endregion
 
-                await _repository.UnitOfWork.SaveChangesAsync(ct);
+                await _repository.UnitOfWork.SaveEntitiesAsync(ct);
 
 
                 _logger.LogInformation("Updating Topic : {@findTopic}", findTopic);

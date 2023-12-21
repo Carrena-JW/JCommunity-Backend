@@ -56,7 +56,7 @@ public class DeleteTopicTag
                 }
 
                 findTopic.RemoveTag(findTopicTag.SingleOrDefault()!);
-                await _repository.UnitOfWork.SaveChangesAsync(ct);
+                await _repository.UnitOfWork.SaveEntitiesAsync(ct);
 
                 _logger.LogInformation("Deleting Topic Tag : {@topic}", findTopicTag);
                 return true;

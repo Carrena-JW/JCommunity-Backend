@@ -3,7 +3,7 @@ public class Topic : AggregateRoot
 {
     
     public string Name { get; private set; } = string.Empty;
-    public string Description { get; set; } = string.Empty;
+    public string Description { get; private set; } = string.Empty;
     public HashSet<TopicTag> Tags { get; private set; } = new();
     public int Sort { get; private set; }
     public Member Author { get; private set; } = null!;

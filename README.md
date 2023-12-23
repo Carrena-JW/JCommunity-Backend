@@ -3,6 +3,10 @@
 ![https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https://trusted-lightyear-006.notion.site/JCommunity-Project-Backend-7996fcb633fe4d59be6f254d1281289c&count_bg=#79C83D&title_bg=#555555&icon=&icon_color=#E7E7E7&title=hits&edge_flat=false](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https://trusted-lightyear-006.notion.site/JCommunity-Project-Backend-7996fcb633fe4d59be6f254d1281289c&count_bg=#79C83D&title_bg=#555555&icon=&icon_color=#E7E7E7&title=hits&edge_flat=false)
    [![Main_Action 🚀](https://github.com/Carrena-JW/JCommunity-Backend/actions/workflows/main-action.yml/badge.svg)](https://github.com/Carrena-JW/JCommunity-Backend/actions/workflows/main-action.yml)
 
+## Changes ##
+- [2023-12-23] Chagne Guid to Ulid
+  
+---
 
 ## ## My Profile ## ##
 - Back-end, Front-end 

@@ -34,7 +34,7 @@ public class DeleteMember
 
             public async Task<Result<bool>> Handle(Command command, CancellationToken ct)
             {
-                var findMember = await _memberRepository.GetByIdAsync(Member.ConvertMemberIdFromString(command.Id), ct);
+                var findMember = await _memberRepository.GetByIdAsync(command.Id.ConvertToUlid(), ct);
 
                 if (findMember == null) return Result.Fail(new MemberError.NotFound(command.Id));
 

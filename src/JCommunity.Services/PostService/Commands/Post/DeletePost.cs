@@ -37,7 +37,7 @@ public class DeletePost
             {
                 // #01. Find post 
                 var options = PostIncludeOptions.Build();
-                var postId = command.Id.ConvertToGuid();
+                var postId = command.Id.ConvertToUlid();
                 var post = await _postRepository.GetPostByIdAsync(postId, options, token);
 
                 if(post == null)

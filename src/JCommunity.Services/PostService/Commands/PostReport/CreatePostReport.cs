@@ -65,7 +65,7 @@ public class CreatePostReport
                 var options = PostIncludeOptions.Build()
                     .BindReportsOption(true);
 
-                var postId = command.PostId.ConvertToGuid();
+                var postId = command.PostId.ConvertToUlid();
                 var post = await _postRepository.GetPostByIdAsync(postId, options, token);
 
                 if(post == null)
@@ -74,7 +74,7 @@ public class CreatePostReport
                 }
 
                 // #02. Check member
-                var memberId = command.AuthorId.ConvertToGuid();
+                var memberId = command.AuthorId.ConvertToUlid();
                 var isExistsMember = await _memberRepository.IsExistsMemberAsync(memberId, token);
 
                 if (!isExistsMember)

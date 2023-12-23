@@ -2,7 +2,7 @@
 
 public class PostContentAttachment : EntityBase
 {
-    public Guid PostContentId { get; private set; }
+    public Ulid PostContentId { get; private set; }
     public string Name { get; private set; } = string.Empty;
     public string Path { get; private set; } = string.Empty;
     public string Url { get; private set; } = string.Empty;
@@ -22,6 +22,7 @@ public class PostContentAttachment : EntityBase
 
         return new()
         {
+            Id = Ulid.NewUlid(),
             Name = fileName,
             Path = filePath,
             Url = downloadUri,

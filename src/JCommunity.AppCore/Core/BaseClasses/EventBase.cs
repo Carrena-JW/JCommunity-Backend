@@ -3,7 +3,7 @@
 public abstract class EventBase :IDomainEvent
 {
 
-    public Guid EventId { get; } = Guid.NewGuid();
+    public Ulid EventId { get; } = Ulid.NewUlid();
 
     public DateTime CreatedAt { get; } = SystemTime.now();
 

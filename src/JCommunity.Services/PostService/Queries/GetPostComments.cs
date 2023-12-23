@@ -32,7 +32,7 @@ public class GetPostComments
                 var options = PostIncludeOptions.Build()
                     .BindCommentsOption(true);
 
-                var post = await _postRepository.GetPostByIdAsync(query.Id.ConvertToGuid(), options, token);
+                var post = await _postRepository.GetPostByIdAsync(query.Id.ConvertToUlid(), options, token);
 
                 if (post == null) return Result.Fail(new PostError.NotFound(query.Id));
 

@@ -2,16 +2,17 @@
 {
     public class PostLike : EntityBase
     {
-        public Guid PostId { get; private set; }
+        public Ulid PostId { get; private set; }
         public Member Author { get; private set; } = null!;
-        public Guid AuthorId { get; private set; }
+        public Ulid AuthorId { get; private set; }
         public bool IsLike { get; private set; }
         public DateTime CreatedOrUpdatedAt { get; protected set; } = SystemTime.now();
 
-        internal static PostLike Create(Guid authorId,bool isLike)
+        internal static PostLike Create(Ulid authorId,bool isLike)
         {
             return new()
             {
+                Id = Ulid.NewUlid(),
                 AuthorId = authorId,
                 IsLike = isLike
             };

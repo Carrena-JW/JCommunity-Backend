@@ -8,18 +8,6 @@ public class Member : AggregateRoot
     public string Password { get; private set; } = string.Empty;
     public MemberStatus MemberStatus { get; private set; } = MemberStatus.Active;
    
-    public string GetMemberId() 
-    {
-        return this.Id.ToString();
-    }
-
-    public static Guid ConvertMemberIdFromString (string id)
-    {
-        return Guid.Parse(id);
-    }
-
-    
-
     public static Member Create(
         string name,
         string nickName,
@@ -27,10 +15,10 @@ public class Member : AggregateRoot
         string email
         )
     {
-        var memberId = Guid.NewGuid();
+        var memberId = Ulid.NewUlid();
         Member member = new()
         {
-            Id = Guid.NewGuid(),
+            Id = memberId,
             Name = name,
             NickName = nickName,
             Password = PasswordHasher.HashPassword(password),
@@ -38,7 +26,6 @@ public class Member : AggregateRoot
             MemberStatus = MemberStatus.Active,
             CreatedMemberId = memberId.ToString(),
             LastUpdatedMemberId = memberId.ToString()
-
         };
         
 

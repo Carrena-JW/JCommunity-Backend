@@ -47,7 +47,7 @@ public class UpdateTopic
             {
                 var options = TopicIncludeOptions.Create(true);
 
-                var findTopic = await _repository.GetTopicByIdAsync(Guid.Parse(command.Id), options, ct);
+                var findTopic = await _repository.GetTopicByIdAsync(command.Id.ConvertToUlid(), options, ct);
 
                 if (findTopic == null)
                 {

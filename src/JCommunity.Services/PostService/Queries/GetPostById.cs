@@ -43,7 +43,7 @@ public class GetPostById
                     .BindTopicOption(query.IncludeTopic);
 
                 var post = await _postRepository
-                    .GetPostByIdAsync(query.Id.ConvertToGuid(), options, token);
+                    .GetPostByIdAsync(query.Id.ConvertToUlid(), options, token);
 
                 if (post == null) return Result.Fail(new PostError.NotFound(query.Id));
 

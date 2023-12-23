@@ -95,4 +95,17 @@ public class UtilTest
         // Assert
         strGuid.Should().Be(guid);
     }
+
+    [Fact]
+    void Convert_To_Ulid_From_String_Test()
+    {
+        // Arrange
+        var ulid = Ulid.NewUlid();
+
+        // Act
+        var strUlid = ulid.ToString().ConvertToUlid();
+
+        // Assert
+        ulid.Should().Be(strUlid);
+    }
 }

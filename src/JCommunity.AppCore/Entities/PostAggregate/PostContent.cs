@@ -4,7 +4,7 @@ namespace JCommunity.AppCore.Entities.PostAggregate;
 
 public class PostContent : EntityBase
 {
-    public Guid PostId { get; internal set; }
+    public Ulid PostId { get; internal set; }
     public string ThumbnailUrl { get; internal set; } = string.Empty;
     public string MainImageUrl { get; internal set; } = string.Empty;
     public HashSet<PostContentAttachment> Attachments { get; internal set; } = new();
@@ -17,6 +17,7 @@ public class PostContent : EntityBase
     {
         return new()
         {
+            Id = Ulid.NewUlid(),
             ThumbnailUrl = thumbnailUrl,
             MainImageUrl = mainImageUrl,
             HtmlBody = htmlBody

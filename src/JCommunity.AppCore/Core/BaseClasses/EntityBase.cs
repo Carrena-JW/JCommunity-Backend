@@ -2,6 +2,6 @@
 
 public class EntityBase
 {
-	public Guid Id { get; protected set; }
+	public Ulid Id { get; protected set; }
 }
 

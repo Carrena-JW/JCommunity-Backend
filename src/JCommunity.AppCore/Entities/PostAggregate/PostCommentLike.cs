@@ -2,18 +2,19 @@
 {
     public class PostCommentLike : EntityBase
     {
-        public Guid CommentId { get; private set; }
+        public Ulid CommentId { get; private set; }
         public Member Author { get; private set; } = null!;
-        public Guid AuthorId { get; private set; }
+        public Ulid AuthorId { get; private set; }
         public bool IsLike { get; private set; }
         public DateTime CreatedOrUpdatedAt { get; protected set; } = SystemTime.now();
 
         internal static PostCommentLike Create(
-            Guid authorId,
+            Ulid authorId,
             bool isLike)
         {
             return new()
             {
+                Id = Ulid.NewUlid(),
                 AuthorId = authorId,
                 IsLike = isLike
             };

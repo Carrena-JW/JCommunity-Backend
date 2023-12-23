@@ -2,7 +2,7 @@
 
 public interface ISomeService : INotificationService
 {
-    Task SendSomeJobAsync(Guid id, CancellationToken token);
+    Task SendSomeJobAsync(Ulid id, CancellationToken token);
 }
 public class SomeService : ISomeService
 {
@@ -13,7 +13,7 @@ public class SomeService : ISomeService
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
-    public Task SendSomeJobAsync(Guid id, CancellationToken token)
+    public Task SendSomeJobAsync(Ulid id, CancellationToken token)
     {
         _logger.LogInformation($"Sendding SomeJob : {id}");
         return Task.CompletedTask;

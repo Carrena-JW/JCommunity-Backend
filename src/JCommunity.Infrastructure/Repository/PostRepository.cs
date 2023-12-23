@@ -22,7 +22,7 @@ public class PostRepository : IPostRepository
     }
 
     public async Task<Post?> GetPostByIdAsync(
-        Guid postId,
+        Ulid postId,
         PostIncludeOptions? options = null,
         CancellationToken token = default)
     {

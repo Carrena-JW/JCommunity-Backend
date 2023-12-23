@@ -8,15 +8,12 @@ public class PostLikeTypeConfiguration : IEntityTypeConfiguration<PostLike>
 
         builder.HasKey(builder => builder.Id);
         builder.Property(builder => builder.Id)
-            .HasConversion(
-                Id => Id.ToString(),
-                value => Guid.Parse(value)
-            );
+            .HasConversion<UlidConverter>();
 
         builder.Property(builder => builder.PostId)
-         .HasConversion(
-             Id => Id.ToString(),
-             value => Guid.Parse(value)
-         );
+            .HasConversion<UlidConverter>();
+
+        builder.Property(builder => builder.AuthorId)
+            .HasConversion<UlidConverter>();
     }
 }

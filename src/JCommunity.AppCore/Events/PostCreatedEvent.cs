@@ -1,7 +1,7 @@
 ﻿namespace JCommunity.AppCore.Events;
 
-public class PostCreatedEvent(Guid postId) : EventBase
+public class PostCreatedEvent(Ulid postId) : EventBase
 {
-    public Guid PostId { get; init; } = postId;
+    public Ulid PostId { get; init; } = postId;
      
 }

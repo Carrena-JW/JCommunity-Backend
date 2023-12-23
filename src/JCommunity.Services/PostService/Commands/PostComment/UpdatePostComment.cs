@@ -45,7 +45,7 @@ public class UpdatePostComment
                 var options = PostIncludeOptions.Build()
                     .BindCommentsOption(true);
 
-                var postId = command.PostId.ConvertToGuid();
+                var postId = command.PostId.ConvertToUlid();
                 var post = await _postRepository
                     .GetPostByIdAsync(postId, options, token);
                 
@@ -55,7 +55,7 @@ public class UpdatePostComment
                 }
 
                 // #02. Find Post Comment
-                var postCommentId = command.PostCommentId.ConvertToGuid();
+                var postCommentId = command.PostCommentId.ConvertToUlid();
                 var postComment = post.GetPostCommentById(postCommentId);
 
                 if(postComment == null)

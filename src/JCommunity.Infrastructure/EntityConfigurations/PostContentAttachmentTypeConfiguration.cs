@@ -9,16 +9,10 @@ public class PostContentAttachmentTypeConfiguration
 
         builder.HasKey(builder => builder.Id);
         builder.Property(builder => builder.Id)
-            .HasConversion(
-                Id => Id.ToString(),
-                value => Guid.Parse(value)
-            );
+            .HasConversion<UlidConverter>();
 
         builder.Property(builder => builder.PostContentId)
-          .HasConversion(
-              Id => Id.ToString(),
-              value => Guid.Parse(value)
-          );
- 
+            .HasConversion<UlidConverter>();
+
     }
 }

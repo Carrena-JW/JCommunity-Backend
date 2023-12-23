@@ -2,7 +2,7 @@
 
 public interface IEmailService : INotificationService
 {
-    Task SendSomeJobAsync(Guid id, CancellationToken token);
+    Task SendSomeJobAsync(Ulid id, CancellationToken token);
 }
 public class EmailService : IEmailService
 {
@@ -13,7 +13,7 @@ public class EmailService : IEmailService
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
-    public Task SendSomeJobAsync(Guid id, CancellationToken token)
+    public Task SendSomeJobAsync(Ulid id, CancellationToken token)
     {
         _logger.LogInformation($"Sendding Email : {id}");
         return Task.CompletedTask;

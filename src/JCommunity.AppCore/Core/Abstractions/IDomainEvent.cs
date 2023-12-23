@@ -2,7 +2,7 @@
 
 public interface IDomainEvent : INotification
 {
-    Guid EventId { get; }
+    Ulid EventId { get; }
     DateTime CreatedAt { get; }
    
 }

@@ -69,7 +69,7 @@ public class UpdatePost
                 var options = PostIncludeOptions.Build()
                     .BindContentsOption(true);
 
-                var postId = command.PostId.ConvertToGuid();
+                var postId = command.PostId.ConvertToUlid();
                 var post = await _postRepository.GetPostByIdAsync(postId, options, token);
 
                 if (post == null)
@@ -81,14 +81,14 @@ public class UpdatePost
                 if (command.TopicId != null)
                 {
                     var isExistsTopic = await _topicRepository
-                    .IsExistsTopicAsync(command.TopicId.ConvertToGuid(), token);
+                    .IsExistsTopicAsync(command.TopicId.ConvertToUlid(), token);
 
                     if (!isExistsTopic)
                     {
                         return Result.Fail(new TopicError.NotFound(command.TopicId));
                     }
 
-                    post.UpdateTopic(command.TopicId.ConvertToGuid());
+                    post.UpdateTopic(command.TopicId.ConvertToUlid());
                 }
                  
 

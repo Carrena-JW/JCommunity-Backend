@@ -2,7 +2,7 @@
 
 public interface IPushService : INotificationService
 {
-    Task SendSomeJobAsync(Guid id, CancellationToken token);
+    Task SendSomeJobAsync(Ulid id, CancellationToken token);
 }
 public class PushService : IPushService
 {
@@ -13,7 +13,7 @@ public class PushService : IPushService
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
-    public Task SendSomeJobAsync(Guid id, CancellationToken token)
+    public Task SendSomeJobAsync(Ulid id, CancellationToken token)
     {
         _logger.LogInformation($"Sendding Push : {id}");
         return Task.CompletedTask;

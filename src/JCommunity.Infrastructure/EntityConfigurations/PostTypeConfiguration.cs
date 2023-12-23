@@ -1,4 +1,6 @@
-﻿namespace JCommunity.Infrastructure.Entitybuilderurations;
+﻿using JCommunity.Infrastructure.ValueConverters;
+
+namespace JCommunity.Infrastructure.Entitybuilderurations;
 
 public class PostTypeConfiguration : IEntityTypeConfiguration<Post>
 {
@@ -8,20 +10,14 @@ public class PostTypeConfiguration : IEntityTypeConfiguration<Post>
 
         builder.HasKey(builder => builder.Id);
         builder.Property(builder => builder.Id)
-            .HasConversion(
-                Id => Id.ToString(),
-                value => Guid.Parse(value)
-            );
+           .HasConversion<UlidConverter>();
 
         builder.Property(builder => builder.Title)
             .HasMaxLength(PostRestriction.TITLE_MAX_LENGTH);
 
         // Topic (one to many)
         builder.Property(builder => builder.TopicId)
-           .HasConversion(
-               Id => Id.ToString(),
-               value => Guid.Parse(value)
-           );
+            .HasConversion<UlidConverter>();
 
         builder.HasOne(builder => builder.Topic)
             .WithMany()
@@ -35,10 +31,7 @@ public class PostTypeConfiguration : IEntityTypeConfiguration<Post>
 
         // Author (one to many)
         builder.Property(builder => builder.AuthorId)
-           .HasConversion(
-               Id => Id.ToString(),
-               value => Guid.Parse(value)
-           );
+           .HasConversion<UlidConverter>();
 
         builder.HasOne(builder => builder.Author)
             .WithMany()

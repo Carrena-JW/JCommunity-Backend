@@ -8,17 +8,17 @@ public class Topic : AggregateRoot
     public int Sort { get; private set; }
     public Member Author { get; private set; } = null!;
     [JsonIgnore]
-    public Guid AuthorId { get; private set; }
+    public Ulid AuthorId { get; private set; }
     
     public static Topic Create(
         string name,
         string description,
         int sort,
-        Guid authorId)
+        Ulid authorId)
     {
         return new()
         {
-            Id = Guid.NewGuid(),
+            Id = Ulid.NewUlid(),
             Name = name,
             Description = description,
             Sort = sort,

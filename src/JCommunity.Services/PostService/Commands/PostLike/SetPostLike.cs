@@ -42,7 +42,7 @@ public class SetPostLike
                 var options = PostIncludeOptions.Build()
                     .BindLikeOption(true);
 
-                var postId = command.PostId.ConvertToGuid();
+                var postId = command.PostId.ConvertToUlid();
 
                 var post = await _postRepository.GetPostByIdAsync(postId, options, token);
 
@@ -52,7 +52,7 @@ public class SetPostLike
                 }
 
                 // #03. Check Author
-                var memberId = command.AuthorId.ConvertToGuid();
+                var memberId = command.AuthorId.ConvertToUlid();
                 var isExistsMember = await _memberRepository.IsExistsMemberAsync(memberId, token);
 
                 if (!isExistsMember)

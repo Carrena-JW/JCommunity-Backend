@@ -72,7 +72,7 @@ public class CreatePost
             {
                 // #00. Find Member by AuthorId
                 var IsExistsMemberAsync = await _memberRepository
-                    .IsExistsMemberAsync(command.AuthorId.ConvertToGuid(), token);
+                    .IsExistsMemberAsync(command.AuthorId.ConvertToUlid(), token);
 
                 if (!IsExistsMemberAsync)
                 {
@@ -90,7 +90,7 @@ public class CreatePost
                 var baseUri = new Uri(BASE_URI);
 
                 // ## Check IsExists Topic
-                var isExistsTopic = await _topicRepository.IsExistsTopicAsync(command.TopicId.ConvertToGuid(), token);
+                var isExistsTopic = await _topicRepository.IsExistsTopicAsync(command.TopicId.ConvertToUlid(), token);
 
                 if (!isExistsTopic)
                 {
@@ -100,11 +100,11 @@ public class CreatePost
                 
                 // #03. Create post entity
                 var post = Post.Create(
-                    command.TopicId.ConvertToGuid(),
+                    command.TopicId.ConvertToUlid(),
                     command.Title,
                     command.HtmlBody,
                     command.Sources,
-                    command.AuthorId.ConvertToGuid(),
+                    command.AuthorId.ConvertToUlid(),
                     command.Image.FileName,
                     filePath,
                     command.Image.Length,

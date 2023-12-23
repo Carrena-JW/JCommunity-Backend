@@ -67,7 +67,7 @@ public class CreateMemberTest
 
         // Assert
         result.Value.Should().BeOfType(typeof(string));
-        Guid.TryParse(result.Value,out _).Should().BeTrue();
+        Ulid.TryParse(result.Value,out _).Should().BeTrue();
     }
 
     [Fact]

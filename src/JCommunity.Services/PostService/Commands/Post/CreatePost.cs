@@ -1,6 +1,4 @@
-﻿using JCommunity.AppCore.Events;
-
-namespace JCommunity.Services.PostService.Commands;
+﻿namespace JCommunity.Services.PostService.Commands;
 
 public class CreatePost
 {

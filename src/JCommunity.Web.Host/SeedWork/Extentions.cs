@@ -21,12 +21,12 @@ public static class Extentions
             var elasticsearchOptions = new ElasticsearchSinkOptions(new Uri(elasticServerUri));
 
             conf
-#if DEBUG
-            .Enrich.FromLogContext()
-            .Enrich.WithExceptionDetails()
-            .WriteTo.Debug()
+//#if DEBUG
+            //.Enrich.FromLogContext()
+            //.Enrich.WithExceptionDetails()
+            //.WriteTo.Debug()
             .WriteTo.Console()
-#endif
+//#endif
             .WriteTo.Elasticsearch(elasticsearchOptions)
             .ReadFrom.Configuration(configuration);
         });

@@ -1,6 +1,6 @@
 ﻿namespace JCommunity.AppCore.Entities.PostAggregate;
 
-public class PostContentAttachment : EntityBase
+internal class PostContentAttachment : EntityBase
 {
     public Guid PostContentId { get; private set; }
     public string Name { get; private set; } = string.Empty;

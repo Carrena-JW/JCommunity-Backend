@@ -9,17 +9,18 @@ public class ArchitectureTest
     private const string InfrastructureNS = "JCommunity.Infrastructure";
     private const string ServicesNS = "JCommunity.Services";
     private const string WebHostNS = "JCommunity.Web.Host";
- 
+    private const string NotificationHostNS = "JCommunity.Notification.Host";
+    private const string IntergrationEventNS = "JCommunity.IntergrationEvent";
 
 
     [Fact]
-    public void AppCore_프로젝트_종속성_확인()
+    void AppCore_Project_Check_Dependency_Test()
     {
         // Arrange
         var assembly = typeof(AppCore.AssemblyReference).Assembly;
         var otherProjects = new[]
         {
-            InfrastructureNS, ServicesNS, WebHostNS,
+            InfrastructureNS, ServicesNS, WebHostNS, IntergrationEventNS, NotificationHostNS
         };
 
         // Act
@@ -33,13 +34,13 @@ public class ArchitectureTest
     }
 
     [Fact]
-    public void Infrastructure_프로젝트_종속성_확인()
+    void Infrastructure_Project_Check_Dependency_Test()
     {
         // Arrange
         var assembly = typeof(Infrastructure.AssemblyReference).Assembly;
         var otherProjects = new[]
         {
-           ServicesNS, WebHostNS
+           ServicesNS, WebHostNS, NotificationHostNS
         };
 
         // Act
@@ -53,13 +54,13 @@ public class ArchitectureTest
     }
 
     [Fact]
-    public void Services_프로젝트_종속성_확인()
+    void Services_Project_Check_Dependency_Test()
     {
         // Arrange
         var assembly = typeof(Services.AssemblyReference).Assembly;
         var otherProjects = new[]
         {
-            WebHostNS
+            WebHostNS, NotificationHostNS
         };
 
         // Act
@@ -72,6 +73,45 @@ public class ArchitectureTest
         result.IsSuccessful.Should().BeTrue();
     }
 
+    [Fact]
+    void IntergrationEvent_Project_Check_Dependency_Test()
+    {
+        // Arrange
+        var assembly = IntergrationEvent.AssemblyReference.Assembly;
+        var otherProjects = new[]
+        {
+            InfrastructureNS, ServicesNS, WebHostNS, AppCoreNS, NotificationHostNS
+        };
+
+        // Act
+        var result = Types.InAssembly(assembly)
+            .Should()
+            .NotHaveDependencyOnAny(otherProjects)
+            .GetResult();
+
+        // Assert
+        result.IsSuccessful.Should().BeTrue();
+    }
+
+    [Fact]
+    void NotificationHost_Project_Check_Dependency_Test()
+    {
+        // Arrange
+        var assembly = Notification.Host.AssemblyReference.Assembly;
+        var otherProjects = new[]
+        {
+            InfrastructureNS, ServicesNS, WebHostNS, AppCoreNS
+        };
+
+        // Act
+        var result = Types.InAssembly(assembly)
+            .Should()
+            .NotHaveDependencyOnAny(otherProjects)
+            .GetResult();
+
+        // Assert
+        result.IsSuccessful.Should().BeTrue();
+    }
 
 }
 

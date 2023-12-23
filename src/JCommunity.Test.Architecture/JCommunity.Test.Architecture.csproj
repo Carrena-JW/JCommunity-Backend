@@ -30,6 +30,8 @@
     <ProjectReference Include="..\JCommunity.Infrastructure\JCommunity.Infrastructure.csproj" />
     <ProjectReference Include="..\JCommunity.Services\JCommunity.Services.csproj" />
     <ProjectReference Include="..\JCommunity.Web.Host\JCommunity.Web.Host.csproj" />
+    <ProjectReference Include="..\JCommunity.Notification.Host\JCommunity.Notification.Host.csproj" />
+    <ProjectReference Include="..\JCommunity.IntergrationEvent\JCommunity.IntergrationEvent.csproj" />
   </ItemGroup>
 
 </Project>

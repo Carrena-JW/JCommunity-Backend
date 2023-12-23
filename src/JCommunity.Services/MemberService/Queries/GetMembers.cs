@@ -36,7 +36,7 @@ public class GetMembers
                 _logger.LogInformation("Get Members - member: {@member}", members);
                 var result = members.Select(x => new MemberDto(x.Id.ToString(), x.Name, x.Email, x.NickName));
                 
-                var dto = _mapper.Map<IEnumerable<MemberDto>>(result);
+                var dto = _mapper.Map<IEnumerable<MemberDto>>(members);
 
                 return Result.Ok(dto);
             }

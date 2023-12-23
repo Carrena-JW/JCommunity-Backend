@@ -31,8 +31,15 @@ public class AppDbContext : DbContext, IUnitOfWork
 
     public async Task<bool> SaveEntitiesAsync(CancellationToken ct = default)
     {
-        _ = await base.SaveChangesAsync(ct);
+        await base.SaveChangesAsync(ct);
 
+        await EventDispatcher(ct);
+       
+        return true;
+    }
+
+    private async Task EventDispatcher(CancellationToken token)
+    {
         var domainEntities = ChangeTracker
            .Entries<AggregateRoot>()
            .Where(x => x.Entity.DomainEvents != null && x.Entity.DomainEvents.Any());
@@ -45,8 +52,6 @@ public class AppDbContext : DbContext, IUnitOfWork
             .ForEach(entity => entity.Entity.ClearDomainEvents());
 
         foreach (var domainEvent in domainEvents)
-            await _mediator.Publish(domainEvent);
-
-        return true;
+            await _mediator.Publish(domainEvent, token);
     }
 }

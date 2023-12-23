@@ -12,7 +12,7 @@ public class TopicTag : EntityBase
     public Tag Value { get; private set; }
     public string Name { get; private set; } = string.Empty;
 
-    public static TopicTag Create(Tag tag)
+    internal static TopicTag Create(Tag tag)
     {
         return new() {
             Id = Guid.NewGuid(),
@@ -21,7 +21,7 @@ public class TopicTag : EntityBase
         };
     }
 
-    public static TopicTag Create(string name)
+    internal static TopicTag Create(string name)
     {
         Tag tag;
         Enum.TryParse(name, out tag);

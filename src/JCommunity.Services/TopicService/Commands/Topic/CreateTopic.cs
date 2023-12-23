@@ -8,7 +8,7 @@ public class CreateTopic
         public string Name { get; init; } = string.Empty;
         public string Description { get; init; } = string.Empty;
         public int Sort { get; init; }
-        public IEnumerable<string> Tags { get; init; } = Array.Empty<string>();
+        public IEnumerable<string> TagNames { get; init; } = Array.Empty<string>();
         public string AuthorId { get; init; } = string.Empty;
         #endregion
 
@@ -26,7 +26,7 @@ public class CreateTopic
                     .MaximumLength(TopicRestriction.DESCRIPTION_MAX_LENGTH);
 
                 // Tags Collection
-                RuleForEach(r => r.Tags)
+                RuleForEach(r => r.TagNames)
                     .MaximumLength(TopicRestriction.TAG_NAME_MAX_LENGTH);
 
                 RuleFor(r => r.AuthorId)
@@ -68,10 +68,9 @@ public class CreateTopic
                     command.Sort,
                     Guid.Parse(command.AuthorId));
 
-                if(command.Tags.Count() > 0)
+                if(command.TagNames.Count() > 0)
                 {
-                    var topicTags = command.Tags.Select(t =>TopicTag.Create(t) );
-                    topic.AddTags(topicTags.ToArray());
+                    topic.AddTags(command.TagNames);
                 }
 
                 var isUniqueName = await _repository.IsUniqueTopicNameAsync(command.Name, ct);

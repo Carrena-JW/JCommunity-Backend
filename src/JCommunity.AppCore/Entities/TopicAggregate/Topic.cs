@@ -1,4 +1,6 @@
-﻿namespace JCommunity.AppCore.Entities.TopicAggregate;
+﻿using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+
+namespace JCommunity.AppCore.Entities.TopicAggregate;
 public class Topic : AggregateRoot 
 {
     
@@ -54,6 +56,12 @@ public class Topic : AggregateRoot
         this.Tags = tags.ToHashSet();
     }
 
+    public void UpdateTags(IEnumerable<string> tagNames)
+    {
+        var topicTags = tagNames.Select(t => TopicTag.Create(t));
+        this.Tags = topicTags.ToHashSet();
+    }
+
     public void AddTag(TopicTag tag)
     {
         if (Tags.Any(t => t.Id.Equals(tag.Id))) return;
@@ -68,7 +76,20 @@ public class Topic : AggregateRoot
         {
             Tags.Add(tag);
         }
-         
+    }
+
+    public IEnumerable<TopicTag> AddTags(IEnumerable<string> names)
+    {
+        var exceptName = names.Except(Tags.Select(t => t.Name)).ToList();
+        var tags = exceptName.Select(n => TopicTag.Create(n)).ToList();
+
+        foreach (var tag in tags)
+        {
+            Tags.Add(tag);
+        }
+
+        return tags;
+
     }
 
     public void RemoveAllTags()

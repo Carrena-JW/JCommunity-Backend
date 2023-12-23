@@ -1,4 +1,6 @@
-﻿namespace JCommunity.Services.PostService.Commands;
+﻿using Microsoft.Extensions.Configuration;
+
+namespace JCommunity.Services.PostService.Commands;
 
 public class CreatePost
 {
@@ -47,19 +49,23 @@ public class CreatePost
             private readonly IFileService _fileService;
             private readonly IMemberRepository _memberRepository;
             private readonly ITopicRepository _topicRepository;
+            private readonly string BASE_URI;
 
             public Handler(
                 ILogger<Handler> logger,
                 IPostRepository postRepository,
                 IFileService fileService,
                 IMemberRepository memberRepository,
-                ITopicRepository topicRepository)
+                ITopicRepository topicRepository,
+                IConfiguration config)
             {
                 _logger = logger ?? throw new ArgumentNullException(nameof(logger));
                 _postRepository = postRepository ?? throw new ArgumentNullException(nameof(postRepository));
                 _fileService = fileService ?? throw new ArgumentNullException(nameof(fileService));
                 _memberRepository = memberRepository ?? throw new ArgumentNullException(nameof(memberRepository));
                 _topicRepository = topicRepository ?? throw new ArgumentNullException(nameof(topicRepository));
+
+                BASE_URI = config.GetValue<string>("BaseUri","http://localhost:5149")!;
             }
 
             public async Task<Result<string>> Handle(Command command, CancellationToken token)
@@ -81,11 +87,7 @@ public class CreatePost
 
                 // #02. Save image file
                 var filePath = await _fileService.SaveFileAsync(command.Image, true, token);
-
-                
-                var baseUri = new Uri("http://localhost:5149");
-                var attachment = PostContentAttachment
-                    .Create(command.Image.FileName, filePath, baseUri, command.Image.Length);
+                var baseUri = new Uri(BASE_URI);
 
                 // ## Check IsExists Topic
                 var isExistsTopic = await _topicRepository.IsExistsTopicAsync(command.TopicId.ConvertToGuid(), token);
@@ -103,7 +105,10 @@ public class CreatePost
                     command.HtmlBody,
                     command.Sources,
                     command.AuthorId.ConvertToGuid(),
-                    attachment);
+                    command.Image.FileName,
+                    filePath,
+                    command.Image.Length,
+                    baseUri);
 
                 // Set Draf = false
                 post.SetFinished();

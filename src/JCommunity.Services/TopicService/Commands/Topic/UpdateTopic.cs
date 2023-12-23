@@ -9,7 +9,7 @@ public class UpdateTopic
         public string? Name { get; init; }  
         public string? Description { get; init; } 
         public int? Sort { get; init; }
-        public IEnumerable<string>? Tags { get; init; }
+        public IEnumerable<string>? TagNames { get; init; }
         #endregion
 
         #region [Validator]
@@ -24,7 +24,7 @@ public class UpdateTopic
                 RuleFor(r => r.Description)
                     .MaximumLength(TopicRestriction.DESCRIPTION_MAX_LENGTH);
 
-                RuleForEach(r => r.Tags)
+                RuleForEach(r => r.TagNames)
                     .MaximumLength(TopicRestriction.TAG_NAME_MAX_LENGTH);
 
             }
@@ -74,10 +74,9 @@ public class UpdateTopic
                     findTopic.UpdateTopicSortOrder(command.Sort.Value);
                 }
 
-                if(command.Tags != null) 
+                if(command.TagNames != null) 
                 {
-                    var topicTags = command.Tags.Select(t => TopicTag.Create(t));
-                    findTopic.UpdateTags(topicTags);
+                    findTopic.UpdateTags(command.TagNames);
                 }
 
                 findTopic.UpdateLastUpdateAt();

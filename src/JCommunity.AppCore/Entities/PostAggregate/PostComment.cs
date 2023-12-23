@@ -1,6 +1,4 @@
-﻿using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
-
-namespace JCommunity.AppCore.Entities.PostAggregate;
+﻿namespace JCommunity.AppCore.Entities.PostAggregate;
 
 public class PostComment : EntityBase
 {
@@ -12,7 +10,7 @@ public class PostComment : EntityBase
     public HashSet<PostCommentLike> Likes { get; private set; } = new();
     public DateTime CreatedOrUpdatedAt { get; protected set; } = SystemTime.now();
 
-    public static PostComment Create(
+    internal static PostComment Create(
         string contents,
         Guid authorId,
         Guid? parentCommentId = null)
@@ -25,7 +23,7 @@ public class PostComment : EntityBase
         };
     }
 
-    public void UpdatePostCommentContents(string contents)
+    internal void UpdatePostCommentContents(string contents)
     {
         if(Contents != null)
         {
@@ -34,7 +32,7 @@ public class PostComment : EntityBase
         }
     }
 
-    public PostCommentLike CreateUpdatePostCommentLike(Guid authorId,bool isLike)
+    internal PostCommentLike CreateUpdatePostCommentLike(Guid authorId,bool isLike)
     {
         var exists = this.Likes
             .SingleOrDefault(l => l.AuthorId == authorId);

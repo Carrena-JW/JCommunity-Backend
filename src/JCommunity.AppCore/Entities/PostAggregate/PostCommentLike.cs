@@ -8,7 +8,7 @@
         public bool IsLike { get; private set; }
         public DateTime CreatedOrUpdatedAt { get; protected set; } = SystemTime.now();
 
-        public static PostCommentLike Create(
+        internal static PostCommentLike Create(
             Guid authorId,
             bool isLike)
         {
@@ -19,7 +19,7 @@
             };
         }
 
-        public void UpdateLike(bool value)
+        internal void UpdateLike(bool value)
         {
             if(this.IsLike != value)
             {

@@ -1,4 +1,7 @@
-﻿namespace JCommunity.AppCore.Entities.PostAggregate;
+﻿using System.Globalization;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+
+namespace JCommunity.AppCore.Entities.PostAggregate;
 
 public class Post : AggregateRoot
 {
@@ -24,9 +27,15 @@ public class Post : AggregateRoot
         string htmlBody,
         string sources,
         Guid authorId,
-        PostContentAttachment attachment
-        )
+        string fineName,
+        string filePath,
+        long fileLength,
+        Uri baseUri
+    )
     {
+        var attachment = PostContentAttachment
+        .Create(fineName, filePath, baseUri, fileLength);
+
         var fileName = Path.GetFileName(attachment.Path);
         var contents = PostContent
             .Create(attachment.Url.Replace(fileName, $"thumb_{fileName}"), attachment.Url, htmlBody);
@@ -150,6 +159,33 @@ public class Post : AggregateRoot
     public bool IsDuplicatedReport(Guid authorId)
     {
         return this.Reports.Any(r => r.AuthorId == authorId);
+    }
+
+    public void UpdateMainImage(
+        string fileName,
+        string filePath,
+        long fileLength,
+        Uri baseUri)
+    {
+        this.Contents.UpdateMainImage(fileName, filePath, fileLength, baseUri);
+    }
+
+    public void UpdateHtmlBody(string htmlBody)
+    {
+        this.Contents.UpdateHtmlBody(htmlBody);
+    }
+
+    public PostCommentLike CreateUpdatePostCommentLike(
+        PostComment postComment,
+        Guid memberId,
+        bool isLike)
+    {
+       return postComment.CreateUpdatePostCommentLike(memberId, isLike);
+    }
+
+    public void UpdatePostCommentContents(PostComment postComment,string contents) 
+    { 
+        postComment.UpdatePostCommentContents(contents);
     }
 }
  

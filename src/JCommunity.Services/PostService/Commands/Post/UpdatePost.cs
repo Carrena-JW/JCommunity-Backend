@@ -1,4 +1,6 @@
-﻿namespace JCommunity.Services.PostService.Commands;
+﻿using Microsoft.Extensions.Configuration;
+
+namespace JCommunity.Services.PostService.Commands;
 
 public class UpdatePost
 {
@@ -43,17 +45,21 @@ public class UpdatePost
             private readonly IPostRepository _postRepository;
             private readonly IFileService _fileService;
             private readonly ITopicRepository _topicRepository;
+            private readonly string BASE_URI;
 
             public Handler(
                 ILogger<Handler> logger,
                 IPostRepository postRepository,
                 IFileService fileService,
-                ITopicRepository topicRepository)
+                ITopicRepository topicRepository,
+                IConfiguration config)
             {
                 _logger = logger ?? throw new ArgumentNullException(nameof(logger));
                 _postRepository = postRepository ?? throw new ArgumentNullException(nameof(postRepository));
                 _fileService = fileService ?? throw new ArgumentNullException(nameof(fileService));
                 _topicRepository = topicRepository ?? throw new ArgumentNullException(nameof(topicRepository));
+
+                BASE_URI = config.GetValue<string>("BaseUri", "http://localhost:5149")!;
             }
 
             public async Task<Result<bool>> Handle(Command command, CancellationToken token)
@@ -97,11 +103,13 @@ public class UpdatePost
                     var filePath = await _fileService.SaveFileAsync(command.Image, true, token);
 
 
-                    var baseUri = new Uri("http://localhost:5149");
-                    var attachment = PostContentAttachment
-                        .Create(command.Image.FileName, filePath, baseUri, command.Image.Length);
-
-                    post.Contents.UpdateMainImage(attachment);
+                    var baseUri = new Uri(BASE_URI);
+                  
+                    post.UpdateMainImage(
+                        command.Image.FileName,
+                        filePath,
+                        command.Image.Length,
+                        baseUri);
                 }
 
                 // #04. Update Title
@@ -119,7 +127,7 @@ public class UpdatePost
                 // #06. update body
                 if (command.HtmlBody != null)
                 {
-                    post.Contents.UpdateHtmlBody(command.HtmlBody);
+                    post.UpdateHtmlBody(command.HtmlBody);
                 }
 
                 post.UpdateLastUpdateAt();

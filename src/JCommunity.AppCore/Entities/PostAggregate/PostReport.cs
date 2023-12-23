@@ -10,7 +10,7 @@ public class PostReport : EntityBase
     public Guid AuthorId { get; private set; }
     public Member Author { get; private set; } = null!;
 
-    public static PostReport Create(
+    internal static PostReport Create(
         ReportCategory category,
         string title,
         string htmlbody,

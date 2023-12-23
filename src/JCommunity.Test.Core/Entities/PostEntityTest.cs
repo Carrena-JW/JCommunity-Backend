@@ -45,7 +45,8 @@ public class PostEntityTest
         var htmlBody = "this is body";
         var sources = "this is sources";
 
-        var attachment = new PostContentAttachment();
+        var uri = new Uri("http://localhost/ddd");
+        
 
         var post = Post.Create(
             CreatedTopic.Id, 
@@ -53,7 +54,11 @@ public class PostEntityTest
             htmlBody, 
             sources, 
             CreatedMember.Id, 
-            attachment);
+            "fileName",
+            "filePath",
+            123123123,
+            uri
+           );
 
         dbContext.Posts.Add(post);
         dbContext.SaveChanges();

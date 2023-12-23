@@ -1,4 +1,6 @@
-﻿namespace JCommunity.AppCore.Entities.PostAggregate;
+﻿using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+
+namespace JCommunity.AppCore.Entities.PostAggregate;
 
 public class PostContent : EntityBase
 {
@@ -8,7 +10,7 @@ public class PostContent : EntityBase
     public HashSet<PostContentAttachment> Attachments { get; internal set; } = new();
     public string HtmlBody { get; internal set; } = string.Empty;
 
-    public  static PostContent Create(
+    internal static PostContent Create(
         string thumbnailUrl,
         string mainImageUrl,
         string htmlBody)
@@ -21,8 +23,15 @@ public class PostContent : EntityBase
         };
     }
 
-    public void UpdateMainImage(PostContentAttachment attachment)
+    internal void UpdateMainImage(
+        string fileName, 
+        string filePath,
+        long fileLength,
+        Uri baseUri)
     {
+        var attachment = PostContentAttachment
+        .Create(fileName, filePath, baseUri, fileLength);
+
         var previousImage = Attachments.SingleOrDefault(a => a.Url == this.MainImageUrl);
 
         if(previousImage != null)
@@ -33,16 +42,16 @@ public class PostContent : EntityBase
         AddAttachment(attachment);
 
         this.MainImageUrl = attachment.Url;
-        var fileName = Path.GetFileName(attachment.Path);
-        this.ThumbnailUrl = attachment.Url.Replace(fileName, $"thumb_{fileName}");
+        var savedFileName = Path.GetFileName(attachment.Path);
+        this.ThumbnailUrl = attachment.Url.Replace(savedFileName, $"thumb_{fileName}");
     }
 
-    public void AddAttachment(PostContentAttachment attachment)
+    internal void AddAttachment(PostContentAttachment attachment)
     {
         this.Attachments.Add(attachment);
     }
 
-    public void UpdateHtmlBody(string htmlBody)
+    internal void UpdateHtmlBody(string htmlBody)
     {
         // #01. Conditioin for Length
         if (this.HtmlBody != htmlBody)

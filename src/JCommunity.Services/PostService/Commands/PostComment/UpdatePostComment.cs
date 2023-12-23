@@ -64,7 +64,7 @@ public class UpdatePostComment
                 }
 
                 // #03. Update Comment to Post
-                postComment.UpdatePostCommentContents(command.Contents);
+                post.UpdatePostCommentContents(postComment,command.Contents);
 
                 // #04. Save Entity
                 await _postRepository.UnitOfWork.SaveEntitiesAsync(token);

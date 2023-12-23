@@ -72,7 +72,10 @@ public class SetPostCommentLike
                 }
 
                 // #04. Create Or Update Post Comment Like
-                var like = postComment.CreateUpdatePostCommentLike(memberId, command.IsLike);
+                var like = post.CreateUpdatePostCommentLike(
+                    postComment,
+                    memberId, 
+                    command.IsLike);
 
                 // #04. Save Entity
                 await _postRepository.UnitOfWork.SaveEntitiesAsync(token);

@@ -1,6 +1,6 @@
 ﻿namespace JCommunity.AppCore.Entities.PostAggregate;
 
-internal class PostContentAttachment : EntityBase
+public class PostContentAttachment : EntityBase
 {
     public Guid PostContentId { get; private set; }
     public string Name { get; private set; } = string.Empty;
@@ -10,7 +10,7 @@ internal class PostContentAttachment : EntityBase
     public long Size { get; private set; }
     public DateTime CreatedAt { get; private set; } = SystemTime.now();
 
-    public static PostContentAttachment Create(
+    internal static PostContentAttachment Create(
         string fileName,
         string filePath,
         Uri baseUri,

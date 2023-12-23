@@ -48,15 +48,12 @@ public class AddTopicTag
                     return Result.Fail(new TopicError.NotFound(command.TopicId));
                 }
 
-                var exceptName = command.Names.Except( findTopic.Tags.Select(t => t.Name)).ToList();
-                var tags = exceptName.Select(n => TopicTag.Create(n)).ToList();
-
-                findTopic.AddTags(tags.ToArray());
+                var addedTags =  findTopic.AddTags(command.Names);
 
                 await _repository.UnitOfWork.SaveEntitiesAsync(ct);
 
-                _logger.LogInformation("Adding Topic Tag: {@topic}", tags);
-                return Result.Ok(tags.AsEnumerable());
+                _logger.LogInformation("Adding Topic Tag: {@topic}", addedTags);
+                return Result.Ok(addedTags);
 
             }
         }

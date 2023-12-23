@@ -176,6 +176,7 @@ public class TopicEntityTest
         // Act
         var updatedName = "UpdatedName";
         topic.UpdateTopicName(updatedName);
+        topic.UpdateLastUpdateAt();
         dbContext.SaveChanges();
 
         var createdTopic = dbContext.Topics.AsNoTracking().First();
@@ -226,6 +227,53 @@ public class TopicEntityTest
 
         // Assert
         createdTopic.Sort.Should().Be(sortOrder);
+    }
+
+    [Fact]
+    void Topic_Add_Tags_Test()
+    {
+        // Setup
+        using var dbContext = new MemoryDbContext();
+        Init_Job(dbContext);
+
+        // Arrange
+        var topic = Topic.Create(NAME, DESCRIPTION, SROT, CreatedMember.Id);
+        dbContext.Topics.Add(topic);
+        var tagNames = new string[] { "Tag", "Gag", "Food" };
+
+        // Act
+        topic.AddTags(tagNames);
+        dbContext.SaveChanges();
+
+        // Assert
+        topic.Tags.Should().HaveCount(3);
+        topic.Tags.Should().Contain(x => x.Name == "Tag");
+        topic.Tags.Should().Contain(x => x.Name == "Gag");
+        topic.Tags.Should().Contain(x => x.Name == "Food");
+    }
+
+
+    [Fact]
+    void Topic_Update_Tags_Test()
+    {
+        // Setup
+        using var dbContext = new MemoryDbContext();
+        Init_Job(dbContext);
+
+        // Arrange
+        var topic = Topic.Create(NAME, DESCRIPTION, SROT, CreatedMember.Id);
+        dbContext.Topics.Add(topic);
+        var tagNames = new string[] { "Tag", "Gag", "Food" };
+
+        // Act
+        topic.UpdateTags(tagNames);
+        dbContext.SaveChanges();
+
+        // Assert
+        topic.Tags.Should().HaveCount(3);
+        topic.Tags.Should().Contain(x => x.Name == "Tag");
+        topic.Tags.Should().Contain(x => x.Name == "Gag");
+        topic.Tags.Should().Contain(x => x.Name == "Food");
     }
 
 

@@ -9,10 +9,8 @@ internal class TopicTypeConfiguration : IEntityTypeConfiguration<Topic>
         // Id
         builder.HasKey(builder => builder.Id);
         builder.Property(builder => builder.Id)
-            .HasConversion(
-                Id => Id.ToString(),
-                value => Guid.Parse(value)
-            );
+            .HasConversion<UlidConverter>();
+
 
         // Title
         builder.HasIndex(builder => builder.Name).IsUnique();
@@ -32,19 +30,13 @@ internal class TopicTypeConfiguration : IEntityTypeConfiguration<Topic>
              .WithOne()
              .HasForeignKey(builder => builder.TopicId);
 
-
         // Author
         builder.HasOne(builder => builder.Author)
             .WithMany()
             .HasForeignKey(builder => builder.AuthorId);
 
-
-
         builder.Property(builder => builder.AuthorId)
-            .HasConversion(
-                Id => Id.ToString(),
-                value => Guid.Parse(value)
-            );
+            .HasConversion<UlidConverter>();
 
         builder.Ignore(builder => builder.DomainEvents);
     }

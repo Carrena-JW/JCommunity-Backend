@@ -28,7 +28,7 @@ public class GetTopicTags
             public async Task<Result<IEnumerable<TopicTag>>> Handle(Query query, CancellationToken ct)
             {
                 var options = TopicIncludeOptions.Create(true);
-                var topic = await _repository.GetTopicByIdAsync(Guid.Parse(query.TopicId), options, ct);
+                var topic = await _repository.GetTopicByIdAsync(query.TopicId.ConvertToUlid(), options, ct);
 
                 if (topic == null) return Result.Fail(new TopicError.NotFound(query.TopicId));
 

@@ -16,7 +16,7 @@ public class MemberRepository : IMemberRepository
 
     }
 
-    public async Task<Member?> GetByIdAsync(Guid memberId, CancellationToken token)
+    public async Task<Member?> GetByIdAsync(Ulid memberId, CancellationToken token)
     {
         return await _appDbContext.Members.FindAsync(memberId, token);
 
@@ -43,7 +43,7 @@ public class MemberRepository : IMemberRepository
         _appDbContext.Members.Remove(member);
     }
 
-    public async Task<bool> IsExistsMemberAsync(Guid memberId, CancellationToken token)
+    public async Task<bool> IsExistsMemberAsync(Ulid memberId, CancellationToken token)
     {
         return await _appDbContext.Members.AsNoTracking()
             .AnyAsync(m => m.Id == memberId, token);

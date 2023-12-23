@@ -6,7 +6,7 @@ namespace JCommunity.AppCore.Entities.PostAggregate;
 public class Post : AggregateRoot
 {
     [JsonIgnore]
-    public Guid TopicId { get; private set; }
+    public Ulid TopicId { get; private set; }
     public Topic Topic { get; private set; } = null!;
     public bool IsDraft { get; private set; } = true;
     public string Title { get; private set; } = string.Empty;
@@ -18,15 +18,15 @@ public class Post : AggregateRoot
     public List<PostComment> Comments { get; private set; } = new();
     public List<PostReport> Reports { get; private set; } = new();
     [JsonIgnore]
-    public Guid AuthorId { get; private set; }
+    public Ulid AuthorId { get; private set; }
     public Member Author { get; private set; } = null!;
 
     public static Post Create(
-        Guid topicId,
+        Ulid topicId,
         string title,
         string htmlBody,
         string sources,
-        Guid authorId,
+        Ulid authorId,
         string fineName,
         string filePath,
         long fileLength,
@@ -45,6 +45,7 @@ public class Post : AggregateRoot
 
         return new ()
         {
+            Id= Ulid.NewUlid(),
             TopicId = topicId,
             Title = title,
             Sources = sources,
@@ -58,7 +59,7 @@ public class Post : AggregateRoot
         this.IsDraft = false;
     }
 
-    public void UpdateTopic(Guid topicId)
+    public void UpdateTopic(Ulid topicId)
     {
         if(this.TopicId != topicId)
         {
@@ -83,12 +84,12 @@ public class Post : AggregateRoot
 
     }
 
-    public bool IsExistsComment(Guid postCommentId)
+    public bool IsExistsComment(Ulid postCommentId)
     {
         return this.Comments.Any(c => c.Id == postCommentId);
     }
 
-    public PostComment AddComment(string contents, Guid authorId, Guid? parentCommentId)
+    public PostComment AddComment(string contents, Ulid authorId, Ulid? parentCommentId)
     {
         var comment = PostComment.Create(contents, authorId, parentCommentId);
 
@@ -97,7 +98,7 @@ public class Post : AggregateRoot
         return comment;
     }
 
-    public void RemoveComment(Guid postCommentId)
+    public void RemoveComment(Ulid postCommentId)
     {
         var comment = this.Comments
             .SingleOrDefault(c => c.Id == postCommentId);
@@ -108,7 +109,7 @@ public class Post : AggregateRoot
         }
     }
 
-    public PostComment? GetPostCommentById(Guid postCommentId)
+    public PostComment? GetPostCommentById(Ulid postCommentId)
     {
         return this.Comments.SingleOrDefault(c => c.Id == postCommentId);
     }
@@ -118,7 +119,7 @@ public class Post : AggregateRoot
         this.LastUpdatedAt = SystemTime.now();
     }
 
-    public PostLike CreateUpdatePostLike(Guid authorId, bool isLike)
+    public PostLike CreateUpdatePostLike(Ulid authorId, bool isLike)
     {
         var exists = this.Likes
             .SingleOrDefault(l => l.AuthorId == authorId);
@@ -146,7 +147,7 @@ public class Post : AggregateRoot
         int category, 
         string title, 
         string htmlBody, 
-        Guid authorId)
+        Ulid authorId)
     {
         
 
@@ -156,7 +157,7 @@ public class Post : AggregateRoot
         return report;
     }
 
-    public bool IsDuplicatedReport(Guid authorId)
+    public bool IsDuplicatedReport(Ulid authorId)
     {
         return this.Reports.Any(r => r.AuthorId == authorId);
     }
@@ -177,7 +178,7 @@ public class Post : AggregateRoot
 
     public PostCommentLike CreateUpdatePostCommentLike(
         PostComment postComment,
-        Guid memberId,
+        Ulid memberId,
         bool isLike)
     {
        return postComment.CreateUpdatePostCommentLike(memberId, isLike);

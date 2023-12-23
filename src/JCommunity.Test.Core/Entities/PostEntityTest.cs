@@ -46,7 +46,6 @@ public class PostEntityTest
         var sources = "this is sources";
 
         var uri = new Uri("http://localhost/ddd");
-        
 
         var post = Post.Create(
             CreatedTopic.Id, 
@@ -75,5 +74,49 @@ public class PostEntityTest
         post.Id.Should().Be(findPost!.Id);
     }
 
+    [Fact]
+    void Post_Comment_Create_Test()
+    {
+        using MemoryDbContext dbContext = new MemoryDbContext();
+        Init_Job(dbContext);
+
+        // Arrange
+        var title = "this is title";
+        var htmlBody = "this is body";
+        var sources = "this is sources";
+
+        var uri = new Uri("http://localhost/ddd");
+
+        var post = Post.Create(
+            CreatedTopic.Id,
+            title,
+            htmlBody,
+            sources,
+            CreatedMember.Id,
+            "fileName",
+            "filePath",
+            123123123,
+            uri
+           );
+
+        dbContext.Posts.Add(post);
+        dbContext.SaveChanges();
+
+        // Act
+        var comment = "zzzzzzzzzzz";
+        post.AddComment(comment, post.AuthorId, null);
+        dbContext.SaveChanges();
+
+        // Assert
+        post.Comments.Should().HaveCount(1);
+        post.Comments.Should().Contain(c => c.Contents == comment);
+    }
+
 
 }
+
+// Arrange
+
+// Act
+
+// Assert

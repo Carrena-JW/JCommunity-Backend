@@ -140,7 +140,7 @@ public static class Extentions
         var enableSeedJob = app.Configuration.GetValue("EnableSetupSeed", false);
 
 #if DEBUG
-        enableSeedJob = false;
+        enableSeedJob = true;
 #endif
 
         if (enableSeedJob)

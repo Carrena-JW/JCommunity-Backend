@@ -6,4 +6,9 @@ public static class GuidExtention
     {
         return Guid.Parse(value);
     }
+
+    public static Ulid ConvertToUlid(this string value)
+    {
+        return Ulid.Parse(value);
+    }
 }

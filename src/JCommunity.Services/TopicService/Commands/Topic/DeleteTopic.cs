@@ -33,7 +33,7 @@ public class DeleteTopic
 
             public async Task<Result<bool>> Handle(Command command, CancellationToken ct)
             {
-                var findTopic = await _repository.GetTopicByIdAsync(Guid.Parse(command.Id));
+                var findTopic = await _repository.GetTopicByIdAsync(command.Id.ConvertToUlid());
 
                 if (findTopic == null)
                 {

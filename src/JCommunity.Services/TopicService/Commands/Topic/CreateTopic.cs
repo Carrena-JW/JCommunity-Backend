@@ -55,7 +55,7 @@ public class CreateTopic
             public async Task<Result<string>> Handle(Command command, CancellationToken ct)
             {
                 var IsExistsMemberAsync = await _memberRepository
-                    .IsExistsMemberAsync(command.AuthorId.ConvertToGuid(), ct);
+                    .IsExistsMemberAsync(command.AuthorId.ConvertToUlid(), ct);
 
                 if (!IsExistsMemberAsync)
                 {
@@ -66,7 +66,7 @@ public class CreateTopic
                     command.Name,
                     command.Description,
                     command.Sort,
-                    Guid.Parse(command.AuthorId));
+                    command.AuthorId.ConvertToUlid());
 
                 if(command.TagNames.Count() > 0)
                 {

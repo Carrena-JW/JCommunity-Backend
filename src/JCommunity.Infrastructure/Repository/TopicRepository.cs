@@ -21,7 +21,7 @@ public class TopicRepository : ITopicRepository
     }
 
     public async Task<Topic?> GetTopicByIdAsync(
-         Guid topicId,
+         Ulid topicId,
          TopicIncludeOptions? options = null,
          CancellationToken token = new())
     {
@@ -64,7 +64,7 @@ public class TopicRepository : ITopicRepository
         return query;
     }
 
-    public async Task<bool> IsExistsTopicAsync(Guid topicId, CancellationToken token)
+    public async Task<bool> IsExistsTopicAsync(Ulid topicId, CancellationToken token)
     {
         return await _appDbContext.Topics.AsNoTracking()
             .AnyAsync(m => m.Id == topicId, token);

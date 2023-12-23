@@ -27,7 +27,7 @@ public class MessageNotificationConsumer : IConsumer<QueueRecord>
         _logger.LogInformation($"Recevied Message : {@context.Message}");
 
         // You can process the queue message received as follows.
-        var fromId = Guid.Parse(context.Message.fromId);
+        var fromId = Ulid.Parse(context.Message.fromId);
         
         await _someService.SendSomeJobAsync(fromId, new());
         await _pushService.SendSomeJobAsync(fromId, new());

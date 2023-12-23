@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace JCommunity.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231220062908_231220_02")]
-    partial class _231220_02
+    [Migration("20231223105627_231223_01")]
+    partial class _231223_01
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,8 +28,7 @@ namespace JCommunity.Infrastructure.Migrations
             modelBuilder.Entity("JCommunity.AppCore.Entities.MemberAggregate.Member", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("text");
+                        .HasColumnType("character varying(26)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -82,12 +81,11 @@ namespace JCommunity.Infrastructure.Migrations
             modelBuilder.Entity("JCommunity.AppCore.Entities.PostAggregate.Post", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("text");
+                        .HasColumnType("character varying(26)");
 
                     b.Property<string>("AuthorId")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("character varying(26)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -123,7 +121,7 @@ namespace JCommunity.Infrastructure.Migrations
 
                     b.Property<string>("TopicId")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("character varying(26)");
 
                     b.HasKey("Id");
 
@@ -137,12 +135,11 @@ namespace JCommunity.Infrastructure.Migrations
             modelBuilder.Entity("JCommunity.AppCore.Entities.PostAggregate.PostComment", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("text");
+                        .HasColumnType("character varying(26)");
 
                     b.Property<string>("AuthorId")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("character varying(26)");
 
                     b.Property<string>("Contents")
                         .IsRequired()
@@ -153,11 +150,11 @@ namespace JCommunity.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("ParentCommentId")
-                        .HasColumnType("text");
+                        .HasColumnType("character varying(26)");
 
                     b.Property<string>("PostId")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("character varying(26)");
 
                     b.HasKey("Id");
 
@@ -171,16 +168,15 @@ namespace JCommunity.Infrastructure.Migrations
             modelBuilder.Entity("JCommunity.AppCore.Entities.PostAggregate.PostCommentLike", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("text");
+                        .HasColumnType("character varying(26)");
 
                     b.Property<string>("AuthorId")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("character varying(26)");
 
                     b.Property<string>("CommentId")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("character varying(26)");
 
                     b.Property<DateTime>("CreatedOrUpdatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -200,8 +196,7 @@ namespace JCommunity.Infrastructure.Migrations
             modelBuilder.Entity("JCommunity.AppCore.Entities.PostAggregate.PostContent", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("text");
+                        .HasColumnType("character varying(26)");
 
                     b.Property<string>("HtmlBody")
                         .IsRequired()
@@ -213,7 +208,7 @@ namespace JCommunity.Infrastructure.Migrations
 
                     b.Property<string>("PostId")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("character varying(26)");
 
                     b.Property<string>("ThumbnailUrl")
                         .IsRequired()
@@ -230,8 +225,7 @@ namespace JCommunity.Infrastructure.Migrations
             modelBuilder.Entity("JCommunity.AppCore.Entities.PostAggregate.PostContentAttachment", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("text");
+                        .HasColumnType("character varying(26)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -250,7 +244,7 @@ namespace JCommunity.Infrastructure.Migrations
 
                     b.Property<string>("PostContentId")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("character varying(26)");
 
                     b.Property<long>("Size")
                         .HasColumnType("bigint");
@@ -269,12 +263,11 @@ namespace JCommunity.Infrastructure.Migrations
             modelBuilder.Entity("JCommunity.AppCore.Entities.PostAggregate.PostLike", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("text");
+                        .HasColumnType("character varying(26)");
 
                     b.Property<string>("AuthorId")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("character varying(26)");
 
                     b.Property<DateTime>("CreatedOrUpdatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -284,7 +277,7 @@ namespace JCommunity.Infrastructure.Migrations
 
                     b.Property<string>("PostId")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("character varying(26)");
 
                     b.HasKey("Id");
 
@@ -298,12 +291,11 @@ namespace JCommunity.Infrastructure.Migrations
             modelBuilder.Entity("JCommunity.AppCore.Entities.PostAggregate.PostReport", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("text");
+                        .HasColumnType("character varying(26)");
 
                     b.Property<string>("AuthorId")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("character varying(26)");
 
                     b.Property<int>("Category")
                         .HasColumnType("integer");
@@ -318,7 +310,7 @@ namespace JCommunity.Infrastructure.Migrations
 
                     b.Property<string>("PostId")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("character varying(26)");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -337,12 +329,11 @@ namespace JCommunity.Infrastructure.Migrations
             modelBuilder.Entity("JCommunity.AppCore.Entities.TopicAggregate.Topic", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("text");
+                        .HasColumnType("character varying(26)");
 
                     b.Property<string>("AuthorId")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("character varying(26)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -384,7 +375,7 @@ namespace JCommunity.Infrastructure.Migrations
             modelBuilder.Entity("JCommunity.AppCore.Entities.TopicAggregate.TopicTag", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("text");
+                        .HasColumnType("character varying(26)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -393,7 +384,7 @@ namespace JCommunity.Infrastructure.Migrations
 
                     b.Property<string>("TopicId")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("character varying(26)");
 
                     b.Property<int>("Value")
                         .HasColumnType("integer");

@@ -8,10 +8,7 @@ public class PostContentTypeConfiguration : IEntityTypeConfiguration<PostContent
 
         builder.HasKey(builder => builder.Id);
         builder.Property(builder => builder.Id)
-            .HasConversion(
-                Id => Id.ToString(),
-                value => Guid.Parse(value)
-            );
+            .HasConversion<UlidConverter>();
 
         // Attachments (many to one)
         builder.HasMany(builder => builder.Attachments)

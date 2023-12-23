@@ -10,10 +10,7 @@ internal class MemberTypebuilderuration : IEntityTypeConfiguration<Member>
         // Id
         builder.HasKey(builder => builder.Id);
         builder.Property(builder => builder.Id)
-            .HasConversion(
-                Id => Id.ToString(),
-                value => Guid.Parse(value)
-            );
+            .HasConversion<UlidConverter>();
 
         // Name
         builder.Property(builder => builder.Name)

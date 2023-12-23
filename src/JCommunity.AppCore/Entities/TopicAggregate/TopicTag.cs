@@ -8,14 +8,14 @@ public class TopicTag : EntityBase
      * !!!!Must to add properties in child relationship properties!!!!!
      */
     [JsonIgnore]
-    public Guid TopicId { get; private set; }
+    public Ulid TopicId { get; private set; }
     public Tag Value { get; private set; }
     public string Name { get; private set; } = string.Empty;
 
     internal static TopicTag Create(Tag tag)
     {
         return new() {
-            Id = Guid.NewGuid(),
+            Id= Ulid.NewUlid(),
             Name = Enum.GetName(tag)!, 
             Value = tag
         };
@@ -28,7 +28,7 @@ public class TopicTag : EntityBase
 
         return new()
         {
-            Id = Guid.NewGuid(),
+            Id = Ulid.NewUlid(),
             Name = name,
             Value = tag
         };

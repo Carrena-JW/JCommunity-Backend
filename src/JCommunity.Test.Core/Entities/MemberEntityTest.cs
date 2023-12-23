@@ -138,7 +138,7 @@ public class MemberEntityTest
         Member member = Member.Create(NAME, NICKNAME, PASSWORD, EMAIL);
 
         // Act
-        var id = member.GetMemberId();
+        var id = member.Id.ToString();
 
         // Assert
         id.Should().Be(member.Id.ToString());

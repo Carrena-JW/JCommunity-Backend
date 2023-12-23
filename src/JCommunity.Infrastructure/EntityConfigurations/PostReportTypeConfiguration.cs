@@ -9,22 +9,13 @@ public class PostReportTypeConfiguration
 
         builder.HasKey(builder => builder.Id);
         builder.Property(builder => builder.Id)
-            .HasConversion(
-                Id => Id.ToString(),
-                value => Guid.Parse(value)
-            );
+            .HasConversion<UlidConverter>();
 
         builder.Property(builder => builder.PostId)
-          .HasConversion(
-              Id => Id.ToString(),
-              value => Guid.Parse(value)
-          );
+            .HasConversion<UlidConverter>();
 
         builder.Property(builder => builder.AuthorId)
-        .HasConversion(
-            Id => Id.ToString(),
-            value => Guid.Parse(value)
-        );
+            .HasConversion<UlidConverter>();
 
         // Title
         builder.Property(builder => builder.Title)

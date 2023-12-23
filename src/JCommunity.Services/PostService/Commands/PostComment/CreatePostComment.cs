@@ -44,7 +44,7 @@ public class CreatePostComment
             {
                 // #00. Find Member by AuthorId
                 var IsExistsMemberAsync = await _memberRepository
-                    .IsExistsMemberAsync(command.AuthorId.ConvertToGuid(), token);
+                    .IsExistsMemberAsync(command.AuthorId.ConvertToUlid(), token);
 
                 if(!IsExistsMemberAsync)
                 {
@@ -56,7 +56,7 @@ public class CreatePostComment
                     .BindCommentsOption(true);
 
                 var post = await _postRepository
-                    .GetPostByIdAsync(command.PostId.ConvertToGuid(), options, token);
+                    .GetPostByIdAsync(command.PostId.ConvertToUlid(), options, token);
                 
                 if(post == null)
                 {
@@ -64,8 +64,8 @@ public class CreatePostComment
                 }
 
                 // #02. Create Posting Entity
-                Guid? parentCommentId = !string.IsNullOrEmpty(command.ParentCommentId) ?
-                    command.ParentCommentId.ConvertToGuid() : null;
+                Ulid? parentCommentId = !string.IsNullOrEmpty(command.ParentCommentId) ?
+                    command.ParentCommentId.ConvertToUlid() : null;
 
                 //if has parentCommentId check exists item
                 if(parentCommentId != null)
@@ -78,7 +78,7 @@ public class CreatePostComment
                 }
 
                 // #03. Add Comment to Post
-                var addedComment =  post.AddComment(command.Contents, command.AuthorId.ConvertToGuid(), parentCommentId);
+                var addedComment =  post.AddComment(command.Contents, command.AuthorId.ConvertToUlid(), parentCommentId);
 
                 // #04. Save Entity
                 await _postRepository.UnitOfWork.SaveEntitiesAsync(token);

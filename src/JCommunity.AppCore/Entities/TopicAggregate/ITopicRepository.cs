@@ -5,10 +5,10 @@ public interface ITopicRepository : IRepository<Topic>
     Topic Add(Topic topic);
     void Remove(Topic topic);
 
-    Task<bool> IsExistsTopicAsync(Guid topicId, CancellationToken token);
+    Task<bool> IsExistsTopicAsync(Ulid topicId, CancellationToken token);
 
     Task<Topic?> GetTopicByIdAsync(
-        Guid topicId, 
+        Ulid topicId, 
         TopicIncludeOptions? options = null, 
         CancellationToken token = new());
 

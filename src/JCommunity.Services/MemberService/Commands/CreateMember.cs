@@ -67,7 +67,7 @@ public class CreateMember
                 await _memberRepository.UnitOfWork.SaveEntitiesAsync(ct);
 
                 _logger.LogInformation("Creating Member - member: {@member}", member);
-                return result.GetMemberId();
+                return result.Id.ToString();
             }
         }
         #endregion

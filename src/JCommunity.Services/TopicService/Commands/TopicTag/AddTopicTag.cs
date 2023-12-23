@@ -41,7 +41,7 @@ public class AddTopicTag
             {
                 var options = TopicIncludeOptions.Create(true);
                 var findTopic = await _repository.GetTopicByIdAsync(
-                    Guid.Parse(command.TopicId), options, ct);
+                    command.TopicId.ConvertToUlid(), options, ct);
 
                 if(findTopic == null)
                 {

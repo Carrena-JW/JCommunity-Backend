@@ -9,28 +9,16 @@ public class PostCommentTypeConfiguration
 
         builder.HasKey(builder => builder.Id);
         builder.Property(builder => builder.Id)
-            .HasConversion(
-                Id => Id.ToString(),
-                value => Guid.Parse(value)
-            );
+            .HasConversion<UlidConverter>();
 
         builder.Property(builder => builder.PostId)
-          .HasConversion(
-              Id => Id.ToString(),
-              value => Guid.Parse(value)
-          );
+            .HasConversion<UlidConverter>();
 
         builder.Property(builder => builder.AuthorId)
-        .HasConversion(
-            Id => Id.ToString(),
-            value => Guid.Parse(value)
-        );
+            .HasConversion<UlidConverter>();
 
         builder.Property(builder => builder.ParentCommentId)
-        .HasConversion(
-            Id => Id.ToString(),
-            value => !string.IsNullOrEmpty(value) ? Guid.Parse(value) : null
-        );
+            .HasConversion<UlidConverter>();
 
         // Contents
         builder.Property(builder => builder.Contents)

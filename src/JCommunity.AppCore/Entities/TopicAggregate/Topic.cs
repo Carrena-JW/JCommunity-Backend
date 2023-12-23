@@ -1,6 +1,4 @@
-﻿using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
-
-namespace JCommunity.AppCore.Entities.TopicAggregate;
+﻿namespace JCommunity.AppCore.Entities.TopicAggregate;
 public class Topic : AggregateRoot 
 {
     

@@ -2,7 +2,7 @@
 using JCommunity.AppCore.Core.Utils;
 using JCommunity.Test.Core.Utils;
 
-namespace JCommunity.Test.Core;
+namespace JCommunity.Test.Core.Utils;
 
 public class UtilTest
 {

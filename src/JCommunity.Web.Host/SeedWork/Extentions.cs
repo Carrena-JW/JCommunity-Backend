@@ -54,8 +54,7 @@ public static class Extentions
                        name: "PostgreSQL",
                        failureStatus: HealthStatus.Degraded,
                        tags: new string[] { "db", "postgresql" }
-                       )
-            .AddCheck("message_queue", () => MessageQueueHealth.Checker());
+                       );
         #endregion
 
         #region [Global Exception Handler]
@@ -66,8 +65,6 @@ public static class Extentions
         #region [MassTransit]
         services.AddMassTransit(config =>
         {
-          
-
             config.UsingRabbitMq((ctx, cfg) =>
             {
                       
@@ -78,6 +75,22 @@ public static class Extentions
                 });
 
                 cfg.AutoStart = true;
+            });
+        });
+        #endregion
+
+        #region [CORS]
+        services.AddCors(option =>
+        {
+            option.AddPolicy("AllowNgrok", policy =>
+            {
+
+                 policy.AllowAnyOrigin();
+                //policy.AllowAnyMethod();
+                //policy.AllowAnyHeader();
+                //policy.WithOrigins("http:localhost:3000");
+                // policy.WithOrigins("https://*.ngrok-free.app").SetIsOriginAllowedToAllowWildcardSubdomains();
+                //policy.WithOrigins("http://*.ngrok-free.app").SetIsOriginAllowedToAllowWildcardSubdomains();
             });
         });
         #endregion
@@ -150,6 +163,10 @@ public static class Extentions
 
             SetupTestMemberSeed.Setup(services);
         }
+        #endregion
+
+        #region [CORS]
+        app.UseCors("AllowNgrok");
         #endregion
 
         return app;
